@@ -45,11 +45,6 @@ class IOUtils(object):
         file.write(unicode(json.encoder(json_data, ensure_ascii = False)))
         file.close()
 
-
-
-
-
-
     def create_path_if_not_exists(self, file_path):
         if not path.exists(path.dirname(file_path)):
             os.makedirs(path.dirname(file_path))
