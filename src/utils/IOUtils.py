@@ -9,6 +9,7 @@ from PathUtils import PathUtils
 import pprint
 
 class IOUtils(object):
+
     def read_list_from_csv(self, file_path):
         results = []
 
