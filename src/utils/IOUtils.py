@@ -3,6 +3,9 @@ import csv
 import json
 import io
 from os import path
+
+from PathUtils import PathUtils
+
 import pprint
 
 class IOUtils(object):
@@ -44,10 +47,6 @@ class IOUtils(object):
         file = io.open('file_path','w', encoding='utf-8')
         file.write(unicode(json.encoder(json_data, ensure_ascii = False)))
         file.close()
-
-    def create_path_if_not_exists(self, file_path):
-        if not path.exists(path.dirname(file_path)):
-            os.makedirs(path.dirname(file_path))
 
     def save_objects_to_csv(self, objects, file_path):
         pass
