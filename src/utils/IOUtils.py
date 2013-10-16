@@ -1,5 +1,7 @@
 import os
 import csv
+import json
+import io
 from os import path
 import pprint
 
@@ -37,6 +39,15 @@ class IOUtils(object):
                 print IOError
 
         file.close()
+
+    def save_json_data_to_file(self, json_data, file_path):
+        file = io.open('file_path','w', encoding='utf-8')
+        file.write(unicode(json.encoder(json_data, ensure_ascii = False)))
+        file.close()
+
+
+
+
 
 
     def create_path_if_not_exists(self, file_path):
