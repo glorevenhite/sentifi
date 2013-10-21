@@ -26,6 +26,23 @@ class IOUtils(object):
 
         return results
 
+    #Data is the first column in csv file
+    def read_first_column_in_csv(self, file_path):
+        results = []
+
+        file = open(file_path, "rU")
+
+        try:
+            reader = csv.reader(file, delimiter=",", dialect='excel')
+            for row in reader:
+                results.append(row[0])
+        except IOError:
+            print IOError
+
+        file.close()
+
+        return results
+
     def save_list_to_csv(self, header, list_contents, file_path):
         #Create file_path if the file doesn't exist
         PathUtils().create_path_if_not_exists(file_path)
@@ -45,10 +62,10 @@ class IOUtils(object):
 
         file.close()
 
-    def save_json_data_to_file(self, json_data, json_data_id, path):
-        file = io.open(path + json_data_id, 'w', encoding='utf-8')
+    def save_json_data_to_file(self, json_data, file_name, path):
+        file = io.open(path + file_name, 'w', encoding='utf-8')
 
-        file.write(unicode(json.encoder(json_data, ensure_ascii = False)))
+        file.write(unicode(json_data))
 
         file.close()
 

@@ -6,7 +6,7 @@ from utils.IOUtils import *
 
 class CrawlerUtils(object):
     def read_screen_names_from_csv_file(self, file_path):
-        return IOUtils().read_list_from_csv(file_path)
+        return IOUtils().read_first_column_in_csv(file_path)
 
     #split a LIST into CHUNK having N elements
     def split_into_chunks(self, list, n):
@@ -19,5 +19,8 @@ class CrawlerUtils(object):
     def rreplace(self,s, old, new, occurrence):
         li = s.rsplit(old, occurrence)
         return new.join(li)
+
+
+
 
 
