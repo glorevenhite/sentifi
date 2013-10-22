@@ -47,6 +47,8 @@ class MySQLUtils(object):
         str_query += "FROM %s " %table_name
         str_query += "WHERE %s " %where_clauses_as_string
 
+        print str_query
+
         self.cursor.execute(str_query)
         rows = self.cursor.fetchall()
 
