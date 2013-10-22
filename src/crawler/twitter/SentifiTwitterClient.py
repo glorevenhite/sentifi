@@ -1,4 +1,5 @@
 import oauth2 as oauth
+import json
 
 class SentifiTwitterClient:
     def __init__(self, url):
@@ -13,7 +14,7 @@ class SentifiTwitterClient:
         client = oauth.Client(consumer, access_token)
         response, data = client.request(url)
         json_data = json.loads(data)
-        return json_data
+        self.data = json_data
 
     @property
     def client(self):
@@ -25,3 +26,4 @@ class SentifiTwitterClient:
         consumer = oauth.Consumer(key=CONSUMER_KEY, secret=CONSUMER_SECRET)
         access_token = oauth.Token(key=OAUTH_TOKEN, secret=OAUTH_SECRET)
         return oauth.Client(consumer, access_token)
+print SentifiTwitterClient("https://api.twitter.com/1.1/users/lookup.json?screen_name=glorevenhite").data

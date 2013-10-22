@@ -15,7 +15,8 @@ class Rule(object):
             print kw
         print '-----------------'
 
-
+    def _load_rules_from_database(self ):
+        pass
 
 """For testing only"""
 #rule = Rule(['financial', 'analyst'], ['trader'])

@@ -14,10 +14,6 @@ def main():
         OUTPUT: file with content in format: fullname, desc, profile_type, publisher_group, cat_1, cat_2
     """
 
-
-
-
-
     #
 
     #rs1 = Ruler().load_all_ruleset(Category().PER)
@@ -36,7 +32,6 @@ def main():
     n1 = 'glorevenhite'
     d1 = 'i am a student who want to become a financial analyst'
     p1 = TwitterProfile(n1,d1)
-
 
 
     #Profile 2
@@ -74,3 +69,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+

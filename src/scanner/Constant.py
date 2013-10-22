@@ -1,11 +1,19 @@
 """ Define CONSTANTs for conveniently access """
+class Phases(object):
+    def __init__(self):
+        self.VALUES = {'PT':'PROFILE TYPE', 'PG':'PROFILE GROUP', 'C1':'CATEGORY 1', 'C2':'CATEGORY2'}
+
+class Fields(object):
+    def __init__(self):
+        self.VALUES = {1:'twitter_description', 2:'twitter_screen_name', 3:'twitter_full_name'}
+
 class Profile(object):
     def __init__(self):
         self.PER = 'PERSONAL'
         self.ORG = 'ORGANISATION'
-        self.NEWS = 'NEWS'
         self.UNKNOWN = 'UNKNOWN'
-        self.PROFILE = [self.PER, self.ORG, self.NEWS]
+        self.PROFILES = [self.PER, self.ORG]
+        self.VALUES = {'P':'personal', 'O':'organization','U':'unknown'}
 
 class Category2(object):
     def __init__(self):
@@ -47,3 +55,15 @@ class Category1(object):
         self.NEWS_FINANCIAL = 'NEWS FINANCIAL MARKETS'
 
         #self.CATEGORY = [self.PER, self.ORG, self.NEWS]
+
+class SQLTableName(object):
+    def __init__(self):
+        self.DATABASE = 'autocategory'
+        self.RULE_CATEGORY = 'tbl_rule'
+        self.CATEGORIES = 'tbl_category'
+        self.FIELDS = 'tbl_applied_field'
+        self.RULES_FIELS = 'tbl_rule_applied'
+        self.RULE_KEYWORD = 'tbl_rule_keyword'
+        self.KEYWORDS = 'tb_keyword'
+
+        self.KEYWORDS = 'tb_keyword'
