@@ -1,4 +1,9 @@
 class Rule(object):
+    def __init__(self):
+        self.inc_keywords = None
+        self.exc_keywords = None
+        self.keywords = None
+
     def __init__(self, inclusion_list, exclusion_list ):
         self._inc = inclusion_list
         self._exc = exclusion_list
