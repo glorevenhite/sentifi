@@ -27,6 +27,7 @@ class ClassifierUtils(object):
         return dict
 
     def get_list_ruleset_given_phase_field(self, phase_name, field):
+        pass
 
     #Get list CAT_ID for given PHASE
     def _get_list_cat_id_given_phase(self, phase_name):
