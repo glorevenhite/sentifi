@@ -1,40 +1,57 @@
 from SentifiMessage import SentifiMessage
 from SentifiMessage import SentifiFilter
+from SentifiMessage import SentifiSearchItem
+from SentifiMessage import SentifiSearchItemTagElement
+
 from SentifiWordsBank import SentifiWordsBank
 
+import json
+import pprint
+
 class Filter(object):
-    def __init__(self, json_data):
-        self.json_data = json_data
+    def __init__(self, message, sentifi_search_item):
+        self.message = message
+        self.item = sentifi_search_item
 
-    def filter(self, message, filters):
-        cash_filter = filters[0]
-        hash_filter = filters[1]
-        mention_filter = filters[2]
-        en_filter = filters[3]
-        de_filter = filters[4]
+    def apply(self):
+        #making element
+        cash_tag = item.cash_tag
+        hash_tag = item.hash_tag
+        mention_tag = item.mention_tag
+        en_tag = item.en_tag
+        de_tag = item.de_tag
 
-        #Creating bank of vocabulary used
-        wordsbank = list(set(cash_filter.wordsbank) |
-                         set(hash_filter.wordsbank) |
-                         set(mention_filter.wordsbank) |
-                         set(en_filter.wordsbank) |
-                         set(de_filter.wordsbank))
+        #Get rule set
+        ruleset = cash_tag.get_ruleset()
+        ruleset += hash_tag.get_ruleset()
+        ruleset += mention_tag.get_ruleset()
+        ruleset += en_tag.get_ruleset()
+        ruleset += de_tag.get_ruleset()
 
-        processed_wordsbank = self._build_wordsbank(wordsbank)
-        tokenized_content = self._hash_content_using_wordsbank(message.text, processed_wordsbank)
+        #for each rule in ruleset, check whether message is complied to the rule
+        for rule in ruleset:
+            processed_wordsbank = rule.get_wordsbank()
+            tokenized_content = self._hash_content_using_wordsbank(self.message.text, processed_wordsbank)
 
-        #apply filter
-        message.status = self._apply_filter(tokenized_content, processed_wordsbank)
-        message.display()
+            inclusion = rule.get_inclusion()
+            exclusion= rule.exc_keywords
+            self.message.status = self._apply_filter(tokenized_content, inclusion, exclusion)
+            if self.message.status == True:
+                return self.message
 
-    def _apply_filter(self, tokenized_content, processed_wordsbank):
-        print tokenized_content
-        score = set(tokenized_content.split(" ")) & set(processed_wordsbank)
 
-        if (len(score) > 0):
+    def _apply_filter(self, tokenized_content, inclusion, exclusion):
+        #print tokenized_content
+        exc =  set(tokenized_content.split(" ")) & set(exclusion)
+        if len(exc) > 0:
+            return False
+
+        score = set(tokenized_content.split(" ")) & set(inclusion)
+
+        if len(score) == len(set(inclusion)):
             return True
-
-
+        else:
+            return False
 
     def _build_wordsbank(self, wordsbank):
         #order by number of single words
@@ -47,36 +64,32 @@ class Filter(object):
             hyphen_phrase = phrase.replace(" ", "-").lower()
             dict.update({hyphen_phrase: words_count})
 
+        #Sort dictionary order by number of single words
         sorted_dictionary = sorted(dict, key=lambda k:dict[k],reverse=True)
 
         return sorted_dictionary
 
     def _hash_content_using_wordsbank(self, raw_content, wordsbank):
-
-        return SentifiWordsBank().tokenizer(raw_content, wordsbank)
-
-
-
-
-
-
+        return SentifiWordsBank().tokenizer(raw_content, wordsbank).lower()
 
     ############################################################################
 
-text = "@ADEN @B have just release year earning blah blah a b"
+text = "$EDEN CEO @B have just release year earnings blah blah a b"
 channel = "twitter"
 publisher = "WJS"
 message = SentifiMessage(text, channel, publisher)
 
-json_data = None
+#json data
+str_json_data = '{"id":"3","soid":"2","siid":"1","nb_soid":"3366","nb_siid":"2410","blacklist":[{"w":"black","status":0}],"keywords":{"tags_s":{"w":"$EDEN,$EDENN","i":"CEO, Year Earnings","e":"City","c":"Twitter"},"tags_h":{"w":"#EDEN, #EDENN","i":"CEO, Year Earnings","e":"City, Gulf","c":"Twitter"},"tags_a":{"w":"@EDEN, @EDENN","i":"ceo, year earnings","e":"city, gulf","c":"Twitter"},"keywords_en":{"w":"EDEN","i":"company","e":"gulf","c":"Twitter"},"keywords_de":{"w":"string","i":"string","e":"string","c":"string"}}}'
+json_data = json.loads(str_json_data)
 
-s_filter = SentifiFilter(['$ADEN'], ['CEO','Year Earning'],['GULF','city'])
-h_filter = SentifiFilter(['$ADEN'], ['CEO','Earning'],['GULF','city'])
-a_filter = SentifiFilter(['$ADEN'], ['CEO','Earning'],['GULF','city'])
-en_filter = SentifiFilter(['$ADEN'], ['CEO','Earning'],['GULF','city'])
-de_filter = SentifiFilter(['$ADEN'], ['CEO','Earning'],['GULF','city'])
+#initialize
+item = SentifiSearchItem(json_data)
 
-filters = [s_filter, h_filter, a_filter, en_filter, de_filter]
+filter = Filter(message, item)
+print "Before:"
+message.display()
+filter.apply()
 
-
-Filter(json_data).filter(message, filters)
+print "After:"
+message.display()

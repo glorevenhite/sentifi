@@ -11,6 +11,7 @@ class SentifiMessage(object):
     def display(self):
         print self.text, self.publisher, self.channel, self.status
 
+#################################################################################################333
 class SentifiSearchItem(object):
     def __init__(self, json_data):
         s_based_words = json_data['keywords']['tags_s']['w'].split(",")
@@ -42,10 +43,11 @@ class SentifiSearchItem(object):
         #self.blacklist_status = json_data['blacklist'].split(",")
 
     def display(self):
-        print self.based_words
-        print self.inclusion
-        print self.exclusion
+        print self.cash_tag
+        print self.hash_tag
+        print self.mention_tag
 
+####################################################################################################3
 class SentifiSearchItemTagElement(object):
     def __init__(self, name, based_words, inclusion, exclusion):
         self.name = name
@@ -53,37 +55,33 @@ class SentifiSearchItemTagElement(object):
         self.inclusion = inclusion
         self.exclusion = exclusion
         self.wordsbank = list(set(based_words) | set(inclusion) | set(exclusion))
-        self.ruleset = self._get_ruleset(based_words, inclusion, exclusion)
 
-    def _get_ruleset(self, based_words, inclusion, exclusion):
+    def get_ruleset(self):
         ruleset = []
 
         pair_inclusion = []
-        for bw in based_words:
-            for ic in inclusion:
+        for bw in self.based_words:
+            for ic in self.inclusion:
                 pair = [bw, ic]
                 pair_inclusion.append(pair)
 
         #Combine each pair in inclusion_list with exclusion_list
         for pair in pair_inclusion:
-            for ew in exclusion:
+            for ew in self.exclusion:
                 rule = Rule()
-                rule.inc_keywords = pair_inclusion
-                rule.exc_keywords = ew
-                rule_set.append(rule)
+                rule.inc_keywords = pair
+                rule.exc_keywords.append(ew)
+
+                ruleset.append(rule)
 
         return ruleset
 
-
-
-
-
-
-
+    def display(self):
         pass
 
 
 
+########################################################################################33
 class SentifiFilter(object):
     def __init__(self, based_words, inclusion, exclusion):
         self.based_words = based_words
@@ -92,15 +90,8 @@ class SentifiFilter(object):
         self.wordsbank = list(set(based_words) | set(inclusion) | set(exclusion))
 
 
-    def get_ruleset(self):
-        ruleset = []
+#str_json_data = '{"id":"3","soid":"2","siid":"1","nb_soid":"3366","nb_siid":"2410","blacklist":[{"w":"bl 1","status":0}],"keywords":{"tags_s":{"w":"$EDEN,$EDENN","i":"string","e":"string","c":"string"},"tags_h":{"w":"string","i":"string","e":"string","c":"string"},"tags_a":{"w":"string","i":"string","e":"string","c":"string"},"keywords_en":{"w":"string","i":"string","e":"string","c":"string"},"keywords_de":{"w":"string","i":"string","e":"string","c":"string"}}}'
+#json_data = json.loads(str_json_data)
 
-
-
-        pass
-
-str_json_data = '{"id":"3","soid":"2","siid":"1","nb_soid":"3366","nb_siid":"2410","blacklist":[{"w":"bl 1","status":0}],"keywords":{"tags_s":{"w":"$EDEN,$EDENN","i":"string","e":"string","c":"string"},"tags_h":{"w":"string","i":"string","e":"string","c":"string"},"tags_a":{"w":"string","i":"string","e":"string","c":"string"},"keywords_en":{"w":"string","i":"string","e":"string","c":"string"},"keywords_de":{"w":"string","i":"string","e":"string","c":"string"}}}'
-json_data = json.loads(str_json_data)
-
-item = SentifiSearchItem(json_data)
-item.display()
+#item = SentifiSearchItem(json_data)
+#item.display()
