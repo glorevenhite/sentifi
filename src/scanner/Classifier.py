@@ -3,6 +3,7 @@ from TwitterProfile import TwitterProfile
 from SentifiWordsBank import SentifiWordsBank
 from Rule import Rule
 from Ruler import Ruler
+from ClassifierUtils import ClassifierUtils
 
 class Classifier(object):
 
@@ -39,21 +40,25 @@ class Classifier(object):
         return list_profiles
 
     def classify_profile(self, str_field_content, dict_ruleset):
-        dict_ruleset = {'analyst':{0:'financial analyst',1:'equity analyst'}}
+        dict_ruleset = ClassifierUtils().get_list_ruleset_given_phase("'Category 1'")
+        str_field_content = "I am financial analyst"
+        print dict_ruleset
 
-    def classify_profile_type(self, pairs):
-        #retrieve list of profile for indexing
-        PROFILE = Profile().PROFILES
+        list_rules = dict_ruleset['Category 1']
+        print list_rules
 
-        for item in pairs:
-            #tokenizer the content by adding hyphen between compound-words
-            raw_field_content = item[0]    #field_content, i.e., fullname, description
-            list_rulesets = item[1]
+        print "There are %s rules in total"  %len(list_rules)
+
+        for rule_item in list_rules.items():
+            topic = rule_item[0]
+            keywords = rule_item[1]
+
+            #Building set of keywords from vocabulary in respective rule
 
 
-            #Build set of keywords from vocabulary in respective ruleset
-            keywords = []
-            tokenized_content = []
+        #print dict_ruleset
+
+
             for ruleset in list_rulesets:
                 kws = SentifiWordsBank().build_keywords(ruleset)
                 keywords.append(kws)
@@ -107,3 +112,29 @@ class Classifier(object):
         result.append(profile.description)
 
         return result
+
+    def _get_inclusion_keywords_given_rule_id(self, rule_id):
+        inclusion = ClassifierUtils()._get_included_keywords_for_given_rule_id(rule_id)
+        return inclusion
+
+    def _get_exclusion_keywords_given_rule_id(self, rule_id):
+        exclusion = ClassifierUtils()._get_excluded_keywords_for_given_rule_id(rule_id)
+        return exclusion
+
+    def _build_wordsbank_from_rule_id(self, rule_id):
+        inclusion = self._get_inclusion_keywords_given_rule_id(rule_id)
+        exclusion = self._get_exclusion_keywords_given_rule_id(rule_id)
+        wordsbank = list (set(inclusion) | set(exclusion))
+        return wordsbank
+
+    def _get_list_rulesets_given_phase(self, phase, field):
+        results = ClassifierUtils().get_list_ruleset_given_phase_and_field(phase, field)
+
+
+
+
+
+
+#
+#Classifier().classify_profile(None, None)
+print Classifier()._build_wordsbank_from_rule_id(119)

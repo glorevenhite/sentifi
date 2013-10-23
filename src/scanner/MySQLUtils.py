@@ -17,7 +17,7 @@ class MySQLUtils(object):
 
         ver = self.cursor.fetchone()
 
-        print "Database version: %s" %ver
+        #print "Database version: %s" %ver
 
     #Inserting multi-values into multi-colums respectively
     def insert(self, col_names, values, table_name):

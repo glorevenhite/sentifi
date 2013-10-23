@@ -20,10 +20,13 @@ class ClassifierUtils(object):
 
             #update to dict_results
             dict_results.update({ruleset.keys()[0]:ruleset.values()[0]})
+
         dict = {}
         dict.update({phase_name.replace("'",""):dict_results})
 
         return dict
+
+    def get_list_ruleset_given_phase_field(self, phase_name, field):
 
     #Get list CAT_ID for given PHASE
     def _get_list_cat_id_given_phase(self, phase_name):
@@ -56,10 +59,14 @@ class ClassifierUtils(object):
             values2.append(self._get_excluded_keywords_for_given_rule_id(rule_id))
 
         dict2 = {}
-        dict2 = {'exclusion':values2}
+        dict2 = {'override':values2}
 
+        ##############################################################################
         ruleset = {}
-        values = [dict1, dict2]
+        values = []
+        for rule_id in list_rule_ids:
+            values.append(self._get_keywords_given_rule_id(rule_id))
+
         key = self._get_category_name_given_cat_id(cat_id)
 
         ruleset[key] = values
@@ -76,7 +83,6 @@ class ClassifierUtils(object):
         query += "ON rc.rule_id = rk.rule_id "
         query += "WHERE rk.rule_id = %s " %str(rule_id)
 
-
         rows = MySQLUtils().select_query(query)
 
         dict_results = {}
@@ -84,6 +90,17 @@ class ClassifierUtils(object):
             dict_results.update({str(row[0]):row[1]})
 
         return dict_results
+
+    #combine the inclusion and exclusion list #2nd important
+    def _get_keywords_given_rule_id(self, rule_id):
+        inclusion_keywords = self._get_included_keywords_for_given_rule_id(rule_id)
+        exclusion_keywords = self._get_excluded_keywords_for_given_rule_id(rule_id)
+        list = [inclusion_keywords, exclusion_keywords]
+
+        dict ={}
+        dict.update({rule_id:list})
+
+        return dict
 
     def _get_included_keywords_for_given_rule_id(self, rule_id):
         query  = "SELECT k.keyword_id, k.keyword "
@@ -94,14 +111,20 @@ class ClassifierUtils(object):
         query += "ON rc.rule_id = rk.rule_id "
         query += "WHERE rk.rule_id = %s AND rc.type_not = 0" %str(rule_id)
 
-
         rows = MySQLUtils().select_query(query)
 
         dict_results = {}
         for row in rows:
-            dict_results.update({str(row[0]):row[1]})
+            dict_results.update({str(row[0]):row[1]})    #Select two first-columns only
 
-        return dict_results
+        dict_rule = {}
+        dict_rule.update({'AND':dict_results})
+
+        results = []
+        for row in rows:
+            results.append(row[1])
+
+        return results
 
     def _get_excluded_keywords_for_given_rule_id(self, rule_id):
         query  = "SELECT k.keyword_id, k.keyword "
@@ -112,14 +135,21 @@ class ClassifierUtils(object):
         query += "ON rc.rule_id = rk.rule_id "
         query += "WHERE rk.rule_id = %s AND rc.type_not = 1" %str(rule_id)
 
-
         rows = MySQLUtils().select_query(query)
 
         dict_results = {}
         for row in rows:
             dict_results.update({str(row[0]):row[1]})
 
-        return dict_results
+        results = []
+        for row in rows:
+            results.append(row[1])
+
+        dict_rule = {}
+        dict_rule.update({'NOT':dict_results})
+
+        return results
+
 
     #Get Name of Category given by category_id
     def _get_category_name_given_cat_id(self, cat_id):
@@ -148,14 +178,14 @@ class ClassifierUtils(object):
 
 #print ClassifierUtils()._get_keywords_for_given_rule_id(117)
 #ClassifierUtils()._get_list_cat_id_given_phase("'Category 1'")
-dict_ruleset = (ClassifierUtils().get_list_ruleset_given_phase("'Profile Type'"))
+#dict_ruleset = (ClassifierUtils().get_list_ruleset_given_phase("'Category 1'"))
 #pprint.pprint(dict_ruleset)
-print dict_ruleset['Profile Type']
-print dict_ruleset['Profile Type']['P'][1]
+#pprint.pprint(dict_ruleset['Profile Type'])
+#print dict_ruleset['Profile Type']['P'][1]
 #print dict_ruleset['Profile Type']['P'][1]['exclusion'][0]
 
-str = json.dumps(dict_ruleset)
-print str
 #IOUtils().save_json_data_to_file(str, "result.json", "D:\\")
+
+#print ClassifierUtils()._get_keywords_given_rule_id(117)
 
 

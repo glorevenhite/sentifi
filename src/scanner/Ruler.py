@@ -112,8 +112,7 @@ class Ruler(object):
 
             #list_results.append(self._load_rule_for_given_category(id))
 
-        print dict_results
-
+        #print dict_results
 
 
         #for k in sorted(dict_results, key=lambda k:len(dict_results[k]), reverse=True):
