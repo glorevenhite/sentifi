@@ -1,10 +1,6 @@
-class Rule(object):
-    def __init__(self, inclusion_list, exclusion_list ):
-        self._inc = inclusion_list
-        self._exc = exclusion_list
-        self.keywords = self._inc + self._exc
-        self.inc_keywords = set(inclusion_list)
-        self.exc_keywords = set(exclusion_list)
+class RuleSet(object):
+    def __init__(self, json_data):
+        self.rules = self._get_rules_from_json(json_data)
 
     def display(self):
         print "Inclusion:"
@@ -15,8 +11,21 @@ class Rule(object):
             print kw
         print '-----------------'
 
-    def _load_rules_from_database(self ):
+    def _get_rules_from_json(self, json_data):
+        #format json
+        json_data = {}
+
+        rules = []
+
+
+
+
+        return rules
+
+    def _load_rules_from_database(self):
         pass
+
+#format json
 
 """For testing only"""
 #rule = Rule(['financial', 'analyst'], ['trader'])

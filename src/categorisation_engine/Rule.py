@@ -1,21 +1,16 @@
 class Rule(object):
-    def __init__(self):
-        self.inc_keywords = []
-        self.exc_keywords = []
+    def __init__(self, json_data):
+        self.rule_set_name = json_data['rule_set_name']
+        self.inc_keywords = json_data['keywords']['include'].split(",")
+        self.exc_keywords = json_data['keywords']['exclude'].split(",")
         self.keywords = []
 
-#===============================================================================
-#    def __init__(self, inclusion_list, exclusion_list ):
-#        self._inc = inclusion_list
-#        self._exc = exclusion_list
-#        self.keywords = self._inc + self._exc
-#        self.inc_keywords = set(inclusion_list)
-#        self.exc_keywords = set(exclusion_list)
-#===============================================================================
     def get_inclusion(self):
+        #lowercase and strip any space in both left and right side
         return [word.lower().strip() for word in self.inc_keywords]
 
     def get_exclusion(self):
+        #lowercase and strip any space in both left and right side
         return [word.lower().strip() for word in self.exc_keywords]
 
     def get_wordsbank(self):
