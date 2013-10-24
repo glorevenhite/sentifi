@@ -17,9 +17,6 @@ def main():
     json_messages = IOUtils().read_json_data_from_file(FILE_PATH_TO_JSON_MESSAGES)
     json_criteria = IOUtils().read_json_data_from_file(FILE_PATH_TO_JSON_CRITERIA)
 
-    messages_count = len(json_messages)
-    criteria_count = len(json_criteria)
-
     list_criteria = []
     for criteria in json_criteria:
         item = SentifiSearchItem(criteria)
