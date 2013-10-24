@@ -1,7 +1,6 @@
 from Filter import Filter
 from IOUtils import IOUtils
 from SentifiMessage import SentifiMessage
-from SentifiMessage import SentifiFilter
 from SentifiMessage import SentifiSearchItem
 
 import sys
