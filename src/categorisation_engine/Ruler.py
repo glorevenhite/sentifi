@@ -1,86 +1,31 @@
 from MySQLUtils import MySQLUtils
 from Constant import *
-from Switcher import *
-from Rule import *
 
 
 class Ruler(object):
-    def __init__(self):
-        self.category = [
-                         Profile().PER,
-                         Profile().ORG,
-                         ]
-    def load_all_ruleset(self, category):
-        index = self.category.index(category)
-        return Switcher[index]()
 
-    # Each list_rulesets contain collection of rulesets. Each ruleset identify the Category (Class) of given field
-    def load_list_rulesets(self, field, step):
-        if (step == 'PT'):
-            if (field == 'FN'):
-                list_rulesets = []
-
-                #Loading rulset for identification of Person on Fullname
-                connection = MySQLUtils().connection
-                cursor = connection.cursor()
-                cursor.execute("SELECT tbl_rule.rule_id FROM tbl_rule")
-                list_rulesets.append(None)
-
-                ruleset1 = [None]*8
-                ruleset1[0] = Rule(['.com'], [])
-                ruleset1[1] = Rule(['bank'], [])
-                ruleset1[2] = Rule(['market'], [])
-                ruleset1[3] = Rule(['ltd'], [])
-                ruleset1[4] = Rule(['limited'], [])
-                ruleset1[5] = Rule(['bv'], [])
-                ruleset1[6] = Rule(['llc'], [])
-                ruleset1[7] = Rule(['news'], [])
-
-                list_rulesets.append(ruleset1)
-                return list_rulesets
-            else:
-                #load ruleset for description
-                ruleset1 = [None]*7
-                ruleset1[0] = Rule(['believer'], [])
-                ruleset1[1] = Rule(['consultant'], [])
-                ruleset1[2] = Rule(['i'], [])
-                ruleset1[3] = Rule(['my'], [])
-                ruleset1[4] = Rule(['owner'], [])
-                ruleset1[5] = Rule(['student'], [])
-                ruleset1[6] = Rule(['financial-analyst'], []) #extent example for test
-
-                ruleset2 = [None]*3
-                ruleset2[0] = Rule(['we'],[])
-                ruleset2[1] = Rule(['our'],[])
-                ruleset2[2] = Rule(['provider'],[])
-
-                list_ruleset = []
-                list_ruleset.append(ruleset1)
-                list_ruleset.append(ruleset2)
-                return list_ruleset
-        elif (step == 'C2'):
-            pass
-        else:
-            pass
-
-    def _load_rule_for_given_category(self, cat_id):
+    def _load_list_rules_for_given_category(self, cat_id):
         connection = MySQLUtils().connection
         cursor = connection.cursor()
-        sql =  "SELECT  c.name, r.rule_id, rk.keyword_id, k.keyword "
-        sql += "FROM tbl_rule AS r "
-        sql += "JOIN tbl_category AS c ON r.category_id = c.id "
-        sql += "JOIN tbl_rule_keyword AS rk ON r.rule_id = rk.rule_id "
-        sql += "JOIN tb_keyword AS k ON k.keyword_id = rk.keyword_id "
-        sql += "WHERE c.id = %s AND r.type_not = 0"  %cat_id
+        sql = "SELECT  c.name, r.rule_id, rk.keyword_id, k.keyword "
+        sql += "FROM %s AS r " % TABLE_RULE_CATEGORY
+        sql += "JOIN %s AS c ON r.category_id = c.id " % TABLE_CATEGORIES
+        sql += "JOIN %s AS rk ON r.rule_id = rk.rule_id " % TABLE_RULE_KEYWORD
+        sql += "JOIN %s AS k ON k.keyword_id = rk.keyword_id " % TABLE_KEYWORDS
+        sql += "WHERE c.id = %s AND r.type_not = 0" % cat_id
 
         cursor.execute(sql)
         rows = cursor.fetchall()
 
-        dict_result = {}
+        dict_values = {}
         for row in rows:
-            dict_result.update({row[1]:row[3]})
+            dict_values.update({row[1]: row[3]})
 
-        return dict_result
+        dict_key = rows[0][0]
+
+        dict_results = {dict_key: dict_values}
+
+        return dict_results
 
     def _load_all_category1_name(self):
         connection = MySQLUtils().connection
@@ -119,10 +64,10 @@ class Ruler(object):
          #   print k
 
 #Loading rulset for identification of Person on Fullname
-#Ruler()._load_rule_for_given_category(45)
+print Ruler()._load_list_rules_for_given_category(45)
 
 #print Ruler()._load_all_category1_name()
 
-Ruler()._load_rulesets()
+#Ruler()._load_rulesets()
 
 #print Ruler().load_all_ruleset('ORGANISATION')
