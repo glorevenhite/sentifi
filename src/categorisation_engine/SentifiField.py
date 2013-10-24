@@ -5,6 +5,7 @@ from SentifiWordsBank import SentifiWordsBank
 class SentifiField(object):
     def __init__(self, content):
         self.content = content
+        self.category = ""
 
     def is_complied(self, rule):
         #get all words used in rule
@@ -23,7 +24,10 @@ class SentifiField(object):
         #Check whether the content has word in inclusion set but not exclusion set
         flag = self._apply_rule(tokenized_content, inclusion, exclusion)
 
-        return flag
+        if flag is True:
+            return rule.rule_set_name
+        else:
+            return None
 
     def _apply_rule(self, tokenized_content, inclusion, exclusion):
 
