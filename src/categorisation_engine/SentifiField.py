@@ -34,6 +34,7 @@ class SentifiField(object):
 
         innersection = set(tokenized_content.split(" ")) & set(inclusion)
 
+        #Check whether the inclusion set is completely contained in content
         if len(innersection) == len(set(inclusion)):
             return True
         else:
