@@ -1,3 +1,11 @@
+DATABASE_NAME = 'autocategory'
+TABLE_RULE_CATEGORY = 'tbl_rule'
+TABLE_CATEGORIES = 'tbl_category'
+TABLE_FIELDS = 'tbl_applied_field'
+TABLE_RULE_FIELD = 'tbl_rule_applied'
+TABLE_RULE_KEYWORD = 'tbl_rule_keyword'
+TABLE_KEYWORDS = 'tb_keyword'
+
 """ Define CONSTANTs for conveniently access """
 class Phases(object):
     def __init__(self):
