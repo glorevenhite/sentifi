@@ -1,3 +1,6 @@
+import MySQLdb
+import pprint
+from Rule import Rule
 class SentifiWordsBank(object):
     def __init__(self):
         pass

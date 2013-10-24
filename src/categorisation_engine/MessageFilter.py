@@ -1,6 +1,7 @@
 from Filter import Filter
 from IOUtils import IOUtils
 from SentifiMessage import SentifiMessage
+from SentifiMessage import SentifiFilter
 from SentifiMessage import SentifiSearchItem
 
 import sys
@@ -33,13 +34,13 @@ def main():
                 filter = Filter(message, criteria)
                 filter.apply()
 
-    results = []
     for msg in list_messages:
-        results.append(msg.get_json())
-        results.append(msg.get_json())
+        message.display()
 
-    print results
-    return results
+    return list_messages
 
 if __name__ == "__main__":
     main()
+
+
+
