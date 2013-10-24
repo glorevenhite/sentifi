@@ -1,5 +1,5 @@
-from pip.backwardcompat import u
 from Rule import Rule
+from SentifiWordsBank import SentifiWordsBank
 
 
 class SentifiField(object):
@@ -7,69 +7,34 @@ class SentifiField(object):
         self.content = content
 
     def is_complied(self, rule):
+        #get all words used in rule
         wordsbank = rule.get_wordsbank()
 
-        hyphen_content = self._hyphenize_compound_words_in(wordsbank)
+        #hyphenize any compound words in content
+        hyphen_content = SentifiWordsBank().hyphenize_compound_words_in(wordsbank)
 
+        #Splitting the hyphen_content using space resulting to a list of words used in content
         tokenized_content = hyphen_content.split(" ")
 
+        #get words using in case of inclusion and exclusion
         inclusion = rule.get_inclusion()
         exclusion = rule.exc_keywords
 
-        return self._apply_filter(tokenized_content, inclusion, exclusion)
+        #Check whether the content has word in inclusion set but not exclusion set
+        flag = self._apply_rule(tokenized_content, inclusion, exclusion)
 
-    def _apply_filter(self, tokenized_content, inclusion, exclusion):
+        return flag
 
-        #If the words
-        exc =  set(tokenized_content.split(" ")) & set(exclusion)
-        if len(exc) > 0:
+    def _apply_rule(self, tokenized_content, inclusion, exclusion):
+
+        #Check whether content contains any word in exclusion set
+        exc = set(tokenized_content.split(" ")) & set(exclusion)
+        if len(exc) > 0:    # contains word in exclusion set
             return False
 
-        score = set(tokenized_content.split(" ")) & set(inclusion)
+        innersection = set(tokenized_content.split(" ")) & set(inclusion)
 
-        if len(score) == len(set(inclusion)):
+        if len(innersection) == len(set(inclusion)):
             return True
         else:
             return False
-
-    def _hyphenize_compound_words_in(self, list_words):
-        #strip space in left and right
-        processing_content = self.content.strip()
-
-        #replace multi-space by sing space
-        processing_content = processing_content.replace("  ", " ")
-
-        #replace hyphen in compound-word by space
-        vocabulary = []
-        sorted_dictionary = self._build_sorted_dictionary(list_words)
-        for word in sorted_dictionary:
-            #change hyphen-words into normal
-            usual_word = word.replace('-', ' ')
-
-            #put that word into new vocabulary
-            vocabulary.append(usual_word)
-
-        #Replace 'compound words' in content by the one with hyphen, i.e. compound-words
-        for cw in sorted_dictionary:
-            #temporaly
-            tmp = cw.replace("-", " ")
-            processing_content = processing_content.replace(tmp, cw)
-
-        return processing_content
-
-    #Dictionary sorted by number of single words
-    def _build_sorted_dictionary(self, list_words):
-
-        dict_word = {}
-        for phrase in list_words:
-            #spliting using space
-            splitted_words = phrase.split(" ")
-            words_count = len(splitted_words)
-
-            #replacing space by hyphen then lowercase
-            hyphen_phrase = phrase.replace(" ", "-").lower()
-            dict_word.update({hyphen_phrase: words_count})
-
-        sorted_dictionary = sorted(dict, key=lambda k: dict[k], reverse=True)
-
-        return sorted_dictionary
