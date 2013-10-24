@@ -1,3 +1,6 @@
+from SentifiWordsBank import SentifiWordsBank
+
+
 class Rule(object):
     def __init__(self, json_data):
         self.rule_set_name = json_data['rule_set_name']
@@ -14,24 +17,11 @@ class Rule(object):
         return [word.lower().strip() for word in self.exc_keywords]
 
     def get_wordsbank(self):
-        wordsbank = self.inc_keywords + self.exc_keywords
-        return self._build_wordsbank(wordsbank)
+        list_words = self.inc_keywords + self.exc_keywords
+        return self._build_wordsbank(list_words)
 
-    def _build_wordsbank(self, wordsbank):
-        #order by number of single words
-        dict = {}
-        for phrase in wordsbank:
-            splited_words = phrase.split(" ") #spliting using space
-            words_count = len(splited_words)
-
-            #replacing space by hyphen then lowercase
-            hyphen_phrase = phrase.replace(" ", "-").lower()
-            dict.update({hyphen_phrase: words_count})
-
-        sorted_dictionary = sorted(dict, key=lambda k:dict[k],reverse=True)
-
-        return sorted_dictionary
-
+    def _build_wordsbank(self, list_words):
+        return SentifiWordsBank().build_sorted_dictionary()
 
     def display(self):
         print "Inclusion:"
@@ -41,11 +31,6 @@ class Rule(object):
         for kw in self.exc_keywords:
             print kw
         print '-----------------'
-
-
-
-
-
 
 """For testing only"""
 #rule = Rule(['financial', 'analyst'], ['trader'])
