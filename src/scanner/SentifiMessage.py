@@ -2,10 +2,11 @@ from Rule import Rule
 import json
 
 class SentifiMessage(object):
-    def __init__(self, text, channel, publisher):
-        self.text = text
-        self.channel = channel
-        self.publisher = publisher
+    def __init__(self, json_data):
+        self.soid = json_data['soid']
+        self.text = json_data['text']
+        self.channel = json_data['channel']
+        self.publisher = json_data['publisher']
         self.status = False
 
     def display(self):
@@ -14,33 +15,40 @@ class SentifiMessage(object):
 #################################################################################################333
 class SentifiSearchItem(object):
     def __init__(self, json_data):
-        s_based_words = json_data['keywords']['tags_s']['w'].split(",")
-        s_inclusion = json_data['keywords']['tags_s']['i'].split(",")
-        s_exclusion = json_data['keywords']['tags_s']['e'].split(",")
-        self.cash_tag = SentifiSearchItemTagElement('$',s_based_words, s_inclusion, s_exclusion)
+        self.soid = json_data['soid']
 
-        h_based_words = json_data['keywords']['tags_h']['w'].split(",")
-        h_inclusion = json_data['keywords']['tags_h']['i'].split(",")
-        h_exclusion = json_data['keywords']['tags_h']['e'].split(",")
-        self.hash_tag = SentifiSearchItemTagElement('#',h_based_words, h_inclusion, h_exclusion)
+        s_based_words = json_data['keywords'][0]['word'].split(",")
+        s_inclusion = json_data['keywords'][0]['include'].split(",")
+        s_exclusion = json_data['keywords'][0]['exclude'].split(",")
+        s_channel = json_data['keywords'][0]['channel'].split(",")
+        self.cash_tag = SentifiSearchItemTagElement('$tag',s_based_words, s_inclusion, s_exclusion, s_channel)
 
-        a_based_words = json_data['keywords']['tags_a']['w'].split(",")
-        a_inclusion = json_data['keywords']['tags_a']['i'].split(",")
-        a_exclusion = json_data['keywords']['tags_a']['e'].split(",")
-        self.mention_tag = SentifiSearchItemTagElement('@',a_based_words, a_inclusion, a_exclusion)
+        h_based_words = json_data['keywords'][1]['word'].split(",")
+        h_inclusion = json_data['keywords'][1]['include'].split(",")
+        h_exclusion = json_data['keywords'][1]['exclude'].split(",")
+        h_channel = json_data['keywords'][1]['channel'].split(",")
+        self.hash_tag = SentifiSearchItemTagElement('#tag',h_based_words, h_inclusion, h_exclusion, h_channel)
 
-        en_based_words = json_data['keywords']['keywords_en']['w'].split(",")
-        en_inclusion = json_data['keywords']['keywords_en']['i'].split(",")
-        en_exclusion = json_data['keywords']['keywords_en']['e'].split(",")
-        self.en_tag = SentifiSearchItemTagElement('en',en_based_words, en_inclusion, en_exclusion)
+        a_based_words = json_data['keywords'][2]['word'].split(",")
+        a_inclusion = json_data['keywords'][2]['include'].split(",")
+        a_exclusion = json_data['keywords'][2]['exclude'].split(",")
+        a_channel = json_data['keywords'][2]['channel'].split(",")
+        self.mention_tag = SentifiSearchItemTagElement('@tag',a_based_words, a_inclusion, a_exclusion, a_channel)
 
-        de_based_words = json_data['keywords']['keywords_de']['w'].split(",")
-        de_inclusion = json_data['keywords']['keywords_de']['i'].split(",")
-        de_exclusion = json_data['keywords']['keywords_de']['e'].split(",")
-        self.de_tag = SentifiSearchItemTagElement('de',de_based_words, de_inclusion, de_exclusion)
+        en_based_words = json_data['keywords'][3]['word'].split(",")
+        en_inclusion = json_data['keywords'][3]['include'].split(",")
+        en_exclusion = json_data['keywords'][3]['exclude'].split(",")
+        en_channel = json_data['keywords'][3]['channel'].split(",")
+        self.en_tag = SentifiSearchItemTagElement('en',en_based_words, en_inclusion, en_exclusion, en_channel)
 
-        #self.blacklist = json_data['blacklist'].split(",")
-        #self.blacklist_status = json_data['blacklist'].split(",")
+        de_based_words = json_data['keywords'][4]['word'].split(",")
+        de_inclusion = json_data['keywords'][4]['include'].split(",")
+        de_exclusion = json_data['keywords'][4]['exclude'].split(",")
+        de_channel = json_data['keywords'][4]['channel'].split(",")
+        self.de_tag = SentifiSearchItemTagElement('de',de_based_words, de_inclusion, de_exclusion, de_channel)
+
+        #Blacklists
+        self.blacklist = json_data['blacklists']
 
     def display(self):
         print self.cash_tag
@@ -49,11 +57,12 @@ class SentifiSearchItem(object):
 
 ####################################################################################################3
 class SentifiSearchItemTagElement(object):
-    def __init__(self, name, based_words, inclusion, exclusion):
+    def __init__(self, name, based_words, inclusion, exclusion, channel):
         self.name = name
         self.based_words = based_words
         self.inclusion = inclusion
         self.exclusion = exclusion
+        self.channel = channel
         self.wordsbank = list(set(based_words) | set(inclusion) | set(exclusion))
 
     def get_ruleset(self):

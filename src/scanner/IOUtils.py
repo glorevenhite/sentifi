@@ -69,6 +69,16 @@ class IOUtils(object):
 
         file.close()
 
+    def read_json_data_from_file(self, file_path):
+        file = open(file_path, 'rb')
+
+        json_raw_data = file.read()
+
+        return json.loads(json_raw_data)
+
+
+
+
     def save_objects_to_csv(self, objects, file_path):
         pass
 

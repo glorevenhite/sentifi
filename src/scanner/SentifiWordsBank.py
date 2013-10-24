@@ -3,13 +3,7 @@ import pprint
 from Rule import Rule
 class SentifiWordsBank(object):
     def __init__(self):
-        db = MySQLdb.connect(host='127.0.0.1', port=3306, user='root', passwd='',db='sentifi_category')
-        self._cursor = db.cursor()
-        self._wordsbank = []
-
-        self._cursor.execute('SELECT keyword, word_count FROM keywords ORDER BY word_count DESC')
-        self._wordsbank = self._cursor.fetchall()
-
+        pass
     @property
     def wordsbank(self):
         return self._wordsbank

@@ -14,19 +14,28 @@ class Filter(object):
         self.item = sentifi_search_item
 
     def apply(self):
-        #making element
-        cash_tag = item.cash_tag
-        hash_tag = item.hash_tag
-        mention_tag = item.mention_tag
-        en_tag = item.en_tag
-        de_tag = item.de_tag
+        #get channel of message
+        message_channel = self.message.channel
 
-        #Get rule set
-        ruleset = cash_tag.get_ruleset()
-        ruleset += hash_tag.get_ruleset()
-        ruleset += mention_tag.get_ruleset()
-        ruleset += en_tag.get_ruleset()
-        ruleset += de_tag.get_ruleset()
+        #Get rule set from item which has channel is true
+        ruleset = []
+        if message_channel in self.item.cash_tag.channel:
+            ruleset = self.item.cash_tag.get_ruleset()
+        if message_channel in self.item.hash_tag.channel:
+            ruleset += self.item.hash_tag.get_ruleset()
+        if message_channel in self.item.mention_tag.channel:
+            ruleset += self.item.mention_tag.get_ruleset()
+        if message_channel in self.item.en_tag.channel:
+            ruleset += self.item.en_tag.get_ruleset()
+        if message_channel in self.item.de_tag.channel:
+            ruleset += self.item.de_tag.get_ruleset()
+
+        #taking list of blocked keywords. Only word with status of ON
+        blacklist = []
+        for word in self.item.blacklist:
+            if word['status'] == 1:
+                blacklist.append(word['word'])
+
 
         #for each rule in ruleset, check whether message is complied to the rule
         for rule in ruleset:
@@ -34,14 +43,16 @@ class Filter(object):
             tokenized_content = self._hash_content_using_wordsbank(self.message.text, processed_wordsbank)
 
             inclusion = rule.get_inclusion()
-            exclusion= rule.exc_keywords
+            exclusion= rule.exc_keywords + blacklist
+
             self.message.status = self._apply_filter(tokenized_content, inclusion, exclusion)
             if self.message.status == True:
                 return self.message
 
 
     def _apply_filter(self, tokenized_content, inclusion, exclusion):
-        #print tokenized_content
+
+        #If the words
         exc =  set(tokenized_content.split(" ")) & set(exclusion)
         if len(exc) > 0:
             return False
@@ -74,22 +85,24 @@ class Filter(object):
 
     ############################################################################
 
-text = "$EDEN CEO @B have just release year earnings blah blah a b"
-channel = "twitter"
-publisher = "WJS"
-message = SentifiMessage(text, channel, publisher)
+#===============================================================================
+# text = "$EDEN CEO @B have just release year earnings blah blah a b"
+# channel = "twitter"
+# publisher = "WJS"
+# message = SentifiMessage(text, channel, publisher)
+#===============================================================================
 
 #json data
-str_json_data = '{"id":"3","soid":"2","siid":"1","nb_soid":"3366","nb_siid":"2410","blacklist":[{"w":"black","status":0}],"keywords":{"tags_s":{"w":"$EDEN,$EDENN","i":"CEO, Year Earnings","e":"City","c":"Twitter"},"tags_h":{"w":"#EDEN, #EDENN","i":"CEO, Year Earnings","e":"City, Gulf","c":"Twitter"},"tags_a":{"w":"@EDEN, @EDENN","i":"ceo, year earnings","e":"city, gulf","c":"Twitter"},"keywords_en":{"w":"EDEN","i":"company","e":"gulf","c":"Twitter"},"keywords_de":{"w":"string","i":"string","e":"string","c":"string"}}}'
-json_data = json.loads(str_json_data)
+#str_json_data = '{"id":"3","soid":"2","siid":"1","nb_soid":"3366","nb_siid":"2410","blacklist":[{"w":"black","status":0}],"keywords":{"tags_s":{"w":"$EDEN,$EDENN","i":"CEO, Year Earnings","e":"City","c":"Twitter"},"tags_h":{"w":"#EDEN, #EDENN","i":"CEO, Year Earnings","e":"City, Gulf","c":"Twitter"},"tags_a":{"w":"@EDEN, @EDENN","i":"ceo, year earnings","e":"city, gulf","c":"Twitter"},"keywords_en":{"w":"EDEN","i":"company","e":"gulf","c":"Twitter"},"keywords_de":{"w":"string","i":"string","e":"string","c":"string"}}}'
+#json_data = json.loads(str_json_data)
 
 #initialize
-item = SentifiSearchItem(json_data)
+#item = SentifiSearchItem(json_data)
 
-filter = Filter(message, item)
-print "Before:"
-message.display()
-filter.apply()
+#filter = Filter(message, item)
+#print "Before:"
+#message.display()
+#filter.apply()
 
-print "After:"
-message.display()
+#print "After:"
+#message.display()

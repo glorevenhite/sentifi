@@ -13,10 +13,10 @@ class Rule(object):
 #        self.exc_keywords = set(exclusion_list)
 #===============================================================================
     def get_inclusion(self):
-        return [word.lower() for word in self.inc_keywords]
+        return [word.lower().strip() for word in self.inc_keywords]
 
     def get_exclusion(self):
-        return [word.lower() for word in self.exc_keywords]
+        return [word.lower().strip() for word in self.exc_keywords]
 
     def get_wordsbank(self):
         wordsbank = self.inc_keywords + self.exc_keywords
