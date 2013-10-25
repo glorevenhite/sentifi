@@ -1,7 +1,6 @@
 from Rule import Rule
 from SentifiWordsBank import SentifiWordsBank
 
-
 class SentifiField(object):
     def __init__(self, content):
         self.content = content
@@ -12,7 +11,7 @@ class SentifiField(object):
         wordsbank = rule.get_wordsbank()
 
         #hyphenize any compound words in content
-        hyphen_content = SentifiWordsBank().hyphenize_compound_words_in(wordsbank)
+        hyphen_content = SentifiWordsBank().hyphenize_compound_words_in(self.content, wordsbank)
 
         #Splitting the hyphen_content using space resulting to a list of words used in content
         tokenized_content = hyphen_content.split(" ")
@@ -32,14 +31,23 @@ class SentifiField(object):
     def _apply_rule(self, tokenized_content, inclusion, exclusion):
 
         #Check whether content contains any word in exclusion set
-        exc = set(tokenized_content.split(" ")) & set(exclusion)
+        exc = set(tokenized_content) & set(exclusion)
         if len(exc) > 0:    # contains word in exclusion set
             return False
 
-        innersection = set(tokenized_content.split(" ")) & set(inclusion)
+        innersection = set(tokenized_content) & set(inclusion)
 
         #Check whether the inclusion set is completely contained in content
         if len(innersection) == len(set(inclusion)):
             return True
         else:
             return False
+
+#
+#content = " I am an financial analyst"
+#rule = Rule()
+#rule.rule_set_name = "financial analyst"
+#rule.inc_keywords = ['financial analyst']
+#field = SentifiField(content)
+#print field.is_complied(rule)
+#

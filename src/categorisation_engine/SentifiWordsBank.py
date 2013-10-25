@@ -34,13 +34,13 @@ class SentifiWordsBank(object):
             hyphen_phrase = phrase.replace(" ", "-").lower()
             dict_word.update({hyphen_phrase: words_count})
 
-        sorted_dictionary = sorted(dict, key=lambda k: dict[k], reverse=True)
+        sorted_dictionary = sorted(dict_word, key=lambda k: dict_word[k], reverse=True)
 
         return sorted_dictionary
 
-    def hyphenize_compound_words_in(self, list_words):
+    def hyphenize_compound_words_in(self, content, list_words):
         #strip space in left and right
-        processing_content = self.content.strip()
+        processing_content = content.strip()
 
         #replace multi-space by sing space
         processing_content = processing_content.replace("  ", " ")
@@ -62,18 +62,3 @@ class SentifiWordsBank(object):
             processing_content = processing_content.replace(tmp, cw)
 
         return processing_content
-
-    def get_compound_word(self):
-        compound_nount = []
-
-        self._cursor.execute("SELECT keyword FROM keywords WHERE word_count > 1 ORDER BY word_count DESC")
-        compound_noun = self._cursor.fetchall()
-
-        return compound_noun
-        pass
-
-#print(SentifiWordsBank().wordsbank)
-#print(SentifiWordsBank().get_compound_word())
-#print len(SentifiWordsBank().wordsbank)
-#content = "name of any listed financial newsprovider firm of consulting trading company financial system analyst forex trader"
-#print SentifiWordsBank().tokenizer(content)

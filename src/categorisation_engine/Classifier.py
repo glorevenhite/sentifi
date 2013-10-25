@@ -1,5 +1,4 @@
 from Constant import *
-from SentifiWordsBank import SentifiWordsBank
 from Rule import ComplexRule
 from SentifiField import SentifiField
 from TwitterProfile import TwitterProfile
@@ -31,10 +30,7 @@ class Classifier(object):
                 message = {'type': 'categories_name', 'phase': phase}
                 client = Client()
                 result = client.send(message)
-
                 categories = simplejson.loads(result)[phase]
-                print len(categories)
-
 
                 #Traverse universe of CATEGORIES
                 for name in categories:
@@ -49,13 +45,11 @@ class Classifier(object):
 
                     dd = dict(rules)
                     if len(rules[cat_id]) > 0:
-
                         #Traverse in university of RULES
                         for rule_id in dd[cat_id]:
 
-                            message = {'type': 'keywords', 'rule_id': rule_id}
                             client = Client()
-                            result = client.send(message)
+                            result = client.send({'type': 'keywords', 'rule_id': rule_id})
 
                             rule_json = simplejson.loads(result)
 
@@ -63,9 +57,11 @@ class Classifier(object):
 
                             for applied_rule in complex_rules:
                                 if description_field.is_complied(applied_rule):
+                                    print result
                                     dict_result.update({name: True})
+
                     else:
-                        print "NONE"
+                        print rules[cat_id]
                 print dict_result
 
         return list_profiles
