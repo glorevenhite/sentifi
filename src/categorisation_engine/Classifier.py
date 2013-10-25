@@ -1,41 +1,75 @@
 from Constant import *
-from TwitterProfile import TwitterProfile
 from SentifiWordsBank import SentifiWordsBank
-from Rule import Rule
 from Ruler import Ruler
+
+from Rule import ComplexRule
 from ClassifierUtils import ClassifierUtils
+from SentifiField import SentifiField
+from TwitterProfile import TwitterProfile
+from Client import Client
+
+import simplejson
+
 
 class Classifier(object):
 
-    """ Here we pass a list of TwitterProfile(fullname, description)"""
+    """ Here we pass a list of TwitterProfile(fullname, description).
+        For each profile we take out all fields need to be examine.
+        For each phase (PT, PG, Cat1, Cat2) we get all class (i.e. category) to which we assign field.
+        Getting all rule in that class then examine whether field satisfies any rule in such rule set.
+        If so, assign respective class to considering profile.
+    """
     def classify_twitter_profile(self, list_profiles):
-        output_profiles = []
-
-        classifies = []
-        dict_phases = Phases.VALUES      #{'PT':'PROFILE TYPE', 'PG':'PROFILE GROUP', 'C1':'CATEGORY 1', 'C2':'CATEGORY2'}
-        dict_fields = Fields.VALUES            #Fullname - Description
 
         #Traverse each profile in set of profiles
         for profile in list_profiles:
-            field_contents = self._get_field_contents(profile)
+            dict_result = {}
 
-            #Identify PROFILE_TYPE
-            #pairs = self._build_list_rulesets_per_field(field_contents, 'PT')    #Load rulesets
+            description_field = SentifiField(profile.description)
 
-            #classifies.append(self.classify_profile_type(pairs, 'PT'))
-            #profile.profile_type = self.classify_profile_type(pairs)
+            #for each phase,
+            for phase in PHASE_VALUES:
 
-            #Identify CATEGORY_2
-            #pairs = self._build_list_rulesets_per_field(FIELDS, 'C2')
-            #profile.category2 = self.classify_profile_type(pairs, category)
+                #build message to send server to get CATEGORIES in this phase
+                message = {'type': 'categories_name', 'phase': phase}
+                client = Client()
+                result = client.send(message)
 
-            #Identify CATEGORY_1
-            pairs = self._build_list_rulesets_per_field(FIELDS, 'C1')
-            profile.category1 = self.classify_profile_type(pairs)
+                categories = simplejson.loads(result)[phase]
+                print len(categories)
 
-            #Identify GROUP_PUBLISHER
-            #pairs = self._build_list_rulesets_per_field(FIELDS, 'PG')
-            #profile.profile = self.classify_profile_type(pairs)
+
+                #Traverse universe of CATEGORIES
+                for name in categories:
+                    d = dict(name)
+                    cat_id = d.keys()[0]
+
+                    #Message to get RULES
+                    message = {'type': 'rules', 'category_id': cat_id, 'field_id': FIELD_TWITTER_DESCRIPTION}
+                    client = Client()
+                    result = client.send(message)
+                    rules = simplejson.loads(result)
+
+                    dd = dict(rules)
+                    if len(rules[cat_id]) > 0:
+
+                        #Traverse in university of RULES
+                        for rule_id in dd[cat_id]:
+
+                            message = {'type': 'keywords', 'rule_id': rule_id}
+                            client = Client()
+                            result = client.send(message)
+
+                            rule_json = simplejson.loads(result)
+
+                            complex_rules = ComplexRule(cat_id, rule_json[str(rule_id)]).rules
+
+                            for applied_rule in complex_rules:
+                                if description_field.is_complied(applied_rule):
+                                    dict_result.update({name: True})
+                    else:
+                        print "NONE"
+                print dict_result
 
         return list_profiles
 
@@ -137,4 +171,18 @@ class Classifier(object):
 
 #
 #Classifier().classify_profile(None, None)
-print Classifier()._build_wordsbank_from_rule_id(119)
+#print Classifier()._build_wordsbank_from_rule_id(119)
+
+json = {'screen_name': 'glorevenhite', 'description': 'I am a financial analyst', 'name': 'Vo Truong Vinh'}
+p1 = TwitterProfile(json)
+p1.description = "I am financial analysis"
+p1.screen_name = "glorevenhite"
+
+
+profiles = [p1]
+Classifier().classify_twitter_profile(profiles)
+
+#Server calling
+
+
+
