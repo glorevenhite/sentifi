@@ -1,5 +1,5 @@
 import SocketServer
-import json
+import simplejson
 
 
 class RuleTCPServer(SocketServer.ThreadingTCPServer):
@@ -9,11 +9,11 @@ class RuleTCPServer(SocketServer.ThreadingTCPServer):
 class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         try:
-            data = json.loads(self.request.recv(1024).strip())
+            data = simplejson.loads(self.request.recv(1024).strip())
 
             print data
 
-            self.request.sendall(json.dumps({'return':'ok'}))
+            self.request.sendall(simplejson.dumps({'return':'ok'}))
         except Exception, e:
             print "Exception while receiving messsage:", e
 
