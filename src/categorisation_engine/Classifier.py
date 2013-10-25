@@ -1,9 +1,6 @@
 from Constant import *
 from SentifiWordsBank import SentifiWordsBank
-from Ruler import Ruler
-
 from Rule import ComplexRule
-from ClassifierUtils import ClassifierUtils
 from SentifiField import SentifiField
 from TwitterProfile import TwitterProfile
 from Client import Client
@@ -72,101 +69,6 @@ class Classifier(object):
                 print dict_result
 
         return list_profiles
-
-    def classify_profile(self, str_field_content, dict_ruleset):
-        dict_ruleset = ClassifierUtils().get_list_ruleset_given_phase("'Category 1'")
-        str_field_content = "I am financial analyst"
-        print dict_ruleset
-
-        list_rules = dict_ruleset['Category 1']
-        print list_rules
-
-        print "There are %s rules in total"  %len(list_rules)
-
-        for rule_item in list_rules.items():
-            topic = rule_item[0]
-            keywords = rule_item[1]
-
-            #Building set of keywords from vocabulary in respective rule
-
-
-        #print dict_ruleset
-
-
-            for ruleset in list_rulesets:
-                kws = SentifiWordsBank().build_keywords(ruleset)
-                keywords.append(kws)
-
-
-            tokenized_content = []
-            for kw in keywords:
-                tokenized_content.append(SentifiWordsBank().tokenizer(raw_field_content, kw))
-
-            for tc in tokenized_content:
-                #HASHED tokenized_content by spliting with space
-                hashed_tokenized_content = tc.split()
-
-            index = 0
-            for kw in keywords:
-                #Check whether CONTENT satisfy ruleset, i.e., containing keywords
-                if (set(hashed_tokenized_content) & set(kw)):
-                    #print set(hashed_tokenized_content) & set(kw)
-
-                    #select appropriate CLASS to classify
-
-                    return PROFILE[index]
-                else:
-                    index += 1
-
-
-    def classify_sub_category(self):
-
-
-        pass
-
-    def is_complied(self, field, list_ruleset):
-        pass
-
-    def _build_list_rulesets_per_field(self, fields, step):
-        pairs = []
-
-        for field in fields:
-            list_rulesets = Ruler().load_list_rulesets(field, step)
-            pair = []
-            pair.append(field)
-            pair.append(list_rulesets)
-            pairs.append(pair)
-
-        return pairs
-
-    def _get_field_contents(self, profile):
-        result = []
-
-        result.append(profile.fullname)
-        result.append(profile.description)
-
-        return result
-
-    def _get_inclusion_keywords_given_rule_id(self, rule_id):
-        inclusion = ClassifierUtils()._get_included_keywords_for_given_rule_id(rule_id)
-        return inclusion
-
-    def _get_exclusion_keywords_given_rule_id(self, rule_id):
-        exclusion = ClassifierUtils()._get_excluded_keywords_for_given_rule_id(rule_id)
-        return exclusion
-
-    def _build_wordsbank_from_rule_id(self, rule_id):
-        inclusion = self._get_inclusion_keywords_given_rule_id(rule_id)
-        exclusion = self._get_exclusion_keywords_given_rule_id(rule_id)
-        wordsbank = list (set(inclusion) | set(exclusion))
-        return wordsbank
-
-    def _get_list_rulesets_given_phase(self, phase, field):
-        results = ClassifierUtils().get_list_ruleset_given_phase_and_field(phase, field)
-
-
-
-
 
 
 #
