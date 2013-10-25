@@ -1,5 +1,6 @@
 import SocketServer
 import simplejson
+from Ruler import Ruler
 
 
 class RuleTCPServer(SocketServer.ThreadingTCPServer):
@@ -10,10 +11,27 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         try:
             data = simplejson.loads(self.request.recv(1024).strip())
+            print "DATA RECEIVED:", data
+            type = data['type']
 
-            print data
+            returned_data = ""
+            if type == 'categories_name':
+                phase = data['phase']
+                returned_data = Ruler().get_list_category_ids_by_phase(phase)
+                print "DATA SENT:", returned_data
 
-            self.request.sendall(simplejson.dumps({'return':'ok'}))
+            elif type == 'rules':
+                cat_id = data['category_id']
+
+                field_id = data['field_id']
+
+                returned_data = Ruler().get_list_rules_by_category_id(cat_id, field_id)
+            elif type == 'keywords':
+                rule_id = data['rule_id']
+                returned_data = Ruler().get_rules(rule_id)
+
+            self.request.sendall(simplejson.dumps(returned_data))
+
         except Exception, e:
             print "Exception while receiving messsage:", e
 
