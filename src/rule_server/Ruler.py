@@ -165,11 +165,3 @@ class Ruler(object):
         result = cursor.fetchone()
 
         return result[0]
-
-#Ruler().get_list_rules_for_by_category_name('Financial Analyst', 1)
-#Ruler().get_list_rules_for_by_category_id(45,1)
-#print Ruler().get_list_rules_by_category_id(45,1)
-#print Ruler().get_based_keywords_by_rule_id(15)
-#json_data = simplejson.loads(Ruler().get_rules(15))
-
-#print json_data['15']['based']
