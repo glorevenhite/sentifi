@@ -21,4 +21,4 @@ class TwitterProfile(object):
             self.profile_group = category
 
     def display(self):
-        print self.fullname, ":", self.description, ":", self.profile_type
+        print self.fullname,self.description,self.profile_type,self.profile_group,":", self.category1,self.category2

@@ -50,8 +50,6 @@ class ComplexRule(object):
                         rule.inc_keywords = [item]
                         rule.exc_keywords = []
                         list_rules.append(rule)
-        for rule in list_rules:
-            rule.display()
         return list_rules
 
 #bws = ['a', 'b']

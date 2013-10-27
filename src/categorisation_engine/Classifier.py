@@ -36,15 +36,14 @@ class Classifier(object):
                 except:
                     pass
                 dict_r = dict(ruleset)
-                print len(dict_r)
+
                 for rule in dict_r:
-                    print rule
                     cr = ComplexRule(rule, dict_r.get(rule).keys()[0], dict_r.get(rule))
                     rules = cr.rules
                     for r in rules:
-                        description_field.is_complied(r)
-
-                #print ruletset
+                        if description_field.is_complied(r):
+                            print phase, r.rule_set_name
+                            profile.set_category(phase, r.rule_set_name)
 
         return list_profiles
 
@@ -55,13 +54,14 @@ class Classifier(object):
 
 json = {'screen_name': 'glorevenhite', 'description': 'I am a financial analyst', 'name': 'Vo Truong Vinh'}
 p1 = TwitterProfile(json)
-p1.description = "I am financial analysis"
+p1.description = "I am financial analyst"
 p1.screen_name = "glorevenhite"
 
 
 profiles = [p1]
-Classifier().classify_twitter_profile(profiles)
-
+pf = Classifier().classify_twitter_profile(profiles)
+for p in pf:
+    p.display()
 #Server calling
 
 
