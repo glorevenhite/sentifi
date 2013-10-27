@@ -169,7 +169,7 @@ class Ruler(object):
 
         return result[0]
 
-    def get_ruleset_by_phase(self, phase):
+    def get_ruleset_by_phase(self, phase, field):
         sql = "SELECT DISTINCT c.type, c.name, r.rule_id, rk.keyword_id, k.keyword, field, rk.status "
         sql += "FROM {0} AS c " .format(TABLE_CATEGORIES)
         sql += "JOIN {0} AS r ON r.category_id = c.id " .format(TABLE_RULE_CATEGORY)
@@ -177,7 +177,7 @@ class Ruler(object):
         sql += "JOIN {0} AS f ON rf.field_id = f.id " .format(TABLE_FIELDS)
         sql += "JOIN {0} AS rk ON r.rule_id = rk.rule_id " .format(TABLE_RULE_KEYWORD)
         sql += "JOIN {0} AS k ON rk.keyword_id = k.keyword_id " .format(TABLE_KEYWORDS)
-        sql += "WHERE c.type LIKE '{0}' " .format(phase)
+        sql += "WHERE c.type LIKE '{0}' AND f.id = {1} " .format(phase, field)
         sql += "ORDER BY c.id, r.rule_id "
 
         cursor = self.connection.cursor()
@@ -227,35 +227,34 @@ class Ruler(object):
 
         return result
 
-    def get_ruleset_in_json2(self, phase):
+    def get_ruleset_in_json2(self, phase, field):
         #Get keywords for specific phase: Profile Type, Profile group, category 1, category 2
-        rows = Ruler().get_ruleset_by_phase(phase)
+        rows = Ruler().get_ruleset_by_phase(phase, field)
+        if len(rows) > 0:
 
-        arr = numpy.array(rows)
+            arr = numpy.array(rows)
 
-        #Get list of category name by select only the 2nd-column from array
-        list_category_name = set(arr[:, 1])
+            #Get list of category name by select only the 2nd-column from array
+            list_category_name = set(arr[:, 1])
 
-        list_ruleset = {}
+            list_ruleset = {}
 
-        for cat_name in list_category_name:
-            rs = []
-            subset_rows = arr[arr[:, 1] == str(cat_name)]
-            rs.append(subset_rows)
-            list_rules = self._make_ruleset(subset_rows)
+            for cat_name in list_category_name:
+                rs = []
+                subset_rows = arr[arr[:, 1] == str(cat_name)]
+                rs.append(subset_rows)
+                list_rules = self._make_ruleset(subset_rows)
 
-            #json format
-            ruleset = self._make_json_ruleset(cat_name, list_rules)
-            #list_ruleset.append(ruleset)
+                #json format
+                ruleset = self._make_json_ruleset(cat_name, list_rules)
 
-            key = ruleset.keys()[0]
-            values = ruleset.values()[0]
-            list_ruleset.update({key:values})
-        results = {}
-        results.update({phase: list_ruleset})
+                key = ruleset.keys()[0]
+                values = ruleset.values()[0]
+                list_ruleset.update({key: values})
+            results = {}
+            results.update({phase: list_ruleset})
 
-
-        return simplejson.dumps(results)
+            return simplejson.dumps(results)
 
     def _make_ruleset(self, list_rows):
         category_name = list_rows[0][1]
@@ -290,14 +289,14 @@ class Ruler(object):
                 word = row[4]
                 status = int(row[6])
                 if status == 0:
-                    rule.add_new_based_word(word)
+                    rule.add_new_based_word(unicode(word).encode('utf-8'))
                 elif status == 1:
-                    rule.add_new_and_words(word)
+                    rule.add_new_and_words(unicode(word).encode('utf-8'))
                 elif status == 2:
-                    rule.add_new_not_words(word)
+                    rule.add_new_not_words(unicode(word).encode('utf-8'))
             return rule
 
-#ruleset = Ruler().get_ruleset_in_json2(phase = 'Profile Type')
-#print ruleset
+ruleset = Ruler().get_ruleset_in_json2(phase = 'Publisher Group')
+print ruleset
 
 

@@ -1,3 +1,5 @@
+from Constant import *
+
 class TwitterProfile(object):
     def __init__(self, json_data):
         self.screen_name = json_data['screen_name']
@@ -8,8 +10,15 @@ class TwitterProfile(object):
         self.category1 = None
         self.category2 = None
 
-    def to_json(self):
-        pass
+    def set_category(self, phase, category):
+        if phase == PHASE_VALUES[0]:
+            self.category1 = category
+        elif phase == PHASE_VALUES[1]:
+            self.category2 = category
+        elif phase == PHASE_VALUES[3]:
+            self.profile_type = category
+        else:
+            self.profile_group = category
 
     def display(self):
-        print self._f, ":", self._d, ":", self._pt
+        print self.fullname, ":", self.description, ":", self.profile_type

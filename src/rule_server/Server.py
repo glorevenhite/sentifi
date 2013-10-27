@@ -30,6 +30,11 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
                 rule_id = data['rule_id']
                 returned_data = Ruler().get_rules(rule_id)
 
+            elif type == 'ruleset':
+                phase = data['phase']
+                field_id = data['field_id']
+                returned_data = Ruler().get_ruleset_in_json2(phase, field_id)
+
             self.request.sendall(simplejson.dumps(returned_data))
 
         except Exception, e:

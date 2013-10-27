@@ -1,5 +1,5 @@
 from Constant import *
-from Rule import ComplexRule
+from ComplexRule import ComplexRule
 from SentifiField import SentifiField
 from TwitterProfile import TwitterProfile
 from Client import Client
@@ -22,47 +22,29 @@ class Classifier(object):
             dict_result = {}
 
             description_field = SentifiField(profile.description)
+            field_id = 1
 
             #for each phase,
             for phase in PHASE_VALUES:
 
                 #build message to send server to get CATEGORIES in this phase
-                message = {'type': 'categories_name', 'phase': phase}
+                message = {'type': 'ruleset', 'phase': phase, 'field_id': field_id}
                 client = Client()
                 result = client.send(message)
-                categories = simplejson.loads(result)[phase]
+                try:
+                    ruleset = simplejson.loads(result)[phase]
+                except:
+                    pass
+                dict_r = dict(ruleset)
+                print len(dict_r)
+                for rule in dict_r:
+                    print rule
+                    cr = ComplexRule(rule, dict_r.get(rule).keys()[0], dict_r.get(rule))
+                    rules = cr.rules
+                    for r in rules:
+                        description_field.is_complied(r)
 
-                #Traverse universe of CATEGORIES
-                for name in categories:
-                    d = dict(name)
-                    cat_id = d.keys()[0]
-
-                    #Message to get RULES
-                    message = {'type': 'rules', 'category_id': cat_id, 'field_id': FIELD_TWITTER_DESCRIPTION}
-                    client = Client()
-                    result = client.send(message)
-                    rules = simplejson.loads(result)
-
-                    dd = dict(rules)
-                    if len(rules[cat_id]) > 0:
-                        #Traverse in university of RULES
-                        for rule_id in dd[cat_id]:
-
-                            client = Client()
-                            result = client.send({'type': 'keywords', 'rule_id': rule_id})
-
-                            rule_json = simplejson.loads(result)
-
-                            complex_rules = ComplexRule(cat_id, rule_json[str(rule_id)]).rules
-
-                            for applied_rule in complex_rules:
-                                if description_field.is_complied(applied_rule):
-                                    print result
-                                    dict_result.update({name: True})
-
-                    else:
-                        print rules[cat_id]
-                print dict_result
+                #print ruletset
 
         return list_profiles
 
