@@ -1,6 +1,9 @@
 from MySQLUtils import MySQLUtils
 from Constant import *
+from Rule import Rule
+
 import simplejson
+import numpy
 from StringIO import StringIO
 
 #All function return in json format
@@ -67,7 +70,7 @@ class Ruler(object):
             dict_values.update({row[0]: row[1]})
 
         #using category name as key
-        dict_key = cat_name.encode('utf-8')
+        dict_key = cat_name
 
         dict_results = {dict_key: dict_values}
 
@@ -165,3 +168,126 @@ class Ruler(object):
         result = cursor.fetchone()
 
         return result[0]
+
+    def get_ruleset_by_phase(self, phase):
+        sql = "SELECT DISTINCT c.type, c.name, r.rule_id, rk.keyword_id, k.keyword, field, rk.status "
+        sql += "FROM {0} AS c " .format(TABLE_CATEGORIES)
+        sql += "JOIN {0} AS r ON r.category_id = c.id " .format(TABLE_RULE_CATEGORY)
+        sql += "JOIN {0} AS rf ON rf.rule_id = r.rule_id " .format(TABLE_RULE_FIELD)
+        sql += "JOIN {0} AS f ON rf.field_id = f.id " .format(TABLE_FIELDS)
+        sql += "JOIN {0} AS rk ON r.rule_id = rk.rule_id " .format(TABLE_RULE_KEYWORD)
+        sql += "JOIN {0} AS k ON rk.keyword_id = k.keyword_id " .format(TABLE_KEYWORDS)
+        sql += "WHERE c.type LIKE '{0}' " .format(phase)
+        sql += "ORDER BY c.id, r.rule_id "
+
+        cursor = self.connection.cursor()
+        cursor.execute(sql)
+        results = cursor.fetchall()
+
+        return results
+
+    def get_ruleset_in_json(self):
+        #Get keywords for specific phase: Profile Type, Profile group, category 1, category 2
+        rows = Ruler().get_ruleset_by_phase('Category 1')
+
+        result = {}
+        for row in rows:
+            print row
+            super_key = row[0]  # Type, i.e, Profile Type, Profile Group, Category 1, Category 2
+            if result == {}:
+                result.update({super_key: {}})
+
+            main_key = row[1]   # i.e., financial analyst, portfolio manager
+            if main_key not in result[super_key].keys():
+                result.get(super_key).update({main_key: {}})
+
+            sub_key = int(row[2])    #rule id
+            if sub_key not in result[super_key][main_key].keys():
+                keyword = row[4]
+                status = row[6]
+
+                if status == 0:
+                    based_words = {'based': [keyword]}
+                    status = {'status': based_words}
+                    result.get(super_key).get(main_key).update({sub_key: status})
+                    #result.[super_key][main_key].update({sub_key: {'status': [{based_words}]}})
+                elif status == 1:
+                    and_words = {'and': [keyword]}
+                    result[super_key][main_key].update({sub_key: {'status': {[based_words,and_words]}}})
+                elif status == 2:
+                    not_words = {'not': [keyword]}
+                    result[super_key][main_key].update({sub_key: {'status': {[based_words,and_words, not_words]}}})
+            else:
+                value = row[4]
+                status = row[6]
+                if status == 0:
+                    d = result.get(super_key).get(main_key).get(sub_key).get('status').get('based')
+                    d.append(value)
+                    result.get(super_key).get(main_key).get(sub_key).get('status').update({'status': d})
+
+        return result
+
+
+
+    def get_ruleset_in_json2(self):
+        #Get keywords for specific phase: Profile Type, Profile group, category 1, category 2
+        rows = Ruler().get_ruleset_by_phase('Category 1')
+
+        arr = numpy.array(rows)
+        list_category_name = set(arr[:, 1])
+        list_category_name = ['Financial Analyst']
+        for cat_name in list_category_name:
+            rs = []
+            subset_rows = arr[arr[:, 1] == str(cat_name)]
+            rs.append(subset_rows)
+            list_rules = self._make_ruleset(subset_rows)
+
+            #json format
+            print self._make_json_ruleset(cat_name, list_rules)
+
+        return list_rules
+
+    def _make_ruleset(self, list_rows):
+        category_name = list_rows[0][1]
+        list_rule_ids = set(list_rows[:, 2])
+        print list_rule_ids
+        ruleset = []
+        if len(list_rows) > 0:
+            for id in list_rule_ids:
+                subset_rows = list_rows[list_rows[:, 2] == str(id)]
+                rule = self._make_rule(subset_rows)
+                ruleset.append(rule)
+
+        return ruleset
+
+    def _make_json_ruleset(self, cat_name, list_rules):
+        values = {}
+        for rule in list_rules:
+            dct = dict(rule.keywords_json())
+            key = dct.keys()[0]
+            value = dct.values()[0]
+            values.update({key: value})
+
+        json = {'phase': {cat_name: values}}
+        return json
+
+    def _make_rule(self, list_rows):
+        if len(list_rows) > 0:
+
+            rule = Rule(list_rows[0][2])
+            rule.set_category(list_rows[0][1])
+            for row in list_rows:
+                word = row[4]
+                status = int(row[6])
+                if status == 0:
+                    rule.add_new_based_word(word)
+                elif status == 1:
+                    rule.add_new_and_words(word)
+                elif status == 2:
+                    rule.add_new_not_words(word)
+            return rule
+
+ruleset = Ruler().get_ruleset_in_json2()
+
+print len(ruleset)
+
