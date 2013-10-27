@@ -5,6 +5,7 @@ from TwitterProfile import TwitterProfile
 from Client import Client
 
 import simplejson
+import pprint
 
 
 class Classifier(object):
@@ -26,7 +27,7 @@ class Classifier(object):
 
             #for each phase,
             for phase in PHASE_VALUES:
-
+                print phase
                 #build message to send server to get CATEGORIES in this phase
                 message = {'type': 'ruleset', 'phase': phase, 'field_id': field_id}
                 client = Client()
@@ -38,16 +39,18 @@ class Classifier(object):
                 dict_r = dict(ruleset)
 
                 for rule in dict_r:
+
                     cr = ComplexRule(rule, dict_r.get(rule).keys()[0], dict_r.get(rule))
                     rules = cr.rules
+                    print len(rules)
                     for r in rules:
+                        if phase == "PROFILE TYPE":
+                            r.display()
                         if description_field.is_complied(r):
                             print phase, r.rule_set_name
                             profile.set_category(phase, r.rule_set_name)
 
         return list_profiles
-
-
 #
 #Classifier().classify_profile(None, None)
 #print Classifier()._build_wordsbank_from_rule_id(119)
@@ -59,8 +62,8 @@ p1.screen_name = "glorevenhite"
 
 
 profiles = [p1]
-pf = Classifier().classify_twitter_profile(profiles)
-for p in pf:
+Classifier().classify_twitter_profile(profiles)
+for p in profiles:
     p.display()
 #Server calling
 
