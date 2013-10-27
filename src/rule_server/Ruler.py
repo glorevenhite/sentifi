@@ -297,7 +297,7 @@ class Ruler(object):
                     rule.add_new_not_words(word)
             return rule
 
-ruleset = Ruler().get_ruleset_in_json2(phase = 'Profile Type')
-print ruleset
+#ruleset = Ruler().get_ruleset_in_json2(phase = 'Profile Type')
+#print ruleset
 
 
