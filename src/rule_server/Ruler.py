@@ -192,7 +192,7 @@ class Ruler(object):
 
         result = {}
         for row in rows:
-            print row
+
             super_key = row[0]  # Type, i.e, Profile Type, Profile Group, Category 1, Category 2
             if result == {}:
                 result.update({super_key: {}})
@@ -227,15 +227,17 @@ class Ruler(object):
 
         return result
 
-
-
-    def get_ruleset_in_json2(self):
+    def get_ruleset_in_json2(self, phase):
         #Get keywords for specific phase: Profile Type, Profile group, category 1, category 2
-        rows = Ruler().get_ruleset_by_phase('Category 1')
+        rows = Ruler().get_ruleset_by_phase(phase)
 
         arr = numpy.array(rows)
+
+        #Get list of category name by select only the 2nd-column from array
         list_category_name = set(arr[:, 1])
-        list_category_name = ['Financial Analyst']
+
+        list_ruleset = {}
+
         for cat_name in list_category_name:
             rs = []
             subset_rows = arr[arr[:, 1] == str(cat_name)]
@@ -243,14 +245,21 @@ class Ruler(object):
             list_rules = self._make_ruleset(subset_rows)
 
             #json format
-            print self._make_json_ruleset(cat_name, list_rules)
+            ruleset = self._make_json_ruleset(cat_name, list_rules)
+            #list_ruleset.append(ruleset)
 
-        return list_rules
+            key = ruleset.keys()[0]
+            values = ruleset.values()[0]
+            list_ruleset.update({key:values})
+        results = {}
+        results.update({phase: list_ruleset})
+
+
+        return simplejson.dumps(results)
 
     def _make_ruleset(self, list_rows):
         category_name = list_rows[0][1]
         list_rule_ids = set(list_rows[:, 2])
-        print list_rule_ids
         ruleset = []
         if len(list_rows) > 0:
             for id in list_rule_ids:
@@ -268,12 +277,13 @@ class Ruler(object):
             value = dct.values()[0]
             values.update({key: value})
 
-        json = {'phase': {cat_name: values}}
+        json = {cat_name: values}
         return json
 
+    # Making rule from subset of rows those having same RULE_ID.
+    # We basically add up keywords to the based_word, and_words, not_words of rule depend on the status
     def _make_rule(self, list_rows):
         if len(list_rows) > 0:
-
             rule = Rule(list_rows[0][2])
             rule.set_category(list_rows[0][1])
             for row in list_rows:
@@ -287,7 +297,7 @@ class Ruler(object):
                     rule.add_new_not_words(word)
             return rule
 
-ruleset = Ruler().get_ruleset_in_json2()
+ruleset = Ruler().get_ruleset_in_json2(phase = 'Profile Type')
+print ruleset
 
-print len(ruleset)
 
