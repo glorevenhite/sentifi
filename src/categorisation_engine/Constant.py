@@ -11,11 +11,9 @@ FIELD_TWITTER_SCREEN_NAME = '2'
 FIELD_TWITTER_FULL_NAME = '3'
 
 PHASE_VALUES = ['CATEGORY 1', 'CATEGORY 2', 'PROFILE TYPE', 'PUBLISHER GROUP']
+#PHASE_VALUES = ['PROFILE TYPE']
 
 """ Define CONSTANTs for conveniently access """
-class Phases(object):
-    def __init__(self):
-        self.VALUES = {'PT':'PROFILE TYPE', 'PG':'PROFILE GROUP', 'C1':'CATEGORY 1', 'C2':'CATEGORY2'}
 
 class Fields(object):
     def __init__(self):

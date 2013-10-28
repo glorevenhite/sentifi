@@ -1,6 +1,7 @@
 from SentifiWordsBank import  SentifiWordsBank
 import simplejson
 
+
 class Rule(object):
     def __init__(self):
         self.rule_set_name = ""
