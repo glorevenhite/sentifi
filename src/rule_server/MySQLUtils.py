@@ -1,13 +1,13 @@
 import MySQLdb as mdb
 from IOUtils import IOUtils
-from Constant import SQLTableName
+from Constant import *
 
 class MySQLUtils(object):
     def __init__(self):
         SERVER = '127.0.0.1'
         USERNAME = 'root'
         PASSWORD = ""
-        DBNAME = "autocategory_db"
+        DBNAME = DATABASE_NAME
         self.connection = None
         self.cursor = None
 
