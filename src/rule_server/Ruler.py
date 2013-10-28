@@ -64,7 +64,7 @@ class Ruler(object):
         if len(list_rows) > 0:
             for id in list_rule_ids:
                 subset_rows = list_rows[list_rows[:, 2] == str(id)]
-                rule = self._make_rule(subset_rows)
+                rule = self._make_rule_2(subset_rows)
                 ruleset.append(rule)
 
         return ruleset
@@ -72,7 +72,7 @@ class Ruler(object):
     def _make_json_ruleset(self, cat_name, list_rules):
         values = {}
         for rule in list_rules:
-            dct = dict(rule.keywords_json())
+            dct = dict(rule.keywords_json_2())
             key = dct.keys()[0]
             value = dct.values()[0]
             values.update({key: value})
@@ -95,6 +95,20 @@ class Ruler(object):
                     rule.add_new_and_words(unicode(word).encode('utf-8'))
                 elif status == 2:
                     rule.add_new_not_words(unicode(word).encode('utf-8'))
+            return rule
+
+    #We only care about inclusion and exclusion. Do not care about the based, and and not keywords anymore
+    def _make_rule_2(self, list_rows):
+        if len(list_rows) > 0:
+            rule = Rule(list_rows[0][2])
+            rule.set_category(list_rows[0][1])
+            for row in list_rows:
+                word = row[4]
+                status = int(row[6])
+                if status == 0:
+                    rule.add_new_and_words(word)
+                else:
+                    rule.add_new_not_words(word)
             return rule
 
 

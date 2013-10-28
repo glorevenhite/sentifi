@@ -22,3 +22,7 @@ class Rule(object):
     def keywords_json(self):
         str_json = {self.rule_id: {'status': {'based': self.based_words, 'and': self.and_words, 'not': self.not_words}}}
         return str_json
+
+    def keywords_json_2(self):
+        str_json = {self.rule_id: {'status': {'and': self.and_words, 'not': self.not_words}}}
+        return str_json
