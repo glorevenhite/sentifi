@@ -15,10 +15,10 @@ class TwitterProfile(object):
             self.category1 = category
         elif phase == PHASE_VALUES[1]:
             self.category2 = category
-        elif phase == PHASE_VALUES[3]:
-            self.profile_type = category
-        else:
+        elif phase == 'Profile Group':
             self.profile_group = category
+        else:
+            self.profile_type = category
 
     def display(self):
-        print self.fullname,self.description,self.profile_type,self.profile_group,":", self.category1,self.category2
+        print self.fullname,self.description, "/",self.profile_type,":",self.profile_group,":", self.category1,":",self.category2

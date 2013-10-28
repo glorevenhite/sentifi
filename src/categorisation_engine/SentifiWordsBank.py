@@ -2,25 +2,27 @@
 
 class SentifiWordsBank(object):
 
-    def tokenizer(self, content, keywords):
+    # Breaking down a content into word-phrases depend on a bag of words
+    # 1st step: Hyphening phrase in bag of words.
+    # Replacing
+    def tokenize(self, content, bag_of_words):
+        #rearrange words in bag in the order of number single words.
+        bag_of_words = sorted(bag_of_words, key=lambda k: len(k), reverse=True)
 
-        #strip space in left and right
-        content = content.strip()
+        #Removing duplicated, leading, ending spaces in content
+        procesing_content = " ".join(content.split()).lower()
 
-        #replace multi-space by sing space
-        content = content.replace("  ", " ")
+        #Replace 'compound words' in given content by the one with hyphen, i.e. compound-words
+        for phrase in bag_of_words:
+            #hyphening phrase
+            hyphening_phrase = phrase.replace(" ", "-")
 
-        #replace hyphen in compound-word by space
-        vocabulary = []
-        for v in keywords:
-            vocabulary.append(v.replace('-', ' '))
+            #Replacing processing
+            procesing_content = procesing_content.replace(phrase, hyphening_phrase)
 
-        #Replace 'compound words' in content by the one with hyphen, i.e. compound-words
-        for cw in keywords:
-            #temporaly
-            tmp = cw.replace("-", " ")
-            content = content.replace(tmp, cw)
-        return content
+        tokenized_content = set(procesing_content.split(" "))
+
+        return tokenized_content
 
     def build_sorted_dictionary(self, list_words):
 
@@ -62,3 +64,7 @@ class SentifiWordsBank(object):
             processing_content = processing_content.replace(tmp, cw)
 
         return processing_content
+
+bag_of_words = ['financial analyst', 'financial', 'analyst']
+content = " i am a financial analyst"
+print SentifiWordsBank().tokenize(content, bag_of_words)
