@@ -14,7 +14,7 @@ class Ruler(object):
     def get_ruleset_by_phase(self, phase, field):
         sql = "SELECT DISTINCT c.type, c.name, r.rule_id, rk.keyword_id, k.keyword, field, rk.status "
         sql += "FROM {0} AS c " .format(TABLE_CATEGORIES)
-        sql += "JOIN {0} AS r ON r.category_id = c.id " .format(TABLE_RULE_CATEGORY)
+        sql += "JOIN {0} AS r ON r.category_id = c.id " .format(TABLE_RULES)
         sql += "JOIN {0} AS rf ON rf.rule_id = r.rule_id " .format(TABLE_RULE_FIELD)
         sql += "JOIN {0} AS f ON rf.field_id = f.id " .format(TABLE_FIELDS)
         sql += "JOIN {0} AS rk ON r.rule_id = rk.rule_id " .format(TABLE_RULE_KEYWORD)
@@ -25,8 +25,10 @@ class Ruler(object):
         cursor = self.connection.cursor()
         cursor.execute(sql)
         results = cursor.fetchall()
-
-        return results
+        if len(results):
+            return results
+        else:
+            return "None"
 
     def get_ruleset_in_json2(self, phase, field):
         #Get keywords for specific phase: Profile Type, Profile group, category 1, category 2
@@ -52,6 +54,7 @@ class Ruler(object):
                 key = ruleset.keys()[0]
                 values = ruleset.values()[0]
                 list_ruleset.update({key: values})
+
             results = {}
             results.update({phase: list_ruleset})
 
@@ -111,4 +114,22 @@ class Ruler(object):
                     rule.add_new_not_words(word)
             return rule
 
+    def get_parent_phase(self, category_name):
+        sql = "SELECT c.name FROM Categories AS c WHERE c.id IN (SELECT c.above_node_id "
+        sql += "FROM Categories AS c "
+        sql += "WHERE c.name = '{0}')" .format(category_name)
+
+        print sql
+        cursor = self.connection.cursor()
+        cursor.execute(sql)
+        results = cursor.fetchall()
+
+        for row in results:
+            if row[0] != "Null":
+                json_data = {category_name: row[0]}
+                return simplejson.dumps(json_data)
+
+
+
+#print Ruler().get_parent_phase('Financial Analyst')
 

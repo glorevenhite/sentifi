@@ -1,5 +1,5 @@
 DATABASE_NAME = 'autocategory'
-TABLE_RULE_CATEGORY = 'rules'
+TABLE_RULES = 'rules'
 TABLE_CATEGORIES = 'categories'
 TABLE_FIELDS = 'fields'
 TABLE_RULE_FIELD = 'rule_field_details'

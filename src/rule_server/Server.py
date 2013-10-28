@@ -22,9 +22,7 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
 
             elif type == 'rules':
                 cat_id = data['category_id']
-
                 field_id = data['field_id']
-
                 returned_data = Ruler().get_list_rules_by_category_id(cat_id, field_id)
             elif type == 'keywords':
                 rule_id = data['rule_id']
@@ -34,6 +32,10 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
                 phase = data['phase']
                 field_id = data['field_id']
                 returned_data = Ruler().get_ruleset_in_json2(phase, field_id)
+
+            elif type == 'parent':
+                category_name = data['category_name']
+                returned_data = Ruler().get_parent_phase(category_name)
 
             self.request.sendall(simplejson.dumps(returned_data))
 
