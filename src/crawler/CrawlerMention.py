@@ -1,15 +1,6 @@
-import pprint
-import time
-import datetime as dt
-from datetime import timedelta
-
-from Config import *
-
-import tweepy
-
-from twitter.TwitterUserCrawler import TwitterUserCrawler
+import sys
 from twitter.TwitterStatusCrawler import TwitterStatusCrawler
-from utils.CrawlerUtils import *
+
 
 from utils.IOUtils import IOUtils
 from utils.PathUtils import PathUtils
@@ -22,9 +13,12 @@ def main():
 
 #tag given in file
 def _crawl_tweets_by_mentioning_tag():
-    PATH = "D:\\SENTIFI_DATA\\mention_csv\\"
-    input_file_path = PATH + "input\\mention.csv"
+    PATH = "D:\\SENTIFI_DATA\\mention\\"
     output_path = PATH + "output\\processing\\"
+
+    if len(sys.argv) == 2:
+        input_file_path = PATH + "input\\" + sys.argv[1]
+
 
     #Building the header for csv file
     header = ['twitter_screen_name_user','tweet_id','tweet_text','tweet_create_time','twitter_id',
@@ -35,7 +29,7 @@ def _crawl_tweets_by_mentioning_tag():
 
     #Loading all filename which we have crawled in the output directory
     list_mentions_tags = IOUtils().read_first_column_in_csv(input_file_path)
-    print "Total mention tags in library:", len(list_mention_tags)
+    print "Total mention tags in library:", len(list_mentions_tags)
 
     #Get list of filename have been crawled
     list_processed_filename = PathUtils().get_list_filename(PATH + "output\\")
@@ -47,8 +41,8 @@ def _crawl_tweets_by_mentioning_tag():
         name = filename.replace(".csv","")
         list_processed_mention.append(name)
 
-    print list_processing_mention
-    list_processing_tags = set(list_mention_tags) - set(list_processed_mention)
+    print list_processed_mention
+    list_processing_tags = set(list_mentions_tags) - set(list_processed_mention)
     print "There have still been", len(list_processing_tags), "mentioning tag need to be crawled"
 
     for tag_mention in list_processing_tags:
@@ -57,12 +51,9 @@ def _crawl_tweets_by_mentioning_tag():
         IOUtils().save_list_to_csv(header, list_contents, output_path + tag_mention + ".csv")
 
 def combine_mention():
+    pass
 
 
-
-def _crawl_tweets_mention_text_from_file(file_path):
-    FILE_PATH = Co
-    list_mention_text = "adf"
 
 def count_mention_per_tag(mention_text):
     PATH = "D:\\SENTIFI_DATA\\mention_csv\\"
