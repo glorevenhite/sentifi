@@ -1,11 +1,11 @@
 from Constant import *
-from ComplexRule import ComplexRule
 from Rule import Rule
 from SentifiField import SentifiField
 from TwitterProfile import TwitterProfile
 from Client import Client
 
 import simplejson
+
 
 class Classifier(object):
 

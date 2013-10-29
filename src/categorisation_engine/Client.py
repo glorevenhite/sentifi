@@ -10,10 +10,7 @@ class Client():
     def send(self, json_message):
         self.s.send(simplejson.dumps(json_message))
 
-        try:
-            result = simplejson.loads(self.s.recv(500000), encoding="utf-8")
-        except Exception, e:
-            result = simplejson.loads({'error':'No ruleset found'})
+        result = simplejson.loads(self.s.recv(500000))
 
         self.s.close()
 

@@ -65,6 +65,6 @@ class SentifiWordsBank(object):
 
         return processing_content
 
-bag_of_words = ['financial analyst', 'financial', 'analyst']
-content = " i am a financial analyst"
-print SentifiWordsBank().tokenize(content, bag_of_words)
+#bag_of_words = ['financial analyst', 'financial', 'analyst']
+#content = " i am a financial analyst"
+#print SentifiWordsBank().tokenize(content, bag_of_words)

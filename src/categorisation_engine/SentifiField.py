@@ -2,7 +2,8 @@ from Rule import Rule
 from SentifiWordsBank import SentifiWordsBank
 
 class SentifiField(object):
-    def __init__(self, content):
+    def __init__(self, name, content):
+        self.name = name
         self.content = content
         self.category = ""
 
