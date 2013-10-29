@@ -1,5 +1,4 @@
 import MySQLdb as mdb
-from IOUtils import IOUtils
 from Constant import *
 
 class MySQLUtils(object):
@@ -71,7 +70,7 @@ class MySQLUtils(object):
         #multi columns in each row, only taking the FIRST one.
         results = []
         for row in rows:
-            results.append(row[0]) #taking the first one
+            results.append(row[0]) # taking the first one
 
         return results
 
@@ -79,3 +78,27 @@ class MySQLUtils(object):
     def select_query(self, str_query):
         self.cursor.execute(str_query)
         return self.cursor.fetchall()
+
+    def _get_rule_subset_by_phase_and_field(self, stage, field_id):
+        sql = "SELECT DISTINCT c.name, rs.rule_set_id, r.rule_id,k.keyword, r.type_not "
+        sql += "FROM {0} AS c " .format(TABLE_CATEGORIES)
+        sql += "JOIN {0} AS rs ON c.category_id = rs.category_id " .format(TABLE_RULESETS)
+        sql += "JOIN {0} AS rsd ON rsd.rule_set_id = rs.rule_set_id " .format(TABLE_RULESET_DETAILS)
+        sql += "JOIN {0} AS r ON r.rule_id = rsd.rule_id " .format(TABLE_RULES)
+        sql += "JOIN {0} AS rk ON rk.rule_id = r.rule_id " .format(TABLE_RULE_KEYWORD)
+        sql += "JOIN {0} AS k ON k.keyword_id = rk.keyword_id " .format(TABLE_KEYWORDS)
+        sql += "JOIN {0} AS rf ON rf.rule_id = r.rule_id " .format(TABLE_RULE_FIELD)
+        sql += "WHERE c.type LIKE '{0}' AND rf.field_id = {1} " .format(stage, field_id)
+
+        self.cursor.execute(sql)
+
+        rows = self.cursor.fetchall()
+
+        results = []
+        for row in rows:    # OPTIMIZE HERE, return directly in tuple format instead of a list
+            print row
+            results.append(row)
+
+        return results
+#MySQLUtils()._get_rule_subset_by_phase_and_field('Category 1', 1)
+#MySQLUtils()._get_rule_subset_by_phase_and_field('Profile Type', 1)

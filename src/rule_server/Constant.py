@@ -1,6 +1,8 @@
 DATABASE_NAME = 'primitive_category_db'
 TABLE_RULES = 'tbl_rule'
 TABLE_CATEGORIES = 'tbl_category'
+TABLE_RULESETS = 'tbl_rule_set'
+TABLE_RULESET_DETAILS = 'tbl_rule_set_detail'
 TABLE_FIELDS = 'tbl_field'
 TABLE_RULE_FIELD = 'tbl_rule_field'
 TABLE_RULE_KEYWORD = 'tbl_rule_keyword'

@@ -5,11 +5,76 @@ from Rule import Rule
 import simplejson
 import numpy
 
+import pprint
+
+
 
 #All function return in json format
 class Ruler(object):
     def __init__(self):
         self.connection = MySQLUtils().connection
+
+    def _get_rule_subset_by_phase_and_field(self, stage, field_id):
+        list_rule_subset = MySQLUtils()._get_rule_subset_by_phase_and_field(stage,field_id)
+
+        # Building json
+        # FORMAT:
+        # {cat_name1:
+        #   {subset_id:{'exclusion':[n1,n2,n3], 'rules':{rid:[a1,b1],rid:[a2,b1]}},
+        #    subset_id:{'exclusion':[m1,m2,m3], 'rules':{rid:[x1,y1], rid:[x1,y2}},
+        #  cat_name2:
+        #   {subset_id:{'exclusion':[n1,n2,n3], 'rules':{rid:[a1,b1],rid:[a2,b1]}},
+        #    subset_id:{'exclusion':[m1,m2,m3], 'rules':{rid:[x1,y1], rid:[x1,y2}},
+        # }
+        dict_result = {}
+        for item in list_rule_subset:
+
+            class_name = item[0]
+            subset_id = item[1]
+            rule_id = item[2]
+            word = item[3]
+            status = item[4]    # inclusion or exclusion
+            ss1 = {class_name: {}}
+            if class_name not in dict_result.keys():
+                #create new one
+                dict_result.update({class_name: {subset_id: {'exclusion': [], 'rules': {rule_id: []}}}})
+
+                if status == 0:     # Inclusion
+                    dict_result.get(class_name).get(subset_id).get('rules').get(rule_id).append(word)
+                else:
+                    dict_result.get(class_name).get(subset_id).get('exclusion').append(word)
+            else:
+                #update
+                if subset_id not in dict_result.get(class_name).keys():
+                    # new subset_id. We going to add new subset
+                    dict_result.get(class_name).update({subset_id: {'exclusion': [], 'rules': {rule_id: []}}})
+
+                    #since current subset_id is fresh, rule_id absolutely is fresh too.
+                    if status == 0:
+                        dict_result.get(class_name).get(subset_id).get('rules').update({rule_id: [word]})
+                    else:
+                        dict_result.get(class_name).get(subset_id).get('exclusion').append(word)
+                else:
+                    #Update existed subset
+                    # check rule_id
+                    #print dict_result.get(class_name).get(subset_id).get('rules').keys()
+                    if rule_id not in dict_result.get(class_name).get(subset_id).get('rules').keys():
+                        if status == 0:
+                            dict_result.get(class_name).get(subset_id).get('rules').update({rule_id: [word]})
+                        else:
+                            dict_result.get(class_name).get(subset_id).get('exclusion').append(word)
+                    else:
+                        #rule existed already
+
+                        if status == 0:
+                            lst = dict_result.get(class_name).get(subset_id).get('rules').get(rule_id)
+
+                            dict_result.get(class_name).get(subset_id).get('rules').get(rule_id).append(word)
+                        else:
+                            dict_result.get(class_name).get(subset_id).get('exclusion').append(word)
+
+        #pprint.pprint(dict_result)
+        return dict_result
 
     def get_ruleset_by_phase(self, phase, field):
         sql = "SELECT DISTINCT c.type, c.name, r.rule_id, rk.keyword_id, k.keyword, field, rk.status "
@@ -149,3 +214,4 @@ class Ruler(object):
 
 #print Ruler().get_parent_phase('Financial Analyst')
 #print Ruler().get_classes_by_phase_name('Category 1')
+Ruler()._get_rule_subset_by_phase_and_field('Category 1', 1)
