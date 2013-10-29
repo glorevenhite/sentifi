@@ -30,6 +30,22 @@ class Ruler(object):
         else:
             return "None"
 
+    def get_classes_by_phase_name(self, phase):
+        sql = "SELECT c.category_id, c.name "
+        sql += "FROM {0} AS c " .format(TABLE_CATEGORIES)
+        sql += "WHERE LCASE(c.type) LIKE '{0}' " .format(phase.lower())
+
+        cursor = self.connection.cursor()
+        cursor.execute(sql)
+
+        rows = cursor.fetchall()
+
+        values = {}
+        for row in rows:
+            values.update({row[0]: row[1]})
+
+        return {phase: values}
+
     def get_ruleset_in_json2(self, phase, field):
         #Get keywords for specific phase: Profile Type, Profile group, category 1, category 2
         rows = Ruler().get_ruleset_by_phase(phase, field)
@@ -132,4 +148,4 @@ class Ruler(object):
 
 
 #print Ruler().get_parent_phase('Financial Analyst')
-
+#print Ruler().get_classes_by_phase_name('Category 1')

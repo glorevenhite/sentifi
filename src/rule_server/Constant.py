@@ -3,7 +3,7 @@ TABLE_RULES = 'tbl_rule'
 TABLE_CATEGORIES = 'tbl_category'
 TABLE_FIELDS = 'tbl_field'
 TABLE_RULE_FIELD = 'tbl_rule_field'
-TABLE_RULE_KEYWORD = 'tbl_rule_keyword_'
+TABLE_RULE_KEYWORD = 'tbl_rule_keyword'
 TABLE_KEYWORDS = 'tbl_keyword'
 
 FIELD_TWITTER_DESCRIPTION = '1'
@@ -11,6 +11,9 @@ FIELD_TWITTER_SCREEN_NAME = '2'
 FIELD_TWITTER_FULL_NAME = '3'
 
 PHASE_VALUES = ['CATEGORY 1', 'CATEGORY 2', 'PROFILE TYPE', 'PUBLISHER GROUP']
+
+SERVER_STATUS_OK = 'OK'
+SERVER_STATUS_ERROR = "ERROR"
 
 """ Define CONSTANTs for conveniently access """
 class Phases(object):

@@ -1,6 +1,7 @@
 import SocketServer
 import simplejson
 from Ruler import Ruler
+from Constant import *
 
 
 class RuleTCPServer(SocketServer.ThreadingTCPServer):
@@ -18,6 +19,10 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
             if type == 'categories_name':
                 phase = data['phase']
                 returned_data = Ruler().get_list_category_ids_by_phase(phase)
+                print "DATA SENT:", returned_data
+            elif type == 'classes':
+                phase = data['phase']
+                returned_data = Ruler().get_classes_by_phase_name(phase)
                 print "DATA SENT:", returned_data
 
             elif type == 'rules':
@@ -37,10 +42,22 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
                 category_name = data['category_name']
                 returned_data = Ruler().get_parent_phase(category_name)
 
-            self.request.sendall(simplejson.dumps(returned_data))
+            returned_message = {}
+            if returned_data is not {}:
+                returned_message.update({'status': SERVER_STATUS_OK})
+                returned_message.update({'data': returned_data})
+            else:
+                returned_message.update({'status': SERVER_STATUS_ERROR})
+                returned_message.update({'code': '0'})
+
+            self.request.sendall(simplejson.dumps(returned_message))
 
         except Exception, e:
             print "Exception while receiving messsage:", e
+            returned_message = {}
+            returned_message.update({'status': SERVER_STATUS_ERROR})
+            returned_message.update({'code': '0'})
+            self.request.sendall(simplejson.dumps(returned_message))
 
 server = RuleTCPServer(('127.0.0.1', 13373), RuleTCPServerHandler)
 server.serve_forever()
