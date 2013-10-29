@@ -7,6 +7,7 @@ from CategorisationMatrix import CategorisationMatrix
 from RuleSet import RuleSet
 from Rule import Rule
 
+
 class Categorizer(object):
     def categorize_twitter_profile(self, list_profiles):
 
@@ -35,30 +36,38 @@ class Categorizer(object):
                     field_id = field.id
                     list_rule_subset = self._get_rule_subset_by_phase_and_field(stage, field_id)
 
-                    for subset in list_rule_subset:
-                        score = field._apply_rule_subset(subset)
-                        matrix.increase_by(field_id,)
+                    if list_rule_subset is not None:
+                        for subset in list_rule_subset:
+                            score = field._apply_rule_subset(subset)
+                            matrix.increase_by(field_id,)
 
                     print list_rule_subset
     def _get_rule_subset_by_phase_and_field(self, stage_name, field_id):
-        message = {'type': 'rule_subset', 'phase': stage_name, 'field_id': field_id}
+        message = {'type': 'subset', 'phase': stage_name, 'field_id': field_id}
         client = Client()
-
+        print field_id, stage_name
         # format:
         # {cat_name:
         #   {subset_id:{'exclusion':[n1,n2,n3], 'rules':{rid:[a1,b1],rid:[a2,b1]}},
-        #    subset_id:{'exclusion':[m1,m2,m3], 'rules':{rid:[x1,y1], rid:[x1,y2}}}
-        dict_rule_subsets = dict(client.send(message))
-        cat_name = dict_rule_subsets.keys()[0]
+        #    subset_id:{'exclusion':[m1,m2,m3], 'rules':{r
+        # id:[x1,y1], rid:[x1,y2}}}
+        result = dict(client.send(message))
+        print result
+        if result.get('status') == SERVER_STATUS_OK and result.get('data') != {}:
 
-        for subset in dict_rule_subsets.get(cat_name):
-            ss = RuleSet()
-            ss.cat_name = cat_name
-            ss.exclusion = subset.get('inclusion')
-            rules = subset.get('rules')
-            for rule in rules:
-                r = Rule()
-                r.inclusion = rule
+            dict_rule_subsets = result.get('data')
+            print dict_rule_subsets
+            cat_name = dict_rule_subsets.keys()[0]
+            print cat_name
+            for subset in dict_rule_subsets.get(cat_name):
+                ss = RuleSet()
+                ss.cat_name = cat_name
+                ss.exclusion = subset.get('inclusion')
+                rules = subset.get('rules')
+                for rule in rules:
+                    r = Rule()
+                    r.inclusion = rule
+        return None
 
     def _create_categorisation_result_matrix(self, field_names, phase):
         #get all classes to which a profile will be assigned in given phase
@@ -95,4 +104,4 @@ p.fullname = 'Vo Truong Vinh'
 
 list_profile = [p]
 
-Categorizer().categorize_twitter_profile(list_profile)
+print Categorizer().categorize_twitter_profile(list_profile)

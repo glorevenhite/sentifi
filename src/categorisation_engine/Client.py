@@ -10,7 +10,7 @@ class Client():
     def send(self, json_message):
         self.s.send(simplejson.dumps(json_message))
 
-        result = simplejson.loads(self.s.recv(500000))
+        result = simplejson.loads(self.s.recv(5000000),encoding="utf-8")
 
         self.s.close()
 
