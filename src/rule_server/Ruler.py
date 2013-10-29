@@ -14,7 +14,7 @@ class Ruler(object):
     def __init__(self):
         self.connection = MySQLUtils().connection
 
-    def _get_rule_subset_by_phase_and_field(self, stage, field_id):
+    def get_rule_subset_by_phase_and_field(self, stage, field_id):
         list_rule_subset = MySQLUtils()._get_rule_subset_by_phase_and_field(stage,field_id)
 
         # Building json
@@ -32,7 +32,7 @@ class Ruler(object):
             class_name = item[0]
             subset_id = item[1]
             rule_id = item[2]
-            word = item[3]
+            word = item[3].encode('utf-8')
             status = item[4]    # inclusion or exclusion
             ss1 = {class_name: {}}
             if class_name not in dict_result.keys():
@@ -214,4 +214,4 @@ class Ruler(object):
 
 #print Ruler().get_parent_phase('Financial Analyst')
 #print Ruler().get_classes_by_phase_name('Category 1')
-Ruler()._get_rule_subset_by_phase_and_field('Category 1', 1)
+#Ruler().get_rule_subset_by_phase_and_field('Category 1', 1)

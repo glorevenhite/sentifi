@@ -11,7 +11,7 @@ class RuleTCPServer(SocketServer.ThreadingTCPServer):
 class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         try:
-            data = simplejson.loads(self.request.recv(1024).strip())
+            data = simplejson.loads(self.request.recv(1024).strip(),encoding='utf-8')
             print "DATA RECEIVED:", data
             type = data['type']
 
@@ -41,23 +41,28 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
             elif type == 'parent':
                 category_name = data['category_name']
                 returned_data = Ruler().get_parent_phase(category_name)
+            elif type == 'subset':
+                phase = data['phase']
+                field_id = data['field_id']
+                returned_data = Ruler().get_rule_subset_by_phase_and_field(phase, field_id)    # IMPORTANT
 
             returned_message = {}
-            if returned_data is not {}:
+            if returned_data != {}:
                 returned_message.update({'status': SERVER_STATUS_OK})
                 returned_message.update({'data': returned_data})
             else:
                 returned_message.update({'status': SERVER_STATUS_ERROR})
                 returned_message.update({'code': '0'})
 
-            self.request.sendall(simplejson.dumps(returned_message))
+            #print returned_message
+            self.request.sendall(simplejson.dumps(returned_message,encoding='utf-8'))
 
         except Exception, e:
             print "Exception while receiving messsage:", e
             returned_message = {}
             returned_message.update({'status': SERVER_STATUS_ERROR})
             returned_message.update({'code': '0'})
-            self.request.sendall(simplejson.dumps(returned_message))
+            self.request.sendall(simplejson.dumps(returned_message, encoding="utf-8"))
 
 server = RuleTCPServer(('127.0.0.1', 13373), RuleTCPServerHandler)
 server.serve_forever()
