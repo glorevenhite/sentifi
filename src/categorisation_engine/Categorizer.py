@@ -4,6 +4,8 @@ from Constant import *
 from Client import Client
 from TwitterProfile import TwitterProfile
 from CategorisationMatrix import CategorisationMatrix
+from RuleSet import RuleSet
+from Rule import Rule
 
 class Categorizer(object):
     def categorize_twitter_profile(self, list_profiles):
@@ -13,13 +15,13 @@ class Categorizer(object):
             matrix = {}
 
             #taking examining fields
-            field_full_name = SentifiField(FIELD_TWITTER_FULL_NAME, profile.fullname)
-            field_screen_name = SentifiField(FIELD_TWITTER_SCREEN_NAME, profile.screen_name)
-            field_description = SentifiField(FIELD_TWITTER_DESCRIPTION, profile.description)
+            field_full_name = SentifiField(FIELD_TWITTER_FULL_NAME_ID, profile.fullname)
+            field_screen_name = SentifiField(FIELD_TWITTER_SCREEN_NAME_ID, profile.screen_name)
+            field_description = SentifiField(FIELD_TWITTER_DESCRIPTION_ID, profile.description)
 
             # Put above fields into a list
             fields = {TWITTER_FULL_NAME: field_full_name, TWITTER_SCREEN_NAME: field_screen_name, TWITTER_DESCRIPTION: field_description}
-            FIELDS = {3, 2, 1}
+
             # For each phase of categorisation process, i.e. Profile Type, Publisher Group, Category 1, Category 2
             #
             for stage in PHASE_VALUES:
@@ -29,10 +31,34 @@ class Categorizer(object):
                 # For each field, get all applicable rules.
                 # Count how many time a field satisfies its own set of rules
                 # Update values to matrix
-                for field in FIELDS:
-                    rule_set = self._get_rules_by_phase_and_field(stage, field)
+                for field in fields.values():
+                    field_id = field.id
+                    list_rule_subset = self._get_rule_subset_by_phase_and_field(stage, field_id)
 
-                    print rule_set
+                    for subset in list_rule_subset:
+                        score = field._apply_rule_subset(subset)
+                        matrix.increase_by(field_id,)
+
+                    print list_rule_subset
+    def _get_rule_subset_by_phase_and_field(self, stage_name, field_id):
+        message = {'type': 'rule_subset', 'phase': stage_name, 'field_id': field_id}
+        client = Client()
+
+        # format:
+        # {cat_name:
+        #   {subset_id:{'exclusion':[n1,n2,n3], 'rules':{rid:[a1,b1],rid:[a2,b1]}},
+        #    subset_id:{'exclusion':[m1,m2,m3], 'rules':{rid:[x1,y1], rid:[x1,y2}}}
+        dict_rule_subsets = dict(client.send(message))
+        cat_name = dict_rule_subsets.keys()[0]
+
+        for subset in dict_rule_subsets.get(cat_name):
+            ss = RuleSet()
+            ss.cat_name = cat_name
+            ss.exclusion = subset.get('inclusion')
+            rules = subset.get('rules')
+            for rule in rules:
+                r = Rule()
+                r.inclusion = rule
 
     def _create_categorisation_result_matrix(self, field_names, phase):
         #get all classes to which a profile will be assigned in given phase
