@@ -8,4 +8,4 @@ class RuleSet(object):
         self.rules = []
 
     def display(self):
-        print self.cat_name, ":", self.exclusion, ":", self.rules
+        print self.cat_name, ":", self.exclusion, ":", [r for r in self.rules]

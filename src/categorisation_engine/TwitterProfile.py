@@ -1,4 +1,6 @@
 from Constant import *
+from Client import Client
+import simplejson
 
 class TwitterProfile(object):
     def __init__(self, json_data):
@@ -19,6 +21,13 @@ class TwitterProfile(object):
             self.profile_group = category
         else:
             self.profile_type = category
+
+    def _get_previous_stage(self, stage):
+        message = {'type': 'parent', 'category_name': stage}
+        client = Client()
+        result = client.send(message)
+        value = simplejson.loads(result)[stage]
+        self.set_category('Profile Group', value)
 
     def display(self):
         print self.fullname,self.description, "/",self.profile_type,":",self.profile_group,":", self.category1,":",self.category2

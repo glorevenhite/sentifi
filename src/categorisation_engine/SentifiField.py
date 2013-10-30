@@ -51,6 +51,9 @@ class SentifiField(object):
 
         #check with the exclusion
         exclusion = subset.exclusion
+        for keyword in exclusion:
+            if self.content.find(keyword) > 0:
+                return score
         #print exclusion
 
         #check each rule

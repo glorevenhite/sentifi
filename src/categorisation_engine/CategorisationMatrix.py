@@ -19,7 +19,7 @@ class CategorisationMatrix(object):
     def _get_col_pos(self, value):
         return self.cols.index(value)
 
-    def _get_class_name(self):
+    def get_class_name(self):
         arr = numpy.array(self.matrix)
         sum_array = arr.sum(axis=0)
         max_index = sum_array.argmax()
@@ -31,5 +31,5 @@ class CategorisationMatrix(object):
         return class_name
 
     def display(self):
-        print self._get_class_name()
+        print self.get_class_name()
         #print self.matrix

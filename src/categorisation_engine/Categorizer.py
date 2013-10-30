@@ -1,4 +1,5 @@
 __author__ = 'vinh.vo@sentifi.com'
+
 from SentifiField import SentifiField
 from Constant import *
 from Client import Client
@@ -36,12 +37,26 @@ class Categorizer(object):
 
                     if list_rule_subset is not None:
                         for subset in list_rule_subset:
+                            #subset.display()
                             #print subset.cat_name
                             score = field.apply_rule_subset(subset)
                             #print score
                             matrix.increase_by(field_id, subset.cat_name, score)
+                            assigned_class = matrix.get_class_name()
+                            profile.set_category(stage, assigned_class)
 
-                matrix.display()
+                            value = self._get_parent_class_name(stage, subset.cat_name)
+                            profile.set_category('Profile Group', value)
+            profile.display()
+
+    @staticmethod
+    def _get_parent_class_name(stage, cat_name):
+
+        message = {'type': 'parent', 'category_name': cat_name}
+        client = Client()
+        result = client.send(message)
+        print result
+        return result[stage]
 
     @staticmethod
     def _get_rule_subset_by_phase_and_field(stage_name, field_id):
@@ -113,7 +128,7 @@ class Categorizer(object):
 json = {'screen_name': 'glorevenhite', 'description': 'I am a financial analyst', 'name': 'Vo Truong Vinh'}
 p = TwitterProfile(json)
 p.screen_name = "glorevenhite"
-p.description = "I am a financial analyst sell side journalist news"
+p.description = "I am an equity analyst sell side"
 p.fullname = 'Vo Truong Vinh'
 
 list_profile = [p]
