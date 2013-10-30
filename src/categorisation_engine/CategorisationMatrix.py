@@ -11,7 +11,7 @@ class CategorisationMatrix(object):
     def increase_by(self, field_name, class_name, increasing_value):
         x = self._get_col_pos(class_name)
         y = self._get_row_pos(field_name)
-        self.matrix[x][y] += increasing_value
+        self.matrix[y][x] += increasing_value
 
     def _get_row_pos(self, value):
         return self.rows.index(value)
@@ -19,11 +19,17 @@ class CategorisationMatrix(object):
     def _get_col_pos(self, value):
         return self.cols.index(value)
 
+    def _get_class_name(self):
+        arr = numpy.array(self.matrix)
+        sum_array = arr.sum(axis=0)
+        max_index = sum_array.argmax()
+
+        print max_index
+        class_name = self.cols[max_index]
+
+        return class_name
+
     def display(self):
+        print self._get_class_name()
         print self.matrix
-
-
-rows = ['a','b']
-cols = ['x','y','z']
-matrix = CategorisationMatrix(rows, cols)
 
