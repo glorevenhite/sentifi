@@ -1,20 +1,10 @@
 import sys
-import pprint
-import time
-import datetime as dt
-from datetime import timedelta
-
-from Config import *
-
-import tweepy
 
 from twitter.TwitterUserCrawler import TwitterUserCrawler
-from twitter.TwitterStatusCrawler import TwitterStatusCrawler
+
 from utils.CrawlerUtils import *
 from utils.IOUtils import IOUtils
-from utils.PathUtils import PathUtils
 from Config import Configuration
-from twitter.SentifiTwitterClient import SentifiTwitterClient
 from utils.Parser import Parser
 import json
 
@@ -34,7 +24,6 @@ def main():
 
 
 def crawl_users_by_list_screen_names():
-
     FILE_PATH = Configuration().HOME_PATH + "user\\input\\screen_names.csv"
     print "Path to the file containing screen names", FILE_PATH
 
