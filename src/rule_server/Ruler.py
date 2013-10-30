@@ -32,7 +32,9 @@ class Ruler(object):
             class_name = item[0]
             subset_id = item[1]
             rule_id = item[2]
+
             word = item[3].encode('utf-8')
+
             status = item[4]    # inclusion or exclusion
             ss1 = {class_name: {}}
             if class_name not in dict_result.keys():
@@ -200,7 +202,6 @@ class Ruler(object):
         sql += "FROM Categories AS c "
         sql += "WHERE c.name = '{0}')" .format(category_name)
 
-        print sql
         cursor = self.connection.cursor()
         cursor.execute(sql)
         results = cursor.fetchall()

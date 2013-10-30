@@ -10,7 +10,7 @@ class MySQLUtils(object):
         self.connection = None
         self.cursor = None
 
-        self.connection = mdb.connect(SERVER, USERNAME, PASSWORD, DBNAME)
+        self.connection = mdb.connect(SERVER, USERNAME, PASSWORD, DBNAME, charset='utf8')
         self.cursor = self.connection.cursor()
         self.cursor.execute("SELECT VERSION()")
 
@@ -80,7 +80,7 @@ class MySQLUtils(object):
         return self.cursor.fetchall()
 
     def _get_rule_subset_by_phase_and_field(self, stage, field_id):
-        sql = "SELECT DISTINCT c.name, rs.rule_set_id, r.rule_id,k.keyword, r.type_not "
+        sql = "SELECT DISTINCT c.name, rs.rule_set_id, r.rule_id, CONVERT(k.keyword USING utf8), r.type_not "
         sql += "FROM {0} AS c " .format(TABLE_CATEGORIES)
         sql += "JOIN {0} AS rs ON c.category_id = rs.category_id " .format(TABLE_RULESETS)
         sql += "JOIN {0} AS rsd ON rsd.rule_set_id = rs.rule_set_id " .format(TABLE_RULESET_DETAILS)
@@ -90,13 +90,13 @@ class MySQLUtils(object):
         sql += "JOIN {0} AS rf ON rf.rule_id = r.rule_id " .format(TABLE_RULE_FIELD)
         sql += "WHERE c.type LIKE '{0}' AND rf.field_id = {1} " .format(stage, field_id)
 
+        print sql
         self.cursor.execute(sql)
 
         rows = self.cursor.fetchall()
 
         results = []
         for row in rows:    # OPTIMIZE HERE, return directly in tuple format instead of a list
-            print row
             results.append(row)
 
         return results
