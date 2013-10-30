@@ -11,7 +11,3 @@ MENTION_HEADER = ['twitter_screen_name_user', 'tweet_id', 'tweet_text', 'tweet_c
                   'twitter_website_url', 'twitter_website_full_url', 'twitter_description', 'twitter_image',
                   'twitter_image_thumbnail', 'twitter_followers_count', 'twitter_followings_count',
                   'twitter_statuses_count', 'twitter_listed_count']
-
-
-
-
