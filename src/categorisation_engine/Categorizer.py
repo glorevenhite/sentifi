@@ -6,15 +6,12 @@ from TwitterProfile import TwitterProfile
 from CategorisationMatrix import CategorisationMatrix
 from RuleSet import RuleSet
 from Rule import Rule
-import pprint
+
 
 class Categorizer(object):
     def categorize_twitter_profile(self, list_profiles):
 
         for profile in list_profiles:
-            #declare Matrix of Categorisation Result
-            matrix = {}
-
             #taking examining fields
             field_full_name = SentifiField(FIELD_TWITTER_FULL_NAME_ID, profile.fullname)
             field_screen_name = SentifiField(FIELD_TWITTER_SCREEN_NAME_ID, profile.screen_name)
@@ -22,7 +19,7 @@ class Categorizer(object):
 
             # Put above fields into a list
             fields = {TWITTER_FULL_NAME: field_full_name, TWITTER_SCREEN_NAME: field_screen_name, TWITTER_DESCRIPTION: field_description}
-            print fields
+
             # For each phase of categorisation process, i.e. Profile Type, Publisher Group, Category 1, Category 2
             #
             for stage in PHASE_VALUES:
@@ -45,12 +42,14 @@ class Categorizer(object):
                             matrix.increase_by(field_id, subset.cat_name, score)
 
                 matrix.display()
-    def _get_rule_subset_by_phase_and_field(self, stage_name, field_id):
+
+    @staticmethod
+    def _get_rule_subset_by_phase_and_field(stage_name, field_id):
         list_rulesets = []
 
         message = {'type': 'subset', 'phase': stage_name, 'field_id': field_id}
         client = Client()
-        print field_id, stage_name
+
         # format:
         # {cat_name:
         #   {subset_id:{'exclusion':[n1,n2,n3], 'rules':{rid:[a1,b1],rid:[a2,b1]}},
@@ -89,7 +88,9 @@ class Categorizer(object):
         matrix = CategorisationMatrix(list_field_names, list_class_names)
 
         return matrix
-    def _get_rules_by_phase_and_field(self, stage_name, field_id):
+
+    @staticmethod
+    def _get_rules_by_phase_and_field(stage_name, field_id):
         message = {'type': 'ruleset', 'phase': stage_name, 'field_id': field_id}
         client = Client()
 
@@ -97,7 +98,8 @@ class Categorizer(object):
 
         return result
 
-    def _get_classes_by_phase_name(self, phase):
+    @staticmethod
+    def _get_classes_by_phase_name(phase):
         message = {'type': 'classes', 'phase': phase}
         client = Client()
         returned_data = dict(client.send(message))

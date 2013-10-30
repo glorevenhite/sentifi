@@ -4,8 +4,8 @@ import numpy
 
 class CategorisationMatrix(object):
     def __init__(self, rows, cols):
-        self.rows = rows
-        self.cols = cols
+        self.rows = sorted(rows)
+        self.cols = sorted(cols)
         self.matrix = numpy.zeros((len(rows), len(cols)))
 
     def increase_by(self, field_name, class_name, increasing_value):
@@ -25,11 +25,11 @@ class CategorisationMatrix(object):
         max_index = sum_array.argmax()
 
         print max_index
+        print self.cols
         class_name = self.cols[max_index]
 
         return class_name
 
     def display(self):
         print self._get_class_name()
-        print self.matrix
-
+        #print self.matrix
