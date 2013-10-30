@@ -6,3 +6,6 @@ class RuleSet(object):
         self.cat_name = ""
         self.exclusion = []
         self.rules = []
+
+    def display(self):
+        print self.cat_name, ":", self.exclusion, ":", self.rules
