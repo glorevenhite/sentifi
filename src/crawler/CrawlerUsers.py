@@ -1,12 +1,11 @@
-import sys
-
 from twitter.TwitterUserCrawler import TwitterUserCrawler
-
 from utils.CrawlerUtils import *
 from utils.IOUtils import IOUtils
 from Config import Configuration
 from utils.Parser import Parser
 import json
+import sys
+
 
 def main():
     if len(sys.argv) == 2:

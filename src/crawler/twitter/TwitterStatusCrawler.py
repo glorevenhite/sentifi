@@ -106,16 +106,10 @@ class TwitterStatusCrawler(object):
             pass
         return tweets
 
-    def _crawl_tweet_mentioning(self, mention_text):
+    def crawl_tweet_mentioning(self, mention_text):
         tweets = []
-        """header = ['twitter_screen_name_user','tweet_id','tweet_text','tweet_create_time','twitter_id',
-                  'twitter_screen_name','twitter_full_name','twitter_address','twitter_email',
-                  'twitter_website_url','twitter_website_full_url','twitter_description','twitter_image',
-                  'twitter_image_thumbnail','twitter_followers_count','twitter_followings_count',
-                  'twitter_statuses_count','twitter_listed_count']
-        tweets.append(header)"""
 
-        pages = tweepy.Cursor(self._api.search, q=mention_text, count = 100).pages()
+        pages = tweepy.Cursor(self._api.search, q=mention_text, count=100).pages()
         for page in pages:
             rate_limit_json = self._api.rate_limit_status()
             remain_hits = rate_limit_json['resources']['search']['/search/tweets']['remaining']
@@ -125,7 +119,7 @@ class TwitterStatusCrawler(object):
             for tweet in page:
                 tw = []
 
-                tw.append(unicode(mention_text.replace("@","")).encode('utf-8'))
+                tw.append(mention_text)
 
                 tw.append(tweet.id)
                 tw.append(unicode(tweet.text).encode('utf-8'))
@@ -139,7 +133,7 @@ class TwitterStatusCrawler(object):
                 tw.append(unicode(tweet.user.url).encode('utf-8'))
                 tw.append(unicode(tweet.user.description).encode('utf-8'))
                 tw.append(unicode(tweet.user.profile_image_url).encode('utf-8'))
-                tw.append(CrawlerUtils().rreplace(tweet.user.profile_image_url,"normal", "mini", 1))
+                tw.append(CrawlerUtils().rreplace(tweet.user.profile_image_url, "normal", "mini", 1))
                 tw.append(unicode(tweet.user.followers_count).encode('utf-8'))
                 tw.append(unicode(tweet.user.friends_count).encode('utf-8'))
                 tw.append(str(tweet.user.statuses_count))
@@ -148,12 +142,14 @@ class TwitterStatusCrawler(object):
                 tweets.append(tw)
 
             print "Total mentions so far:", len(tweets)
-            if (len(tweets) >= 50000): #reach limit of max tweet can be retrieved
+            #reach limit of max tweet can be retrieved
+            if len(tweets) >= 50000:
                 return tweets
-            if (remain_hits <= 2):
-                time.sleep(15*60) #waiting for 15 minutes
+            if remain_hits <= 2:
+                #waiting for 15 minutes
+                time.sleep(15*60)
 
-            if (len(tweets) == 3200): #reach limit of max tweet can be retrieved
+            if len(tweets) == 3200:   # reach limit of max tweet can be retrieved
                 return tweets
 
         return tweets
