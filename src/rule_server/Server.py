@@ -11,7 +11,7 @@ class RuleTCPServer(SocketServer.ThreadingTCPServer):
 class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         try:
-            data = simplejson.loads(self.request.recv(1024).strip(),encoding='utf-8')
+            data = simplejson.loads(self.request.recv(1024).strip(), encoding='utf-8')
             print "DATA RECEIVED:", data
             type = data['type']
 
@@ -41,6 +41,8 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
             elif type == 'parent':
                 category_name = data['category_name']
                 returned_data = Ruler().get_parent_phase(category_name)
+                print "DATA SENT:", returned_data
+
             elif type == 'subset':
                 phase = data['phase']
                 field_id = data['field_id']
