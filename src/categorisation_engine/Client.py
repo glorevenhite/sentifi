@@ -8,9 +8,10 @@ class Client():
         self.s.connect(('127.0.0.1', 13373))
 
     def send(self, json_message):
+        print json_message
         self.s.send(simplejson.dumps(json_message))
 
-        result = simplejson.loads(self.s.recv(5000000),encoding="utf-8")
+        result = simplejson.loads(self.s.recv(5000000), encoding="utf-8")
 
         self.s.close()
 

@@ -24,8 +24,6 @@ class CategorisationMatrix(object):
         sum_array = arr.sum(axis=0)
         max_index = sum_array.argmax()
 
-        print max_index
-        print self.cols
         class_name = self.cols[max_index]
 
         return class_name

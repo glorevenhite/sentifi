@@ -46,6 +46,7 @@ class Categorizer(object):
                             profile.set_category(stage, assigned_class)
 
                             value = self._get_parent_class_name(stage, subset.cat_name)
+                            #print value
                             profile.set_category('Profile Group', value)
             profile.display()
 
@@ -53,10 +54,11 @@ class Categorizer(object):
     def _get_parent_class_name(stage, cat_name):
 
         message = {'type': 'parent', 'category_name': cat_name}
+        print cat_name
         client = Client()
-        result = client.send(message)
-        print result
-        return result[stage]
+        result = dict(client.send(message))
+        #print result
+        return result
 
     @staticmethod
     def _get_rule_subset_by_phase_and_field(stage_name, field_id):
