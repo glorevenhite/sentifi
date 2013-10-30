@@ -1,5 +1,6 @@
 from Rule import Rule
 from SentifiWordsBank import SentifiWordsBank
+from RuleSet import RuleSet
 
 class SentifiField(object):
     def __init__(self, id, content):
@@ -43,6 +44,29 @@ class SentifiField(object):
             return True
         else:
             return False
+
+
+    def apply_rule_subset(self, subset):
+        score = 0
+
+        #check with the exclusion
+        exclusion = subset.exclusion
+        #print exclusion
+
+        #check each rule
+        list_rules = subset.rules
+        #print list_rules
+
+        for rules in list_rules:
+            flag = True
+            for keyword in rules:
+                if self.content.find(keyword) < 0:
+                    flag = False
+            if flag is True:
+                score += 1
+        return score
+
+
 
 #
 #content = " I am an financial analyst"
