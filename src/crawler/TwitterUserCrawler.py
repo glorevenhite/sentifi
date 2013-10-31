@@ -1,5 +1,5 @@
 from utils.CrawlerUtils import CrawlerUtils
-
+from Constant import *
 import time
 import datetime
 from datetime import timedelta
@@ -9,22 +9,17 @@ import tweepy
 
 class TwitterUserCrawler(object):
     def __init__(self):
-        OAUTH_TOKEN = '18113338-60RyLRMrW4vFxqBibn5LJPx4EAJgByRjLctM86w'
-        OAUTH_SECRET = 'W9GSPl8dItl4Bk3J6dKNImcL99PSbZinkn4FREWVhUg'
-        CONSUMER_KEY = 'egYRKgKOkJ2Utf06tYUFw'
-        CONSUMER_SECRET = 'ezfzK9ddmwCCgBVJKCKHROYfEwX86wWYqLoVMZhicU'
         auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
         auth.set_access_token(OAUTH_TOKEN, OAUTH_SECRET)
         self._api = tweepy.API(auth)
 
     #CRAWLING SINGLE TWITTER USER
     def crawl_singe_user(self, screen_name):
-        return self._api.get_user(screen_name=screen_name)
+        return self._api.get_user(screen_name=screen_name, include_entities=True)
 
     def crawl_single_user_csv(self, screen_name):
-        user = self._api.get_user(screen_name = screen_name)
-
-        print user.fullurl
+        user = self._api.get_user(screen_name=screen_name)
+        return user
 
     #CRAWLING MANY USERS AT THE SAME TIME
     def crawl_many_users(self, list_screen_names):
@@ -53,11 +48,14 @@ class TwitterUserCrawler(object):
         chunks = CrawlerUtils().split_into_chunks(list_screen_names, 100)
 
         list_users = []
-        users = None
         for chunk in chunks:
             try:
                 rate_limit_json = self._api.rate_limit_status()
                 remaining_hits = rate_limit_json['resources']['users']['/users/lookup']['remaining']
+
+                if remaining_hits <= 2:
+                    #waiting for 15 minutes
+                    time.sleep(15*60)
 
                 print "The remaining hits for looking up user are:", remaining_hits
                 users = self._api.lookup_users(screen_names=chunk)
@@ -65,12 +63,20 @@ class TwitterUserCrawler(object):
                     user = []
 
                     user.append(u.id)
-                    user.append(u.screen_name)
-                    user.append(u.name)
-                    user.append(u.location)
-                    user.append(u.created_at)
-                    user.append(u.url)
-                    list_users.append(u)
+                    user.append(unicode(u.screen_name).encode('utf-8'))
+                    user.append(unicode(u.name).encode('utf-8'))
+                    user.append(unicode(u.location).encode('utf-8'))
+                    user.append(unicode(u.created_at).encode('utf-8'))
+                    user.append(u.entities['url']['urls'][0]['expanded_url'])
+                    user.append(unicode(u.description).encode('utf-8'))
+                    user.append(unicode(u.profile_image_url).encode('utf-8'))
+                    user.append(CrawlerUtils().rreplace(u.profile_image_url, "normal", "mini", 1))
+                    user.append(unicode(u.followers_count).encode('utf-8'))
+                    user.append(unicode(u.friends_count).encode('utf-8'))
+                    user.append(str(u.statuses_count))
+                    user.append(str(u.listed_count))
+
+                    list_users.append(user)
             except Exception, e:
                 print e
         return list_users
@@ -80,8 +86,8 @@ class TwitterUserCrawler(object):
         rate_limit_json = self._api.rate_limit_status()
         remain_hits = rate_limit_json['resources']['followers']['/followers/ids']['remaining']
         print remain_hits
-        if (remain_hits < 2):
-            pprint.pprint(ids)
+        if remain_hits < 2:
+
             time.sleep(15*60)
 
         for page in tweepy.Cursor(self._api.followers_ids, screen_name=name).pages():
@@ -93,8 +99,8 @@ class TwitterUserCrawler(object):
             remain_hits = rate_limit_json['resources']['followers']['/followers/ids']['remaining']
             print remain_hits
             if (remain_hits < 2):
-                pprint.pprint(ids)
-                Utils.save_list_to_csv(page, filepath)
+
+                #Utils.save_list_to_csv(page, filepath)
                 time.sleep(15*60)
         return ids
 TwitterUserCrawler().crawl_single_user_csv('glorevenhite')

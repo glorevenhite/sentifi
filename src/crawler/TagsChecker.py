@@ -3,6 +3,8 @@ from utils.IOUtils import IOUtils
 
 from SentifiTwitterProfile import SentifiTwitterProfile
 
+from Constant import *
+
 def main():
     PATH_TO_MENTION_FILES = "D:\\SENTIFI_DATA\\mention\\output\\"
     #TEST_PATH = "D:\\online-cloud\\Dropbox\\SENTIFI\\mention\\all\\test\\"
@@ -12,13 +14,12 @@ def main():
     twitter_id_list = []
 
     total_mention_count = 0    #Total mentions for all tag
-    total_mention_tag = 0
+
 
     list_mention_files = PathUtils().get_list_filename(PATH_TO_MENTION_FILES)
 
 
-    #for testing purpose
-    #list_mention_files = get_list_filename(TEST_PATH)
+
 
     for filename in list_mention_files:
         tag = filename.replace('.csv', '')

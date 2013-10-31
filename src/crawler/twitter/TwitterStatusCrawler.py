@@ -143,7 +143,7 @@ class TwitterStatusCrawler(object):
 
             print "Total mentions so far:", len(tweets)
             #reach limit of max tweet can be retrieved
-            if len(tweets) >= 50000:
+            if len(tweets) >= 32000:
                 return tweets
             if remain_hits <= 2:
                 #waiting for 15 minutes
