@@ -79,7 +79,7 @@ class MySQLUtils(object):
         self.cursor.execute(str_query)
         return self.cursor.fetchall()
 
-    def _get_rule_subset_by_phase_and_field(self, stage, field_id):
+    def get_rule_subset_by_phase_and_field(self, stage, field_id):
         sql = "SELECT DISTINCT c.name, rs.rule_set_id, r.rule_id, CONVERT(k.keyword USING utf8), r.type_not "
         sql += "FROM {0} AS c " .format(TABLE_CATEGORIES)
         sql += "JOIN {0} AS rs ON c.category_id = rs.category_id " .format(TABLE_RULESETS)

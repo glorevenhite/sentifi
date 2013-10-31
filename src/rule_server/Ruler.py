@@ -14,8 +14,9 @@ class Ruler(object):
     def __init__(self):
         self.connection = MySQLUtils().connection
 
-    def get_rule_subset_by_phase_and_field(self, stage, field_id):
-        list_rule_subset = MySQLUtils()._get_rule_subset_by_phase_and_field(stage,field_id)
+    @staticmethod
+    def get_rule_subset_by_phase_and_field(stage, field_id):
+        list_rule_subset = MySQLUtils().get_rule_subset_by_phase_and_field(stage, field_id)
 
         # Building json
         # FORMAT:
@@ -32,9 +33,7 @@ class Ruler(object):
             class_name = item[0]
             subset_id = item[1]
             rule_id = item[2]
-
-            word = item[3].encode('utf-8')
-
+            word = item[3]
             status = item[4]    # inclusion or exclusion
             ss1 = {class_name: {}}
             if class_name not in dict_result.keys():
@@ -110,7 +109,7 @@ class Ruler(object):
         values = {}
         for row in rows:
             values.update({row[0]: row[1]})
-
+        print values
         return {phase: values}
 
     def get_ruleset_in_json2(self, phase, field):
@@ -209,8 +208,8 @@ class Ruler(object):
         for row in results:
             if row[0] != "Null":
                 json_data = {category_name: row[0]}
-                return simplejson.dumps(json_data)
+                return json_data
 
-#print Ruler().get_parent_phase('Financial Analyst')
-#print Ruler().get_classes_by_phase_name('Category 1')
+#print Ruler().get_parent_phase('Architecture, Construction & Design')
+print Ruler().get_classes_by_phase_name('Category 1')
 #Ruler().get_rule_subset_by_phase_and_field('Category 1', 1)

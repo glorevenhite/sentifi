@@ -10,9 +10,38 @@ from Rule import Rule
 
 
 class Categorizer(object):
+    def categorize_twitter_profile_step(self, list_profiles):
+        for profile in list_profile:
+             #taking examining fields
+            field_full_name = SentifiField(FIELD_TWITTER_FULL_NAME_ID, profile.fullname)
+            field_screen_name = SentifiField(FIELD_TWITTER_SCREEN_NAME_ID, profile.screen_name)
+            field_description = SentifiField(FIELD_TWITTER_DESCRIPTION_ID, profile.description)
+
+            # Put above fields into a list
+            fields = {TWITTER_FULL_NAME: field_full_name, TWITTER_SCREEN_NAME: field_screen_name, TWITTER_DESCRIPTION: field_description}
+
+            # Whether Person or Organisation
+            stage = 'Profile Type'
+            matrix = self._create_categorisation_result_matrix(fields.keys(), stage)
+
+            for field in fields.values():
+                field_id = field.id
+                list_rule_subset = self._get_rule_subset_by_phase_and_field(stage, field_id)
+
+                if list_rule_subset is not None:
+                    for subset in list_rule_subset:
+                        #subset.display()
+                        #print subset.cat_name
+                        score = field.apply_rule_subset(subset)
+                        #print score
+                        matrix.increase_by(field_id, subset.cat_name, score)
+                        assigned_class = matrix.get_class_name()
+                        profile.set_category(stage, assigned_class)
+
     def categorize_twitter_profile(self, list_profiles):
 
         for profile in list_profiles:
+
             #taking examining fields
             field_full_name = SentifiField(FIELD_TWITTER_FULL_NAME_ID, profile.fullname)
             field_screen_name = SentifiField(FIELD_TWITTER_SCREEN_NAME_ID, profile.screen_name)
@@ -22,10 +51,9 @@ class Categorizer(object):
             fields = {TWITTER_FULL_NAME: field_full_name, TWITTER_SCREEN_NAME: field_screen_name, TWITTER_DESCRIPTION: field_description}
 
             # For each phase of categorisation process, i.e. Profile Type, Publisher Group, Category 1, Category 2
-            #
             for stage in PHASE_VALUES:
                 #creating matrix of categorisation result
-
+                print stage
                 matrix = self._create_categorisation_result_matrix(fields.keys(), stage)
 
                 # For each field, get all applicable rules.
@@ -54,10 +82,10 @@ class Categorizer(object):
     def _get_parent_class_name(stage, cat_name):
 
         message = {'type': 'parent', 'category_name': cat_name}
-        print cat_name
+        print "looking for parent for:", cat_name
         client = Client()
         result = dict(client.send(message))
-        #print result
+        print result
         return result
 
     @staticmethod
@@ -122,6 +150,7 @@ class Categorizer(object):
         returned_data = dict(client.send(message))
 
         result = {}
+        print result
         if returned_data['status'] == SERVER_STATUS_OK:
             result.update({phase: returned_data.get('data').get(phase)})
 
@@ -135,4 +164,5 @@ p.fullname = 'Vo Truong Vinh'
 
 list_profile = [p]
 
-print Categorizer().categorize_twitter_profile(list_profile)
+#print Categorizer().categorize_twitter_profile(list_profile)
+Categorizer()._get_classes_by_phase_name('Category 1')

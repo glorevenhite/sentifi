@@ -11,7 +11,7 @@ class RuleTCPServer(SocketServer.ThreadingTCPServer):
 class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         try:
-            data = simplejson.loads(self.request.recv(1024).strip(), encoding='utf-8')
+            data = simplejson.loads(self.request.recv(10000).strip(), encoding="utf-8")
             print "DATA RECEIVED:", data
             type = data['type']
 
@@ -23,6 +23,7 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
             elif type == 'classes':
                 phase = data['phase']
                 returned_data = Ruler().get_classes_by_phase_name(phase)
+                print returned_data
                 print "DATA SENT:", returned_data
 
             elif type == 'rules':
@@ -57,10 +58,10 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
                 returned_message.update({'code': '0'})
 
             #print returned_message
-            self.request.sendall(simplejson.dumps(returned_message,encoding='utf-8'))
+            self.request.sendall(simplejson.dumps(returned_message, encoding='utf-8'))
 
         except Exception, e:
-            print "Exception while receiving messsage:", e
+            print "Exception while sending message:", e
             returned_message = {}
             returned_message.update({'status': SERVER_STATUS_ERROR})
             returned_message.update({'code': '0'})
