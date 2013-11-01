@@ -11,12 +11,13 @@ class Client():
         self.s.send(simplejson.dumps(json_message))
 
         result = simplejson.loads(self.s.recv(5000000), encoding="utf-8")
-        print result
+        #print result
         self.s.close()
 
         return result
 
-client = Client()
+#client = Client()
 #message = {'type': 'parent', 'category_name': 'Financial Analyst'}
-message = {'type': 'classes', 'phase': 'Category 1'}
-print client.send(message)
+#message = {'type': 'classes', 'phase': 'Category 1'}
+#print "status:", client.send(message)
+#print "EnD"

@@ -14,15 +14,16 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
             data = simplejson.loads(self.request.recv(10000).strip(), encoding="utf-8")
             print "DATA RECEIVED:", data
             type = data['type']
-
             returned_data = ""
             if type == 'categories_name':
                 phase = data['phase']
                 returned_data = Ruler().get_list_category_ids_by_phase(phase)
                 print "DATA SENT:", returned_data
+
             elif type == 'classes':
                 phase = data['phase']
-                returned_data = Ruler().get_classes_by_phase_name(phase)
+                parent_class = data['parent_class']
+                returned_data = Ruler().get_classes_by_phase_name(phase, parent_class)
                 print returned_data
                 print "DATA SENT:", returned_data
 
@@ -47,7 +48,11 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
             elif type == 'subset':
                 phase = data['phase']
                 field_id = data['field_id']
-                returned_data = Ruler().get_rule_subset_by_phase_and_field(phase, field_id)    # IMPORTANT
+                if ['parent_id'] not in data.keys():
+                    returned_data = Ruler().get_rule_subset_by_phase_and_field(phase, field_id)    # IMPORTANT
+                else:
+                    parent_id = data['parent_id']
+                    returned_data = Ruler().get_rule_subset_by_phase_field_parent(phase, field_id, parent_id)    # IMPORTANT
 
             returned_message = {}
             if returned_data != {}:

@@ -29,5 +29,6 @@ class CategorisationMatrix(object):
         return class_name
 
     def display(self):
-        print self.get_class_name()
+        pass
+        #print self.get_class_name()
         #print self.matrix

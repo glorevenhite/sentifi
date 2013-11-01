@@ -5,10 +5,6 @@ from Rule import Rule
 import simplejson
 import numpy
 
-import pprint
-
-
-
 #All function return in json format
 class Ruler(object):
     def __init__(self):
@@ -17,6 +13,69 @@ class Ruler(object):
     @staticmethod
     def get_rule_subset_by_phase_and_field(stage, field_id):
         list_rule_subset = MySQLUtils().get_rule_subset_by_phase_and_field(stage, field_id)
+
+        # Building json
+        # FORMAT:
+        # {cat_name1:
+        #   {subset_id:{'exclusion':[n1,n2,n3], 'rules':{rid:[a1,b1],rid:[a2,b1]}},
+        #    subset_id:{'exclusion':[m1,m2,m3], 'rules':{rid:[x1,y1], rid:[x1,y2}},
+        #  cat_name2:
+        #   {subset_id:{'exclusion':[n1,n2,n3], 'rules':{rid:[a1,b1],rid:[a2,b1]}},
+        #    subset_id:{'exclusion':[m1,m2,m3], 'rules':{rid:[x1,y1], rid:[x1,y2}},
+        # }
+        dict_result = {}
+        for item in list_rule_subset:
+
+            class_name = item[0]
+            subset_id = item[1]
+            rule_id = item[2]
+            word = item[3]
+            status = item[4]    # inclusion or exclusion
+            ss1 = {class_name: {}}
+            if class_name not in dict_result.keys():
+                #create new one
+                dict_result.update({class_name: {subset_id: {'exclusion': [], 'rules': {rule_id: []}}}})
+
+                if status == 0:     # Inclusion
+                    dict_result.get(class_name).get(subset_id).get('rules').get(rule_id).append(word)
+                else:
+                    dict_result.get(class_name).get(subset_id).get('exclusion').append(word)
+            else:
+                #update
+                if subset_id not in dict_result.get(class_name).keys():
+                    # new subset_id. We going to add new subset
+                    dict_result.get(class_name).update({subset_id: {'exclusion': [], 'rules': {rule_id: []}}})
+
+                    #since current subset_id is fresh, rule_id absolutely is fresh too.
+                    if status == 0:
+                        dict_result.get(class_name).get(subset_id).get('rules').update({rule_id: [word]})
+                    else:
+                        dict_result.get(class_name).get(subset_id).get('exclusion').append(word)
+                else:
+                    #Update existed subset
+                    # check rule_id
+                    #print dict_result.get(class_name).get(subset_id).get('rules').keys()
+                    if rule_id not in dict_result.get(class_name).get(subset_id).get('rules').keys():
+                        if status == 0:
+                            dict_result.get(class_name).get(subset_id).get('rules').update({rule_id: [word]})
+                        else:
+                            dict_result.get(class_name).get(subset_id).get('exclusion').append(word)
+                    else:
+                        #rule existed already
+
+                        if status == 0:
+                            lst = dict_result.get(class_name).get(subset_id).get('rules').get(rule_id)
+
+                            dict_result.get(class_name).get(subset_id).get('rules').get(rule_id).append(word)
+                        else:
+                            dict_result.get(class_name).get(subset_id).get('exclusion').append(word)
+
+        #pprint.pprint(dict_result)
+        return dict_result
+
+    @staticmethod
+    def get_rule_subset_by_phase_field_parent(stage, field_id, parent_id):
+        list_rule_subset = MySQLUtils().get_rule_subset_by_phase_field_parent(stage, field_id, parent_id)
 
         # Building json
         # FORMAT:
@@ -96,20 +155,23 @@ class Ruler(object):
         else:
             return "None"
 
-    def get_classes_by_phase_name(self, phase):
-        sql = "SELECT c.category_id, c.name "
+    def get_classes_by_phase_name(self, phase, parent_name):
+        sql = "SELECT c.category_id, c.name, p.name "
         sql += "FROM {0} AS c " .format(TABLE_CATEGORIES)
-        sql += "WHERE LCASE(c.type) LIKE '{0}' " .format(phase.lower())
+        sql += "JOIN {0} as p ON p.category_id = c.parent_cat_id " .format(TABLE_CATEGORIES)
+        sql += "WHERE LCASE(c.type) LIKE '{0}' AND p.name LIKE '{1}' " .format(phase.lower(), parent_name)
+
+        print sql
 
         cursor = self.connection.cursor()
         cursor.execute(sql)
 
         rows = cursor.fetchall()
-
+        print rows
         values = {}
         for row in rows:
             values.update({row[0]: row[1]})
-        print values
+
         return {phase: values}
 
     def get_ruleset_in_json2(self, phase, field):
@@ -211,5 +273,5 @@ class Ruler(object):
                 return json_data
 
 #print Ruler().get_parent_phase('Architecture, Construction & Design')
-print Ruler().get_classes_by_phase_name('Category 1')
+#print Ruler().get_classes_by_phase_name('Publisher Group', 'O')
 #Ruler().get_rule_subset_by_phase_and_field('Category 1', 1)
