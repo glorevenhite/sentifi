@@ -1,6 +1,7 @@
 from Rule import Rule
 from SentifiWordsBank import SentifiWordsBank
 from RuleSet import RuleSet
+from RuleUtils import *
 
 class SentifiField(object):
     def __init__(self, id, content):
@@ -8,7 +9,35 @@ class SentifiField(object):
         self.content = content
         self.category = ""
 
-    def is_complied(self, rule):
+    def is_complied(self, arr_rules):
+
+        list_ids = sorted(set(arr_rules[:, 2]))
+        for id in list_ids:
+            arr_ruleset = arr_rules[arr_rules[:, 2] == id]
+            rs = RuleSet(arr_ruleset)
+
+            #Exclusion set            "
+            print "Exclusion set for ruleset:" , rs.get_exclusion_regex_str()
+            print "Determining..."
+            print "OK"
+
+            print "---------INCLUSION----------"
+            # Processing inclusion set in each simple rule
+            list_simple_rules = rs.get_list_simple_rules()
+            for simple_rule in list_simple_rules:
+                str_regex = simple_rule.get_regex_inclusion_str()
+                print "content:", self.content
+                print "regex:", str_regex
+                if match(str_regex, self.content):
+                    return simple_rule.class_name
+
+            #print list_simple_rules
+
+
+
+
+
+    def is_complied2(self, rule):
         #get all words used in rule
         wordsbank = rule.get_wordsbank()
 

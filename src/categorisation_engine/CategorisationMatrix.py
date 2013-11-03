@@ -8,6 +8,9 @@ class CategorisationMatrix(object):
         self.cols = sorted(cols)
         self.matrix = numpy.zeros((len(rows), len(cols)))
 
+    def get_matrix(self):
+        return self.matrix
+
     def increase_by(self, field_name, class_name, increasing_value):
         x = self._get_col_pos(class_name)
         y = self._get_row_pos(field_name)
@@ -29,6 +32,6 @@ class CategorisationMatrix(object):
         return class_name
 
     def display(self):
-        pass
         #print self.get_class_name()
-        #print self.matrix
+        print "MATRIX:"
+        print self.matrix

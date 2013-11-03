@@ -3,37 +3,24 @@ import simplejson
 
 
 class Rule(object):
-    def __init__(self):
-        self.rule_set_name = ""
-        self.inc_keywords = []
-        self.exc_keywords = []
-        self.keywords = []
+    def __init__(self, list_records):
+        self.class_name = list_records[0][1]
+        self.primitive_rules = list_records
 
-    def get_inclusion(self):
-        #lowercase and strip any space in both left and right side
-        return [word.lower().strip().replace(" ", "-") for word in self.inc_keywords]
+    def get_regex_inclusion_str(self):
+        inclusion_set = self.primitive_rules[:, 4]
 
-    def get_exclusion(self):
-        #lowercase and strip any space in both left and right side
-        return [word.lower().strip() for word in self.exc_keywords]
+        list_item = []
+        for item in inclusion_set:
 
-    def get_wordsbank(self):
-        list_words = self.inc_keywords + self.exc_keywords
-        return self._build_wordsbank(list_words)
+            if len(item.strip().split()) > 1:   # compound words
+                item = '"' + item + '"'
+            list_item.append(item)
 
-    def _build_wordsbank(self, list_words):
-        return SentifiWordsBank().build_sorted_dictionary(list_words)
+        return " ".join(list_item)
 
     def display(self):
-        print "Ruleset name:", self.rule_set_name
-        print "Inclusion:"
-        for kw in self.inc_keywords:
-            print kw
-        print "Exclusion:"
-        for kw in self.exc_keywords:
-            print kw
-        print '-----------------'
+        #print self.class_name
+        #print self.get_regex_inclusion_str()
+        pass
 
-"""For testing only"""
-#rule = Rule(['financial', 'analyst'], ['trader'])
-#print rule.keywords

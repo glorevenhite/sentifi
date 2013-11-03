@@ -3,12 +3,12 @@ __author__ = 'duydo'
 import shlex
 import re
 
-NOT = '-'
+NOT = '!'
 OR = '|'
 
 
 def match(query, text):
-    pieces = shlex.split(query.lower())
+    pieces = shlex.split(unicode(query).encode('utf-8').lower())
     include, or_include, not_include = [], [], []
     for piece in pieces:
         if piece.startswith(NOT):
@@ -35,6 +35,6 @@ if __name__ == "__main__":
     s = 'ABB is falling down'
     print match(rule, s)    # false
 
-    rule = 'financial analyst'
-    s = 'i am financial analyst'
+    rule = 'equity analyst'
+    s = 'i am an equity analyst sell side'
     print match(rule, s)
