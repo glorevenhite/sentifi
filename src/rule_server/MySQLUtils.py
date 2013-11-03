@@ -101,8 +101,8 @@ class MySQLUtils(object):
 
         return results
 
-    def get_rule_subset_by_phase_field_parent(self, stage, field_id, parent_id):
-        sql = "SELECT DISTINCT c.name, rs.rule_set_id, r.rule_id, CONVERT(k.keyword USING utf8), r.type_not, p.name "
+    def get_rule_subset_by_phase_field_parent(self, stage, field_id, class_name):
+        sql = "SELECT DISTINCT c.category_id, c.name, rs.rule_set_id, r.rule_id, k.keyword, r.type_not, c.priority "
         sql += "FROM {0} AS c " .format(TABLE_CATEGORIES)
         sql += "JOIN {0} AS p ON p.category_id = c.parent_cat_id " .format(TABLE_CATEGORIES)
         sql += "JOIN {0} AS rs ON c.category_id = rs.category_id " .format(TABLE_RULESETS)
@@ -111,18 +111,13 @@ class MySQLUtils(object):
         sql += "JOIN {0} AS rk ON rk.rule_id = r.rule_id " .format(TABLE_RULE_KEYWORD)
         sql += "JOIN {0} AS k ON k.keyword_id = rk.keyword_id " .format(TABLE_KEYWORDS)
         sql += "JOIN {0} AS rf ON rf.rule_id = r.rule_id " .format(TABLE_RULE_FIELD)
-        sql += "WHERE c.type LIKE '{0}' AND rf.field_id = {1} AND p.name LIKE '{2}' " .format(stage, field_id, parent_id)
+        sql += "WHERE c.type LIKE '{0}' AND rf.field_id = {1} AND p.name LIKE '{2}' " .format(stage, field_id, class_name)
+        sql += "ORDER BY c.priority "
 
-        print sql
         self.cursor.execute(sql)
-
         rows = self.cursor.fetchall()
 
-        results = []
-        for row in rows:    # OPTIMIZE HERE, return directly in tuple format instead of a list
-            results.append(row)
-
-        return results
+        return rows
 #MySQLUtils()._get_rule_subset_by_phase_and_field('Category 1', 1)
 #MySQLUtils()._get_rule_subset_by_phase_and_field('Profile Type', 1)
 #print MySQLUtils().get_rule_subset_by_phase_field_parent('Category 1', 1, "Financial Market Professionals")

@@ -21,19 +21,17 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
                 print "DATA SENT:", returned_data
 
             elif type == 'classes':
-                phase = data['phase']
+                # message = {'type': 'classes', 'stage': stage_name, 'parent_class': parent_class}
+                phase = data['stage']
                 parent_class = data['parent_class']
-                returned_data = Ruler().get_classes_by_phase_name(phase, parent_class)
-                print returned_data
+                returned_data = Ruler().get_classes(phase, parent_class)
                 print "DATA SENT:", returned_data
 
             elif type == 'rules':
-                cat_id = data['category_id']
+                stage_name = data['stage_name']
                 field_id = data['field_id']
-                returned_data = Ruler().get_list_rules_by_category_id(cat_id, field_id)
-            elif type == 'keywords':
-                rule_id = data['rule_id']
-                returned_data = Ruler().get_rules(rule_id)
+                class_name = data['class_name']
+                returned_data = Ruler().get_rules(stage_name, field_id, class_name)
 
             elif type == 'ruleset':
                 phase = data['phase']
@@ -53,7 +51,7 @@ class RuleTCPServerHandler(SocketServer.BaseRequestHandler):
                 else:
                     parent_id = data['parent_id']
                     returned_data = Ruler().get_rule_subset_by_phase_field_parent(phase, field_id, parent_id)    # IMPORTANT
-
+            print returned_data
             returned_message = {}
             if returned_data != {}:
                 returned_message.update({'status': SERVER_STATUS_OK})
