@@ -27,13 +27,6 @@ class Categorizer(object):
             # Whether Person or Organisation
             stage = 'Category 1'
             parent = "Financial Market Professionals"
-            list_class_names = self._get_classes(stage, parent)
-
-            ##Creating matrix
-            #list_field_names = fields.keys()
-            #list_class_names = self._get_classes(stage, parent)
-            #matrix = CategorisationMatrix(list_field_names, list_class_names)
-            #matrix.display()
 
             for field in fields.values():
                 field_id = field.id
@@ -50,17 +43,6 @@ class Categorizer(object):
                     print "Assigned class:", assigned_class
 
     @staticmethod
-    def _get_parent_class_name(stage, cat_name):
-
-        message = {'type': 'parent', 'category_name': cat_name}
-        print "looking for parent for:", cat_name
-        client = Client()
-        result = dict(client.send(message))
-        print result
-        return result
-
-
-    @staticmethod
     def _get_rule_subset_by_phase_field_parent(stage_name, field_id, parent_id):
         result = []
 
@@ -72,36 +54,6 @@ class Categorizer(object):
             result = returned_data.get('data').get(parent_id)
 
         return result
-
-    def _create_categorisation_result_matrix(self, field_names, phase):
-        #get all classes to which a profile will be assigned in given phase
-
-        list_class_names = self._get_classes_by_phase_name(phase)
-        list_field_names = field_names
-
-        matrix = CategorisationMatrix(list_field_names, list_class_names)
-
-        return matrix
-
-    def _create_categorisation_result_matrix2(self, field_names, phase, parent):
-        #get all classes to which a profile will be assigned in given phase
-
-        list_class_names = self._get_classes_by_phase_name(phase, parent)
-        list_field_names = field_names
-
-        matrix = CategorisationMatrix(list_field_names, list_class_names)
-
-        return matrix
-
-    @staticmethod
-    def _get_rules_by_phase_and_field(stage_name, field_id):
-        message = {'type': 'ruleset', 'phase': stage_name, 'field_id': field_id}
-        client = Client()
-
-        result = dict(client.send(message))
-
-        return result
-
 
     @staticmethod
     def _get_classes(stage_name, parent_class):
