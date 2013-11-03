@@ -4,10 +4,6 @@ from SentifiField import SentifiField
 from Constant import *
 from Client import Client
 from TwitterProfile import TwitterProfile
-from CategorisationMatrix import CategorisationMatrix
-from RuleUtils import *
-from RuleSet import RuleSet
-from Rule import Rule
 
 import numpy
 
