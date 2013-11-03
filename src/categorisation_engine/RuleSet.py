@@ -34,11 +34,7 @@ class RuleSet(object):
             rule.display()
             list_results.append(rule)
 
-
         return list_results
-
-    def get_regex_inclusion_str(self):
-        pass
 
     def get_exclusion_set(self):
         return set(self.rules[self.rules[:, 5] == '1'])     # 5th-column
@@ -51,7 +47,6 @@ class RuleSet(object):
                 list_item.append("!" + item)
 
         return " ".join(list_item)
-
 
     def display(self):
         print self.cat_name, ":", self.exclusion, ":", [r for r in self.rules]

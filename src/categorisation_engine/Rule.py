@@ -1,5 +1,3 @@
-from SentifiWordsBank import  SentifiWordsBank
-import simplejson
 
 
 class Rule(object):
@@ -20,7 +18,6 @@ class Rule(object):
         return " ".join(list_item)
 
     def display(self):
-        #print self.class_name
-        #print self.get_regex_inclusion_str()
-        pass
+        print self.class_name
+        print self.get_regex_inclusion_str()
 
