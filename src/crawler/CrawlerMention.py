@@ -1,7 +1,6 @@
 import sys
 from twitter.TwitterStatusCrawler import TwitterStatusCrawler
 from Constant import *
-
 from utils.IOUtils import IOUtils
 from utils.PathUtils import PathUtils
 
@@ -12,13 +11,24 @@ def main():
     _crawl_tweets_by_mentioning_tag()
 
 
-#tag given in file
 def _crawl_tweets_by_mentioning_tag():
     input_file_path = ""
+
+    #taking the 3rd argument as the file_name.
     if len(sys.argv) == 2:
         input_file_path = MENTION_INPUT + sys.argv[1]
 
-    #Loading all filename which we have to process
+    list_processing_tags = _get_list_mention_tags_need_to_be_processed(input_file_path)
+
+    for tag_mention in list_processing_tags:
+        print "looking for who mention", tag_mention, "in their tweets"
+        list_contents = TwitterStatusCrawler().crawl_tweet_mentioning(tag_mention)
+        IOUtils().save_list_to_csv(MENTION_HEADER, list_contents, MENTION_OUTPUT_PATH + tag_mention + ".csv")
+
+
+def _get_list_mention_tags_need_to_be_processed(input_file_path):
+
+    #Get all tags need to be processed
     list_mentions_tags = IOUtils().read_first_column_in_csv(input_file_path)
     print "Total mention tags in library:", len(list_mentions_tags)
 
@@ -33,13 +43,11 @@ def _crawl_tweets_by_mentioning_tag():
         list_processed_mention.append(name)
 
     print list_processed_mention
+
     list_processing_tags = set(list_mentions_tags) - set(list_processed_mention)
     print "There have still been", len(list_processing_tags), "mentioning tag need to be crawled"
 
-    for tag_mention in list_processing_tags:
-        print "looking for who mention", tag_mention, "in their tweets"
-        list_contents = TwitterStatusCrawler().crawl_tweet_mentioning(tag_mention)
-        IOUtils().save_list_to_csv(MENTION_HEADER, list_contents, MENTION_OUTPUT_PATH + tag_mention + ".csv")
+    return list_processing_tags
 
 if __name__ == "__main__":
     main()
