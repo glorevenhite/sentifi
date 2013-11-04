@@ -22,6 +22,7 @@ class Categorizer(object):
 
             # Put above fields into a list
             fields = {TWITTER_FULL_NAME: field_full_name, TWITTER_SCREEN_NAME: field_screen_name, TWITTER_DESCRIPTION: field_description}
+
             print "1st STAGE: Identifying Profile Type..."
             stage = 'Profile Type'
             parent = "NULL"
@@ -36,7 +37,7 @@ class Categorizer(object):
             # Whether Person or Organisation
             print "3rd STAGE: Identifying Category 1..."
             stage = 'Category 1'
-            parent = 'Financial Market Professionals'
+            parent = profile.profile_group
             profile.category1 = self._assign_class(stage, parent, fields)
 
             ######################################################################################
@@ -74,6 +75,15 @@ class Categorizer(object):
         return result
 
 if __name__ == "__main__":
+
+    #select from database
+
+    #transfer  to object
+
+    #run categorisation
+
+    #send object back to database
+
 
     json = {'screen_name': 'glorevenhite', 'description': 'I am a financial analyst', 'name': 'Vo Truong Vinh'}
     p = TwitterProfile(json)
