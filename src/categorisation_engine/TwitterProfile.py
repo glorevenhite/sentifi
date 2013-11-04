@@ -13,14 +13,14 @@ class TwitterProfile(object):
         self.category2 = None
 
     def set_category(self, phase, category):
-        if phase == PHASE_VALUES[0]:
-            self.category1 = category
-        elif phase == PHASE_VALUES[1]:
-            self.category2 = category
-        elif phase == 'Profile Group':
-            self.profile_group = category
-        else:
+        if phase.upper() == PHASE_VALUES[0]:
             self.profile_type = category
+        elif phase.upper() == PHASE_VALUES[1]:
+            self.profile_group = category
+        elif phase.upper() == PHASE_VALUES[2]:
+            self.category1 = category
+        else:
+            self.category2 = category
 
     def _get_previous_stage(self, stage):
         message = {'type': 'parent', 'category_name': stage}

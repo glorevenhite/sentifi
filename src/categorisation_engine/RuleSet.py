@@ -8,6 +8,7 @@ class RuleSet(object):
     def __init__(self, list_records):
         self.rules = numpy.array(list_records)
 
+
     def get_list_category_ids(self):
         return sorted(set(self.rules[:, 0]))
 
@@ -31,13 +32,13 @@ class RuleSet(object):
         for id in list_ids:
             r = self.rules[self.rules[:, 3] == id]
             rule = Rule(r)
-            rule.display()
+            #rule.display()
             list_results.append(rule)
 
         return list_results
 
     def get_exclusion_set(self):
-        return set(self.rules[self.rules[:, 5] == '1'])     # 5th-column
+        return set(self.rules[self.rules[:, 5] == '1', 4])     # 5th-column
 
     def get_exclusion_regex_str(self):
         exclusion_set = self.get_exclusion_set()
@@ -53,3 +54,7 @@ class RuleSet(object):
 
 #exclusion = ['fuck', 'dung']
 #print RuleSet(None).get_exclusion_regex_str(exclusion)
+#a = [['1', 'P' ,'1', '608', 'we', '1', '0'],['1', 'P', '1', '610', 'provider', '0', '0']]
+#
+#ar = numpy.array(a)
+#print set(ar[ar[:, 5] == '1', 4])

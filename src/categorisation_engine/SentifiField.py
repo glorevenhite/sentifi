@@ -17,17 +17,20 @@ class SentifiField(object):
             rs = RuleSet(arr_ruleset)
 
             #Exclusion set            "
-            print "Exclusion set for ruleset:" , rs.get_exclusion_regex_str()
-            print "Determining..."
-            print "OK"
+            #print "Exclusion set for ruleset:" , rs.get_exclusion_regex_str()
+            #print "Determining..."
+            #print "OK"
+            exclusion_str_regex = rs.get_exclusion_regex_str()
+            if match(exclusion_str_regex, self.content):
+                return arr_ruleset[0][1]
 
-            print "---------INCLUSION----------"
+            #print "---------INCLUSION----------"
             # Processing inclusion set in each simple rule
             list_simple_rules = rs.get_list_simple_rules()
             for simple_rule in list_simple_rules:
                 str_regex = simple_rule.get_regex_inclusion_str()
-                print "content:", self.content
-                print "regex:", str_regex
+                #print "content:", self.content
+                #print "regex:", str_regex
                 if match(str_regex, self.content):
                     return simple_rule.class_name
 
