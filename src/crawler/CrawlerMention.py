@@ -4,7 +4,6 @@ from Constant import *
 from utils.IOUtils import IOUtils
 from utils.PathUtils import PathUtils
 
-
 def main():
 
     #Crawl all mentions to a People in given file
