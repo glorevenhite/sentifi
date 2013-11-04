@@ -22,28 +22,25 @@ class Categorizer(object):
 
             # Put above fields into a list
             fields = {TWITTER_FULL_NAME: field_full_name, TWITTER_SCREEN_NAME: field_screen_name, TWITTER_DESCRIPTION: field_description}
-            print "STAGE: Identifying Profile Type..."
+            print "1st STAGE: Identifying Profile Type..."
             stage = 'Profile Type'
             parent = "NULL"
             profile.profile_type = self._assign_class(stage, parent, fields)
 
-
-
             ##################################################################
-            print "STAGE: Identifying Publisher Group..."
+            print "2nd STAGE: Identifying Publisher Group..."
             stage = 'Publisher Group'
             parent = profile.profile_type
             profile.profile_group = self._assign_class(stage, parent, fields)
 
-
             # Whether Person or Organisation
-            print "STAGE: Identifying Category 1..."
+            print "3rd STAGE: Identifying Category 1..."
             stage = 'Category 1'
             parent = 'Financial Market Professionals'
             profile.category1 = self._assign_class(stage, parent, fields)
 
             ######################################################################################
-            print "STAGE: Identifying Category 2..."
+            print "4th STAGE: Identifying Category 2..."
             stage = 'Category 2'
             parent = profile.category1
             profile.category2 = self._assign_class(stage, parent, fields)
@@ -63,7 +60,6 @@ class Categorizer(object):
                 assigned_class = field.is_complied(arr_rules)
                 return assigned_class
 
-
     @staticmethod
     def _get_rule_subset_by_phase_field_parent(stage_name, field_id, parent_id):
         result = []
@@ -75,18 +71,6 @@ class Categorizer(object):
         if returned_data.get('status') == SERVER_STATUS_OK:
             result = returned_data.get('data').get(parent_id)
 
-        return result
-
-    @staticmethod
-    def _get_classes(stage_name, parent_class):
-        message = {'type': 'classes', 'stage': stage_name, 'parent_class': parent_class}
-        client = Client()
-        returned_data = dict(client.send(message))
-
-        result = {}
-        if returned_data['status'] == SERVER_STATUS_OK:
-            result.update({stage_name: returned_data.get('data').get(stage_name)})
-            return result.get(stage_name).values()
         return result
 
 if __name__ == "__main__":
