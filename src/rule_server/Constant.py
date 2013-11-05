@@ -1,4 +1,5 @@
 DATABASE_NAME = 'primitive_category_db'
+#DATABASE_NAME = 'autocategory_db'
 TABLE_RULES = 'tbl_rule'
 TABLE_CATEGORIES = 'tbl_category'
 TABLE_RULESETS = 'tbl_rule_set'

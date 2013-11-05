@@ -38,31 +38,6 @@ class SentifiField(object):
                     return simple_rule.class_name
         return last_ruleset[1]
 
-    def is_complied2(self, arr_rules):
-        list_ids = sorted(set(arr_rules[:, 2]))
-
-        for id in list_ids:
-            arr_ruleset = arr_rules[arr_rules[:, 2] == id]
-            rs = RuleSet(arr_ruleset)
-
-            #Exclusion set            "
-            #print "Exclusion set for ruleset:" , rs.get_exclusion_regex_str()
-            #print "Determining..."
-            #print "OK"
-            exclusion_str_regex = rs.get_exclusion_regex_str()
-            if match(exclusion_str_regex, self.content):
-                return arr_ruleset[0][1]    # Return class name
-
-            #print "---------INCLUSION----------"
-            # Processing inclusion set in each simple rule
-            list_simple_rules = rs.get_list_simple_rules()
-            for simple_rule in list_simple_rules:
-                str_regex = simple_rule.get_regex_inclusion_str()
-                #print "content:", self.content
-                #print "regex:", str_regex
-                if match(str_regex, self.content):
-                    return simple_rule.class_name
-            return arr_ruleset[len(list_ids) - 1][1]
     def _apply_rule(self, tokenized_content, inclusion, exclusion):
 
         #Check whether content contains any word in exclusion set

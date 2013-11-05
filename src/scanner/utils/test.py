@@ -4,7 +4,7 @@ from numpy import array
 import pprint
 
 def _build():
-    file_path = "D:\\SENTIFI_DATA\\categorization\\20131021_compare_twitter_analyst.csv"
+    file_path = "D:\\Dropbox\\Sentifi Analytics\\5. Vinh\\Confusing Matrix\\2013.11.05\\results.csv"
     data = IOUtils().read_list_from_csv(file_path)
 
     cat1_confusing_matrix(data)
@@ -21,8 +21,8 @@ def cat1_confusing_matrix(data):
 
     print "Total cases:", n
 
-    array_human = array(analyst_results)[1:,5]     #Select only column 5th from the 2nd row
-    array_machine = array(machine_results)[1:,9]    #Selecting only column 9th from the 2nd row
+    array_human = array(analyst_results)[1:, 10]     #Select only column 5th from the 2nd row
+    array_machine = array(machine_results)[1:, 6]    #Selecting only column 9th from the 2nd row
 
     dict = {}
     for index in range(0, n-1):
@@ -52,22 +52,22 @@ def cat1_confusing_matrix(data):
     dimension = len(grand_dict)
     print dimension
 
-    confusing_matrix = numpy.zeros((dimension,dimension),dtype=numpy.int)
+    confusing_matrix = numpy.zeros((dimension, dimension), dtype=numpy.int)
 
     #Travel each row in data
     for i in range(0, n-1):
-        if (array_machine[i] != ""):
-            #print array_human[i], "-------", array_machine[i]
+        if array_machine[i] != "":
+            print array_human[i], "-------", array_machine[i]
             human_index = get_index(array_human[i], grand_dict)
             machine_index = get_index(array_machine[i], grand_dict)
-            #print human_index, "---------", machine_index
+            print array_machine[i]
+            print human_index, "---------", machine_index
             confusing_matrix[human_index][machine_index] += 1
             #print human_index, machine_index, confusing_matrix[human_index][machine_index]
 
-
     print confusing_matrix
 
-    list_results = confusing_matrix.tolist()
+    #list_results = confusing_matrix.tolist()
 
     #IOUtils().save_list_to_csv(grand_dict, list_results, "D:\\matrix.csv")
 

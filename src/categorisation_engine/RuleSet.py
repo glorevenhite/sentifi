@@ -46,7 +46,7 @@ class RuleSet(object):
         list_item = []
         if len(exclusion_set):
             for item in exclusion_set:
-                list_item.append("!" + item)
+                list_item.append("^" + item)
 
         return " ".join(list_item)
 
