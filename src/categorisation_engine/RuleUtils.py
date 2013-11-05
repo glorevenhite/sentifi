@@ -31,10 +31,14 @@ if __name__ == "__main__":
     s = 'ABB is falling down'
     print match(rule, s)    # true
 
-    rule = 'ABB |$ABB |#ABB -falling'
+    rule = 'ABB |$ABB |#ABB !falling'
     s = 'ABB is falling down'
     print match(rule, s)    # false
 
     rule = 'equity analyst'
     s = 'i am an equity analyst sell side'
+    print match(rule, s)
+
+    rule = '!our !we !provider'
+    s = 'We are technical traders and We want to profit '
     print match(rule, s)

@@ -2,6 +2,7 @@ from Rule import Rule
 from SentifiWordsBank import SentifiWordsBank
 from RuleSet import RuleSet
 from RuleUtils import *
+import numpy
 
 class SentifiField(object):
     def __init__(self, id, content):
@@ -10,8 +11,10 @@ class SentifiField(object):
         self.category = ""
 
     def is_complied(self, arr_rules):
+        sorted_arr_rules = arr_rules[arr_rules[:, 6].argsort()]
+        list_ids = list(set(sorted_arr_rules[:, 2]))
+        last_ruleset = sorted_arr_rules[len(sorted_arr_rules) - 1]
 
-        list_ids = sorted(set(arr_rules[:, 2]))
         for id in list_ids:
             arr_ruleset = arr_rules[arr_rules[:, 2] == id]
             rs = RuleSet(arr_ruleset)
@@ -21,8 +24,8 @@ class SentifiField(object):
             #print "Determining..."
             #print "OK"
             exclusion_str_regex = rs.get_exclusion_regex_str()
-            if match(exclusion_str_regex, self.content):
-                return arr_ruleset[0][1]
+            if len(exclusion_str_regex) > 0 and match(exclusion_str_regex, self.content):
+                return arr_ruleset[0][1]    # Return class name
 
             #print "---------INCLUSION----------"
             # Processing inclusion set in each simple rule
@@ -33,35 +36,33 @@ class SentifiField(object):
                 #print "regex:", str_regex
                 if match(str_regex, self.content):
                     return simple_rule.class_name
+        return last_ruleset[1]
 
-            #print list_simple_rules
+    def is_complied2(self, arr_rules):
+        list_ids = sorted(set(arr_rules[:, 2]))
 
+        for id in list_ids:
+            arr_ruleset = arr_rules[arr_rules[:, 2] == id]
+            rs = RuleSet(arr_ruleset)
 
+            #Exclusion set            "
+            #print "Exclusion set for ruleset:" , rs.get_exclusion_regex_str()
+            #print "Determining..."
+            #print "OK"
+            exclusion_str_regex = rs.get_exclusion_regex_str()
+            if match(exclusion_str_regex, self.content):
+                return arr_ruleset[0][1]    # Return class name
 
-
-
-    def is_complied2(self, rule):
-        #get all words used in rule
-        wordsbank = rule.get_wordsbank()
-
-        #hyphenize any compound words in content
-        hyphen_content = SentifiWordsBank().hyphenize_compound_words_in(self.content, wordsbank)
-
-        #Splitting the hyphen_content using space resulting to a list of words used in content
-        tokenized_content = hyphen_content.split(" ")
-
-        #get words using in case of inclusion and exclusion
-        inclusion = rule.get_inclusion()
-        exclusion = rule.exc_keywords
-
-        #Check whether the content has word in inclusion set but not exclusion set
-        flag = self._apply_rule(tokenized_content, inclusion, exclusion)
-
-        if flag is True:
-            return rule.rule_set_name
-        else:
-            return None
-
+            #print "---------INCLUSION----------"
+            # Processing inclusion set in each simple rule
+            list_simple_rules = rs.get_list_simple_rules()
+            for simple_rule in list_simple_rules:
+                str_regex = simple_rule.get_regex_inclusion_str()
+                #print "content:", self.content
+                #print "regex:", str_regex
+                if match(str_regex, self.content):
+                    return simple_rule.class_name
+            return arr_ruleset[len(list_ids) - 1][1]
     def _apply_rule(self, tokenized_content, inclusion, exclusion):
 
         #Check whether content contains any word in exclusion set

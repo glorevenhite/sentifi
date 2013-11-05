@@ -4,6 +4,7 @@ from SentifiField import SentifiField
 from Constant import *
 from Client import Client
 from TwitterProfile import TwitterProfile
+from MySQLUtils import MySQLUtils
 
 import numpy
 
@@ -36,7 +37,7 @@ class Categorizer(object):
             # Whether Person or Organisation
             print "3rd STAGE: Identifying Category 1..."
             stage = 'Category 1'
-            parent = 'Financial Market Professionals'
+            parent = profile.profile_group
             profile.category1 = self._assign_class(stage, parent, fields)
 
             ######################################################################################
@@ -44,6 +45,9 @@ class Categorizer(object):
             stage = 'Category 2'
             parent = profile.category1
             profile.category2 = self._assign_class(stage, parent, fields)
+
+            profile.display()
+        return list_profiles
 
     def _assign_class(self, stage, parent, fields):
         for field in fields.values():
@@ -57,8 +61,13 @@ class Categorizer(object):
                 #print arr_rules
 
                 #checking the satisfaction
-                assigned_class = field.is_complied(arr_rules)
-                return assigned_class
+
+                if stage.upper() == PHASE_VALUES[0]:
+                    assigned_class = field.is_complied(arr_rules)
+                    return assigned_class
+                else:
+                    assigned_class = field.is_complied(arr_rules)
+                    return assigned_class
 
     @staticmethod
     def _get_rule_subset_by_phase_field_parent(stage_name, field_id, parent_id):
@@ -74,16 +83,31 @@ class Categorizer(object):
         return result
 
 if __name__ == "__main__":
+    connection = MySQLUtils().connection
 
-    json = {'screen_name': 'glorevenhite', 'description': 'I am a financial analyst', 'name': 'Vo Truong Vinh'}
-    p = TwitterProfile(json)
-    p.screen_name = "glorevenhite"
-    p.description = "I am an equity analyst sell side"
-    p.fullname = 'Vo Truong Vinh'
+    cursor = connection.cursor()
 
+    sql = "SELECT * FROM {0} " .format(TABLE_PROFILES)
+    cursor.execute(sql)
+
+    rows = cursor.fetchall()
+
+    list_profile = []
+    for row in rows:
+        p = TwitterProfile(row)
+        list_profile.append(p)
+
+    #list_profile = Categorizer().categorize_twitter_profile_step(list_profile)
+
+    #p = TwitterProfile([239, 'dividata', 'dividata .com', 'Dividend Stock Analysis and Dividend History'])
+    #list_profiles = [p]
+    #Categorizer().categorize_twitter_profile_step(list_profiles)
+
+    p = TwitterProfile([239, 'Luke_McLachlan', 'Luke McLachlan', 'Full-time day trader: Trading major FX pairs, UK & US large-caps, and Gold / Silver / Oil !'])
     list_profiles = [p]
-
-    #print Categorizer().categorize_twitter_profile(list_profile)
-    #Categorizer()._get_classes_by_phase_name('Category 1')
     Categorizer().categorize_twitter_profile_step(list_profiles)
-    list_profiles[0].display()
+
+    #p = TwitterProfile([239, 'stockhunter1984', ' StockInterceptor.com', 'We are technical traders and we want to profit in the stock market! We use our Mobile Application to connect traders around the world!'])
+    #list_profiles = [p]
+    #Categorizer().categorize_twitter_profile_step(list_profiles)
+
