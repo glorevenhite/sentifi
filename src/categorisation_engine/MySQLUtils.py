@@ -79,8 +79,3 @@ class MySQLUtils(object):
     def select_query(self, str_query):
         self.cursor.execute(str_query)
         return self.cursor.fetchall()
-
-
-#MySQLUtils()._get_rule_subset_by_phase_and_field('Category 1', 1)
-#MySQLUtils()._get_rule_subset_by_phase_and_field('Profile Type', 1)
-#print MySQLUtils().get_rule_subset_by_phase_field_parent('Profile Type', 1, "NULL")

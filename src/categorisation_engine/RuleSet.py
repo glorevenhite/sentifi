@@ -28,7 +28,8 @@ class RuleSet(object):
 
     def get_list_simple_rules(self):
         list_results = []
-        list_ids = sorted(set(self.rules[:, 3]))    # 3rd-column
+        inclusion_rules = self.rules[self.rules[:, 5] == '0']
+        list_ids = sorted(set(inclusion_rules[:, 3]))    # 3rd-column
         for id in list_ids:
             r = self.rules[self.rules[:, 3] == id]
             rule = Rule(r)
