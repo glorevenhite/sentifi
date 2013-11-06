@@ -1,6 +1,6 @@
 from Constant import *
-from Client import Client
 import simplejson
+from SentifiField import SentifiField
 
 
 class SentifiTwitterProfile(object):
@@ -14,6 +14,27 @@ class SentifiTwitterProfile(object):
         self.category1 = None
         self.category2 = None
 
+    def get_fields(self):
+
+        # Screen Name
+        snf = SentifiField()
+        snf.name = TWITTER_FULL_NAME
+        snf.channel = TWITTER
+        snf.content = self.screen_name
+
+        # Full Name
+        fn = SentifiField()
+        fn.name = TWITTER_FULL_NAME
+        fn.channel = TWITTER
+        fn.content = self.fullname
+
+        # Description
+        desc = SentifiField()
+        desc.name = TWITTER_DESCRIPTION
+        desc.channel = TWITTER
+        desc.content = self.description
+
+        return [snf, fn, desc]
     def to_array(self):
         list_items = []
 

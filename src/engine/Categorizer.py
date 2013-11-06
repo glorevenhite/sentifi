@@ -3,6 +3,7 @@ __author__ = 'vinh.vo@sentifi.com'
 from SentifiCategory import SentifiCategory
 from SentifiField import SentifiField
 from SentifiQuery import SentifiQuery
+from ResultMatrix import ResultMatrix
 from Utils import *
 
 
@@ -10,8 +11,26 @@ class Categorizer(object):
     def categorizer(self, profile):
         fields = profile.get_fields()
 
+        stage = "Profile Type"
+        parent = "NULL"
+        list_field_names = self.get_list_field_names()
+        list_category_names = self.get_list_category_names()
+        result_matrix = ResultMatrix(list_field_names, list_category_names)
+
+        for f in fields:
+            field_name = f.name
+            list_categories = self.get_categories(stage, parent, field_name)
+            pass
+
+
+
+        #stage = "Publisher Group"
+        #parent =
+
+
+
         #taking all the fields
-        pass
+            pass
 
     def check(self, sentifi_field, sentifi_category):
         score = 0
@@ -45,6 +64,8 @@ class Categorizer(object):
 
     def is_contained(self, list_keywords, text):
         return look(list_keywords, text)
+
+
 
 #text = " I am a financial journalist"
 #list_keywords = ['financial', 'business']
