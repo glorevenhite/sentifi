@@ -16,3 +16,15 @@ SERVER_STATUS_ERROR = "ERROR"
 DATABASE_NAME = 'autocategory'
 DATABASE_NAME = 'primitive_category_db'
 TABLE_PROFILES = 'test'
+
+P_PUBLISHER_GROUP = ['Financial Market Professionals', 'Other Stakeholders']
+
+O_PUBLISHER_GROUP = ['Financial Services',
+                     'News Publishers',
+                     'Technology Market Participants',
+                     'Other Companies',
+                     'Education Organisations',
+                     'Government Organisations',
+                     'Non-Governmental Organisations',
+                     'Non identified Stakeholder',
+                     'Undefined']

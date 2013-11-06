@@ -29,21 +29,23 @@ class Ruler(object):
 
         return {phase: values}
 
-
     def get_parent_phase(self, category_name):
-        sql = "SELECT c.name FROM {0} AS c WHERE c.category_id IN (SELECT c.parent_cat_id " .format(TABLE_CATEGORIES)
+        sql = "SELECT c.name "
+        sql += "FROM {0} AS c WHERE c.category_id IN (SELECT c.parent_cat_id " .format(TABLE_CATEGORIES)
         sql += "FROM {0} AS c " .format(TABLE_CATEGORIES)
         sql += "WHERE c.name = '{0}')" .format(category_name)
 
         cursor = self.connection.cursor()
         cursor.execute(sql)
-        results = cursor.fetchall()
+        results = cursor.fetchone()
 
-        for row in results:
-            if row[0] != "Null":
-                json_data = {category_name: row[0]}
-                return json_data
+        #for row in results:
+        #    if row[0] != "Null":
+        #        json_data = {category_name: row[0]}
+        #        return json_data
 
-#print Ruler().get_parent_phase('Architecture, Construction & Design')
+        return results[0]
+
+print Ruler().get_parent_phase('Architecture, Construction & Design')
 #print Ruler().get_classes_by_phase_name('Publisher Group', 'O')
 #Ruler().get_rule_subset_by_phase_and_field('Category 1', 1)

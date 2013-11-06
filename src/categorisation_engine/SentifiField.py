@@ -13,7 +13,7 @@ class SentifiField(object):
     def is_complied(self, arr_rules):
         sorted_arr_rules = arr_rules[arr_rules[:, 6].argsort()]
         list_ids = list(set(sorted_arr_rules[:, 2]))
-        last_ruleset = sorted_arr_rules[len(sorted_arr_rules) - 1]
+        #last_ruleset = sorted_arr_rules[len(sorted_arr_rules) - 1]
 
         for id in list_ids:
             arr_ruleset = arr_rules[arr_rules[:, 2] == id]
@@ -36,7 +36,7 @@ class SentifiField(object):
                 #print "regex:", str_regex
                 if match(str_regex, self.content):
                     return simple_rule.class_name
-        return last_ruleset[1]
+        return None
 
     def _apply_rule(self, tokenized_content, inclusion, exclusion):
 

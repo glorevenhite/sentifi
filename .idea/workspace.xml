@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8aaa4db0-6dfb-471a-b343-1e22ba29154e" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/Vince.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/categorisation_engine/Categorizer.py" afterPath="$PROJECT_DIR$/src/categorisation_engine/Categorizer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/categorisation_engine/ConfusingMatrix.py" afterPath="$PROJECT_DIR$/src/categorisation_engine/ConfusingMatrix.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/categorisation_engine/Constant.py" afterPath="$PROJECT_DIR$/src/categorisation_engine/Constant.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/rule_server/Constant.py" afterPath="$PROJECT_DIR$/src/rule_server/Constant.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/categorisation_engine/RuleSet.py" afterPath="$PROJECT_DIR$/src/categorisation_engine/RuleSet.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/categorisation_engine/RuleUtils.py" afterPath="$PROJECT_DIR$/src/categorisation_engine/RuleUtils.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/rule_server/Ruler.py" afterPath="$PROJECT_DIR$/src/rule_server/Ruler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/categorisation_engine/SentifiField.py" afterPath="$PROJECT_DIR$/src/categorisation_engine/SentifiField.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scanner/utils/test.py" afterPath="$PROJECT_DIR$/src/scanner/utils/test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="sentifi.iws" />
@@ -36,7 +34,7 @@
       <file leaf-file-name="TwitterProfile.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/categorisation_engine/TwitterProfile.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="0" selection-start="362" selection-end="362" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1300">
+            <state line="14" column="0" selection-start="362" selection-end="362" vertical-scroll-proportion="0.0" vertical-offset="280" max-vertical-offset="1080">
               <folding />
             </state>
           </provider>
@@ -45,7 +43,7 @@
       <file leaf-file-name="Constant.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/categorisation_engine/Constant.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="38" selection-start="472" selection-end="472" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+            <state line="28" column="49" selection-start="956" selection-end="956" vertical-scroll-proportion="0.0" vertical-offset="560" max-vertical-offset="720">
               <folding />
             </state>
           </provider>
@@ -54,25 +52,43 @@
       <file leaf-file-name="Constant.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rule_server/Constant.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="1" selection-start="41" selection-end="41" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="625">
+            <state line="1" column="1" selection-start="41" selection-end="41" vertical-scroll-proportion="0.0" vertical-offset="20" max-vertical-offset="500">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Categorizer.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Categorizer.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/categorisation_engine/Categorizer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="43" selection-start="2334" selection-end="2334" vertical-scroll-proportion="1.769968" vertical-offset="292" max-vertical-offset="3200">
+            <state line="110" column="0" selection-start="4155" selection-end="4155" vertical-scroll-proportion="0.0" vertical-offset="1973" max-vertical-offset="4260">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Classifier.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/scanner/Classifier.py">
+      <file leaf-file-name="Ruler.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/rule_server/Ruler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="106" column="0" selection-start="3507" selection-end="3507" vertical-scroll-proportion="0.0" vertical-offset="2037" max-vertical-offset="3500">
+            <state line="46" column="24" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0" vertical-offset="920" max-vertical-offset="1120">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MySQLUtils.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/rule_server/MySQLUtils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="132" column="8" selection-start="5758" selection-end="5758" vertical-scroll-proportion="0.0" vertical-offset="2640" max-vertical-offset="2820">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="socket.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/Python27/Lib/socket.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="227" column="19" selection-start="7826" selection-end="7826" vertical-scroll-proportion="0.0" vertical-offset="4540" max-vertical-offset="11580">
               <folding />
             </state>
           </provider>
@@ -81,50 +97,26 @@
       <file leaf-file-name="SentifiField.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/categorisation_engine/SentifiField.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="22" selection-start="1523" selection-end="1523" vertical-scroll-proportion="0.0" vertical-offset="900" max-vertical-offset="2250">
+            <state line="32" column="0" selection-start="1194" selection-end="1194" vertical-scroll-proportion="0.0" vertical-offset="449" max-vertical-offset="1800">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RuleUtils.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Server.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/rule_server/Server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="45" column="34" selection-start="1722" selection-end="1722" vertical-scroll-proportion="0.0" vertical-offset="572" max-vertical-offset="1600">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RuleUtils.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/categorisation_engine/RuleUtils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="12" selection-start="536" selection-end="536" vertical-scroll-proportion="0.0" vertical-offset="111" max-vertical-offset="1425">
-              <folding>
-                <element signature="e#56#68#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SentifiWordsBank.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/search_item_engine/SentifiWordsBank.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="1625">
+            <state line="23" column="31" selection-start="596" selection-end="596" vertical-scroll-proportion="0.14705883" vertical-offset="380" max-vertical-offset="1260">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SentifiMessage.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/search_item_engine/SentifiMessage.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="1200" max-vertical-offset="2925">
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Filter.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/search_item_engine/Filter.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="675" max-vertical-offset="2850">
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -151,26 +143,26 @@
         <option value="$PROJECT_DIR$/src/categorisation_engine/Client.py" />
         <option value="$PROJECT_DIR$/src/categorisation_engine/Rule.py" />
         <option value="$PROJECT_DIR$/src/categorisation_engine/ComplexRule.py" />
-        <option value="$PROJECT_DIR$/src/rule_server/Ruler.py" />
         <option value="$PROJECT_DIR$/src/rule_server/Server.py" />
         <option value="$PROJECT_DIR$/src/categorisation_engine/Classifier.py" />
         <option value="$PROJECT_DIR$/src/categorisation_engine/TwitterProfile.py" />
         <option value="$PROJECT_DIR$/src/categorisation_engine/ConfusingMatrix.py" />
         <option value="$PROJECT_DIR$/src/scanner/utils/test.py" />
         <option value="$PROJECT_DIR$/src/categorisation_engine/RuleSet.py" />
-        <option value="$PROJECT_DIR$/src/categorisation_engine/RuleUtils.py" />
         <option value="$PROJECT_DIR$/src/rule_server/Constant.py" />
-        <option value="$PROJECT_DIR$/src/categorisation_engine/Categorizer.py" />
-        <option value="$PROJECT_DIR$/src/categorisation_engine/Constant.py" />
         <option value="$PROJECT_DIR$/src/categorisation_engine/SentifiField.py" />
+        <option value="$PROJECT_DIR$/src/rule_server/Ruler.py" />
+        <option value="$PROJECT_DIR$/src/categorisation_engine/Constant.py" />
+        <option value="$PROJECT_DIR$/src/categorisation_engine/Categorizer.py" />
+        <option value="$PROJECT_DIR$/src/categorisation_engine/RuleUtils.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -213,7 +205,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
+              <option name="myItemId" value="Sentifier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -223,25 +215,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="search_item_engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
+              <option name="myItemId" value="Sentifier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -255,7 +229,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
+              <option name="myItemId" value="Sentifier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -273,25 +247,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crawler2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
+              <option name="myItemId" value="Sentifier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -328,24 +284,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.Categorizer">
-    <configuration default="false" name="Classifier" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/categorisation_engine" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="sentifi" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/categorisation_engine/Classifier.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
     <configuration default="false" name="Categorizer" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -417,6 +355,24 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="sentifi" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/categorisation_engine/RuleSet.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Ruler" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/rule_server" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="sentifi" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/rule_server/Ruler.py" />
       <option name="PARAMETERS" value="" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
@@ -544,19 +500,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.Classifier" />
-      <item index="1" class="java.lang.String" itemvalue="Python.Categorizer" />
-      <item index="2" class="java.lang.String" itemvalue="Python.test" />
-      <item index="3" class="java.lang.String" itemvalue="Python.RuleUtils" />
-      <item index="4" class="java.lang.String" itemvalue="Python.RuleSet" />
+      <item index="0" class="java.lang.String" itemvalue="Python.Categorizer" />
+      <item index="1" class="java.lang.String" itemvalue="Python.test" />
+      <item index="2" class="java.lang.String" itemvalue="Python.RuleUtils" />
+      <item index="3" class="java.lang.String" itemvalue="Python.RuleSet" />
+      <item index="4" class="java.lang.String" itemvalue="Python.Ruler" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.Categorizer" />
-        <item index="1" class="java.lang.String" itemvalue="Python.RuleUtils" />
-        <item index="2" class="java.lang.String" itemvalue="Python.RuleSet" />
-        <item index="3" class="java.lang.String" itemvalue="Python.test" />
-        <item index="4" class="java.lang.String" itemvalue="Python.Classifier" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Ruler" />
+        <item index="2" class="java.lang.String" itemvalue="Python.RuleUtils" />
+        <item index="3" class="java.lang.String" itemvalue="Python.RuleSet" />
+        <item index="4" class="java.lang.String" itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
@@ -664,24 +620,24 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14739583" sideWeight="0.74242425" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32467532" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14714494" sideWeight="0.74346405" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37745097" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25757575" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25653595" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -715,97 +671,89 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/rule_server/Ruler.py</url>
-          <line>298</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/src/categorisation_engine/RuleUtils.py</url>
+          <line>38</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/src/categorisation_engine/Categorizer.py</url>
-          <line>125</line>
-          <option name="timeStamp" value="3" />
+          <line>161</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/categorisation_engine/RuleUtils.py</url>
-          <line>31</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/src/categorisation_engine/Categorizer.py</url>
+          <line>211</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="5" />
+      <option name="time" value="7" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/scanner/utils/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="0" selection-start="2420" selection-end="2420" vertical-scroll-proportion="0.0" vertical-offset="825" max-vertical-offset="2725">
-          <folding>
-            <element signature="e#0#27#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/categorisation_engine/MySQLUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="32" selection-start="683" selection-end="996" vertical-scroll-proportion="0.0" vertical-offset="525" max-vertical-offset="2175">
-          <folding>
-            <element signature="e#0#21#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/categorisation_engine/ConfusingMatrix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="8" selection-start="76" selection-end="76" vertical-scroll-proportion="0.15151516" vertical-offset="0" max-vertical-offset="660">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/categorisation_engine/RuleSet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="0" selection-start="1385" selection-end="1385" vertical-scroll-proportion="0.0" vertical-offset="830" max-vertical-offset="1625">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/crawler/SentifiTwitterProfile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="975" max-vertical-offset="5375">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="975" max-vertical-offset="5375" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/search_item_engine/MessageFilter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1275">
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1275" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/search_item_engine/SentifiMessage.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2925">
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2925" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/search_item_engine/Filter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2850">
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2850" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/search_item_engine/SentifiWordsBank.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="1625">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="1625" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rule_server/Constant.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="1" selection-start="41" selection-end="41" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="625">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scanner/Classifier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="98" column="21" selection-start="3286" selection-end="3286" vertical-scroll-proportion="0.059880238" vertical-offset="1840" max-vertical-offset="2800" />
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/socket.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="227" column="19" selection-start="7826" selection-end="7826" vertical-scroll-proportion="0.0" vertical-offset="4278" max-vertical-offset="11520">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rule_server/MySQLUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="132" column="8" selection-start="5758" selection-end="5758" vertical-scroll-proportion="0.0" vertical-offset="2272" max-vertical-offset="2800">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rule_server/Server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="34" selection-start="1722" selection-end="1722" vertical-scroll-proportion="0.0" vertical-offset="572" max-vertical-offset="1600">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rule_server/Ruler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="24" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0" vertical-offset="552" max-vertical-offset="1100">
           <folding />
         </state>
       </provider>
@@ -817,46 +765,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/rule_server/Constant.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="1" selection-start="41" selection-end="41" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="625">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/categorisation_engine/Constant.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="38" selection-start="472" selection-end="472" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scanner/Classifier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="0" selection-start="3507" selection-end="3507" vertical-scroll-proportion="0.0" vertical-offset="2037" max-vertical-offset="3500">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/categorisation_engine/RuleUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="12" selection-start="536" selection-end="536" vertical-scroll-proportion="0.0" vertical-offset="665" max-vertical-offset="1425">
-          <folding>
-            <element signature="e#56#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/categorisation_engine/SentifiField.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="22" selection-start="1523" selection-end="1523" vertical-scroll-proportion="0.0" vertical-offset="900" max-vertical-offset="2250">
+        <state line="28" column="49" selection-start="956" selection-end="956" vertical-scroll-proportion="0.0" vertical-offset="266" max-vertical-offset="720">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/categorisation_engine/Categorizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="43" selection-start="2334" selection-end="2334" vertical-scroll-proportion="1.769968" vertical-offset="292" max-vertical-offset="3200">
+        <state line="110" column="0" selection-start="4155" selection-end="4155" vertical-scroll-proportion="0.0" vertical-offset="1973" max-vertical-offset="4260">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/categorisation_engine/SentifiField.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="0" selection-start="1194" selection-end="1194" vertical-scroll-proportion="0.0" vertical-offset="449" max-vertical-offset="1800">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/categorisation_engine/RuleUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="31" selection-start="596" selection-end="596" vertical-scroll-proportion="0.14705883" vertical-offset="380" max-vertical-offset="1260">
           <folding />
         </state>
       </provider>

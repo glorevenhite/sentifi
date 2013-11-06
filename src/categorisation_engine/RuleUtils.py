@@ -19,12 +19,19 @@ def match(query, text):
             include.append(re.compile(piece))
 
     s = text.lower()
+    print s.split()
+    for r in include:
+        print r.pattern.lower()
+    print all(r.search(s) for r in include)
+    #for r in not_include:
+        #print r.pattern.lower()
+
 
     return (
         (
-            all(r.pattern in s.split() for r in include)
-            and not any(r.pattern in s.split() for r in not_include)
-        ) or any(r.pattern in s.split() for r in or_include)
+            all(r.search(s)for r in include)
+            and not any(r.search(s) in s.split() for r in not_include)
+        ) or any(r.search(s) in s.split() for r in or_include)
     )
 
 
