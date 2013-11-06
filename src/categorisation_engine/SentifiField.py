@@ -4,6 +4,7 @@ from RuleSet import RuleSet
 from RuleUtils import *
 import numpy
 
+
 class SentifiField(object):
     def __init__(self, id, content):
         self.id = id
@@ -13,16 +14,12 @@ class SentifiField(object):
     def is_complied(self, arr_rules):
         sorted_arr_rules = arr_rules[arr_rules[:, 6].argsort()]
         list_ids = list(set(sorted_arr_rules[:, 2]))
-        #last_ruleset = sorted_arr_rules[len(sorted_arr_rules) - 1]
 
         for id in list_ids:
             arr_ruleset = arr_rules[arr_rules[:, 2] == id]
             rs = RuleSet(arr_ruleset)
 
             #Exclusion set            "
-            #print "Exclusion set for ruleset:" , rs.get_exclusion_regex_str()
-            #print "Determining..."
-            #print "OK"
             exclusion_str_regex = rs.get_exclusion_regex_str()
             if len(exclusion_str_regex) > 0 and match(exclusion_str_regex, self.content):
                 return arr_ruleset[0][1]    # Return class name

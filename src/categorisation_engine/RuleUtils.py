@@ -2,6 +2,7 @@ __author__ = 'duy.do@sentifi.com, vinh.vo@sentifi.com'
 
 import shlex
 import re
+import numpy
 
 NOT = '^'
 OR = '|'
@@ -19,13 +20,12 @@ def match(query, text):
             include.append(re.compile(piece))
 
     s = text.lower()
-    print s.split()
-    for r in include:
-        print r.pattern.lower()
-    print all(r.search(s) for r in include)
+    #print s.split()
+    #for r in include:
+    #    print r.pattern.lower()
+    #print all(r.search(s) for r in include)
     #for r in not_include:
         #print r.pattern.lower()
-
 
     return (
         (
@@ -33,6 +33,16 @@ def match(query, text):
             and not any(r.search(s) in s.split() for r in not_include)
         ) or any(r.search(s) in s.split() for r in or_include)
     )
+
+
+def match2(list_keywords, content):
+    master = numpy.array(content.split())
+    search = numpy.array(list_keywords)
+    print master
+    print search
+    return len(numpy.searchsorted(master, search))
+
+
 
 
 if __name__ == "__main__":
@@ -55,4 +65,6 @@ if __name__ == "__main__":
     rule = 'journalist'
     s = ' i am a journalist'
     print match(rule, s)    # true
+
+    print match2(['journalist financial'], "I am a financial journalist")
 

@@ -8,7 +8,6 @@ class RuleSet(object):
     def __init__(self, list_records):
         self.rules = numpy.array(list_records)
 
-
     def get_list_category_ids(self):
         return sorted(set(self.rules[:, 0]))
 

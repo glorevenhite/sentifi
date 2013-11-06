@@ -4,7 +4,6 @@ from SentifiField import SentifiField
 from Constant import *
 from Client import Client
 from TwitterProfile import TwitterProfile
-from RuleSet import RuleSet
 from MySQLUtils import MySQLUtils
 
 import numpy
@@ -21,7 +20,7 @@ class Categorizer(object):
         field_description = SentifiField(FIELD_TWITTER_DESCRIPTION_ID, profile.description)
 
         # Put above fields into a list
-        fields = {FIELD_TWITTER_FULL_NAME_ID: field_full_name, FIELD_TWITTER_SCREEN_NAME_ID: field_screen_name, FIELD_TWITTER_DESCRIPTION_ID: field_description}
+        fields = {TWITTER_FULL_NAME: field_full_name, TWITTER_SCREEN_NAME: field_screen_name, TWITTER_DESCRIPTION: field_description}
 
         #print "1st STAGE: Identifying Profile Type..."
         stage = 'Profile Type'
@@ -52,15 +51,6 @@ class Categorizer(object):
                     if assigned_class is not None:
                         profile.category2 = assigned_class
                         return profile
-        else:
-            profile.profile_type = ORGANISATION
-
-            #moving to next step
-            stage = 'Publisher Group'
-            parent = profile.profile_type
-            assigned_class = self._assign_class(stage, parent, fields)
-            if assigned_class is not None:
-                profile.profile_group = assigned_class
 
         ##################################################################
         #print "2nd STAGE: Identifying Publisher Group..."
@@ -106,37 +96,20 @@ class Categorizer(object):
 
         return profile
 
-    def _detect_profile_type(self, profile, stage, parent, fields):
-        pass
-
     def _assign_class(self, stage, parent, fields):
         for field in fields.values():
             field_id = field.id
             #print field.content
-            list_rows = self._get_rule_subset_by_phase_field_parent(stage, field_id, parent)
+            list_rules = self._get_rule_subset_by_phase_field_parent(stage, field_id, parent)
 
-            if len(list_rows):
-                #numpy array contains data for rules
-                arr_rows = numpy.array(list_rows)
-                #translate arr_rows to list of ruleset
+            if len(list_rules):
+                #numpy array
+                arr_rules = numpy.array(list_rules)
+                #print arr_rules
 
-
-                #checking whether a given field satisfy set of rules
-                assigned_class = field.is_complied(arr_rows)
-                if assigned_class is not None:
-                    return assigned_class
-
-    def _parse_to_ruleset(self, arr_rows):
-        #parse list_rows to a set of ruleset
-        list_results = []
-        print arr_rows
-        list_ids = list(set(numpy.array(arr_rows[:, 2])))
-
-        for id in list_ids:
-            arr_ruleset = arr_rows[arr_rows[:, 2] == id]
-            rs = RuleSet(arr_ruleset)
-            list_results.append(rs)
-        return list_results
+                #checking the satisfaction
+                assigned_class = field.is_complied(arr_rules)
+                return assigned_class
 
     @staticmethod
     def _get_rules(stage_name, field_id):
@@ -176,41 +149,45 @@ class Categorizer(object):
         return result
 
 if __name__ == "__main__":
-    #connection = MySQLUtils().connection
-    #
-    #cursor = connection.cursor()
-    #
-    #sql = "SELECT * FROM {0} " .format(TABLE_PROFILES)
-    #cursor.execute(sql)
-    #
-    #rows = cursor.fetchall()
-    #
-    #for row in rows:
-        #p = TwitterProfile(row)
-        #p = Categorizer().categorize_twitter_profile_step(p)
-        #p.display()
-        #arr_values = p.to_array()
-        #
-        #string = ['%s']*len(arr_values)
-        #
-        ##Joining list of %s by comma
-        #var_st = ','.join(string)
-        #
-        ##Building query string
-        #query_str = 'INSERT INTO ' + ' results ' + ' VALUES(%s)' % var_st
-        #
-        ##Execute query and commit
-        #cursor.execute(query_str, arr_values)
-        #
-        #connection.commit()
+    connection = MySQLUtils().connection
+
+    cursor = connection.cursor()
+
+    sql = "SELECT * FROM {0} " .format(TABLE_PROFILES)
+    cursor.execute(sql)
+
+    rows = cursor.fetchall()
+
+    for row in rows:
+        p = TwitterProfile(row)
+        p = Categorizer().categorize_twitter_profile_step(p)
+        p.display()
+        arr_values = p.to_array()
+
+        string = ['%s']*len(arr_values)
+
+        #Joining list of %s by comma
+        var_st = ','.join(string)
+
+        #Building query string
+        query_str = 'INSERT INTO ' + ' results ' + ' VALUES(%s)' % var_st
+
+        #Execute query and commit
+        cursor.execute(query_str, arr_values)
+
+        connection.commit()
+
+
 
     #list_profile = Categorizer().categorize_twitter_profile_step(list_profile)
-    #p = TwitterProfile([239, 'dividata', 'dividata.com', 'Dividend Stock Analysis and Dividend History'])
-    #Categorizer().categorize_twitter_profile_step(p)
-    #
+
+    #p = TwitterProfile([239, 'dividata', 'dividata .com', 'Dividend Stock Analysis and Dividend History'])
+    #list_profiles = [p]
+    #Categorizer().categorize_twitter_profile_step(list_profiles)
+
     #p = TwitterProfile([239, 'Luke_McLachlan', 'Luke McLachlan', 'Full-time day trader: Trading major FX pairs, UK & US large-caps, and Gold / Silver / Oil !'])
     #Categorizer().categorize_twitter_profile_step(p)
-    #
+
     #p = TwitterProfile([239, 'stockhunter1984', ' StockInterceptor.com', 'We are technical traders and we want to profit in the stock market! We use our Mobile Application to connect traders around the world!'])
     #list_profiles = [p]
     #Categorizer().categorize_twitter_profile_step(list_profiles)
@@ -227,14 +204,11 @@ if __name__ == "__main__":
     #
     #p = TwitterProfile([123, 'john_smith', 'john smith', 'i am financial journalist'])
     #Categorizer().categorize_twitter_profile_step(p)
-    #
+
     #Categorizer()._get_parent_class_name('Financial Analyst')
-    #
+
     #p = TwitterProfile([287, 'GovBrain', 'GovBrain', "Get Stock Trading Edge From Our Political Intelligence.We Know Government So You Don't Have To."])
     #Categorizer().categorize_twitter_profile_step(p)
-    #
+
     #p = TwitterProfile([1254, 'abheekb', 'Abheek Bhattacharya', 'Wall Street Journal. Columnist, Heard on the Street.'])
     #Categorizer().categorize_twitter_profile_step(p)
-
-    list_rows = Categorizer()._get_rule_subset_by_phase_field_parent('Profile Type', 76, 'NULL')
-    print Categorizer()._parse_to_ruleset(numpy.array(list_rows))
