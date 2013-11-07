@@ -6,9 +6,9 @@ from SentifiField import SentifiField
 class SentifiTwitterProfile(object):
     def __init__(self, data):
         self.profile_id = data[0]
-        self.screen_name = data[1]
-        self.fullname = data[2]
-        self.description = data[3]
+        self.screen_name = data[1].lower()
+        self.fullname = data[2].lower()
+        self.description = data[3].lower()
         self.profile_type = None
         self.profile_group = None
         self.category1 = None
@@ -18,7 +18,7 @@ class SentifiTwitterProfile(object):
 
         # Screen Name
         snf = SentifiField()
-        snf.name = TWITTER_FULL_NAME
+        snf.name = TWITTER_SCREEN_NAME
         snf.channel = TWITTER
         snf.content = self.screen_name
 

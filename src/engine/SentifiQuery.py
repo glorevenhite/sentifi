@@ -6,6 +6,7 @@ import itertools
 class SentifiQuery(object):
     def __init__(self):
         self.id = ""
+        self.field = ""
         self.based_words = []
         self.and1_words = []
         self.and2_words = []
@@ -18,7 +19,7 @@ class SentifiQuery(object):
         if len(self.and2_words) == 0 and self.and1_words:
             return list(itertools.product(self.based_words, self.and1_words))
 
-        return list(self.based_words)
+        return self.based_words
 
 
 if __name__ == "__main__":

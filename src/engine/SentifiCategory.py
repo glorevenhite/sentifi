@@ -12,7 +12,9 @@ class SentifiCategory(object):
 
     def get_exclusion(self):
         for query in self.queries:
-            self.exclusion.append(query.not_words)
+            if len(query.not_words):
+                self.exclusion.extend(query.not_words)
+        return self.exclusion
 
     def get_rules(self):
         list_rules = []
