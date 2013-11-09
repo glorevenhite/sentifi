@@ -7,6 +7,7 @@ TWITTER_DESCRIPTION = "Twitter Description"
 DATABASE_NAME = 'autocategory_db'
 TABLE_PROFILES_INPUT = 'test2'
 TABLE_PROFILES_OUTPUT = 'results2'
+PATH_CACHE = "D:\\data.gsw"
 
 PERSONAL = "P"
 P_PUBLISHER_GROUP = ['Financial Market Professionals', 'Other Stakeholders']

@@ -134,12 +134,6 @@ class Categorizer(object):
         return score
 
 if __name__ == "__main__":
-
-    database = shelve.open("D:\data.gsv")
-    list_sentifi_categories = database['sc']
-    json_category_names = database['cn']
-    database.close()
-
     #print len(list_sentifi_categories)
     #print len(json_category_names)
     #
@@ -174,30 +168,44 @@ if __name__ == "__main__":
     #list_fields = [field]
     #
     #
-    #profile = SentifiTwitterProfile([1, 'Truong Vinh', 'glorevenhite', 'I am a Financial Analyst Buy side Analyst'])
-    #Categorizer().categorizer(profile, list_sentifi_categories, json_category_names )
+    #profile = SentifiTwitterProfile([1, 'Truong Vinh', 'glorevenhite', 'Computational Finance, Productivity and Standardization'])
+    #Categorizer().categorizer(profile, list_sentifi_categories, json_category_names)
     #profile.display()
+    try:
+        database = shelve.open(PATH_CACHE)
+        list_sentifi_categories = database['sc']
+        json_category_names = database['cn']
+        database.close()
 
-    connection = MySQLUtils().connection
-    cursor = connection.cursor()
-    sql = "SELECT * FROM {0} " .format(TABLE_PROFILES_INPUT)
-    cursor.execute(sql)
-    rows = cursor.fetchall()
+        connection = MySQLUtils().connection
+        cursor = connection.cursor()
+        sql = "SELECT * FROM {0} " .format(TABLE_PROFILES_INPUT)
+        cursor.execute(sql)
+        rows = cursor.fetchall()
 
-    for row in rows:
-        p = SentifiTwitterProfile(row)
-        Categorizer().categorizer(p, list_sentifi_categories, json_category_names)
-        arr_values = p.to_array()
+        f = open('log.txt', 'w')
 
-        string = ['%s']*len(arr_values)
+        for row in rows:
+            p = SentifiTwitterProfile(row)
+            Categorizer().categorizer(p, list_sentifi_categories, json_category_names)
+            arr_values = p.to_array()
 
-        #Joining list of %s by comma
-        var_st = ','.join(string)
+            string = ['%s']*len(arr_values)
 
-        #Building query string
-        query_str = 'INSERT INTO ' + TABLE_PROFILES_OUTPUT + ' VALUES(%s)' % var_st
+            #Joining list of %s by comma
+            var_st = ','.join(string)
 
-        #Execute query and commit
-        cursor.execute(query_str, arr_values)
+            #Building query string
+            query_str = 'INSERT INTO ' + TABLE_PROFILES_OUTPUT + ' VALUES(%s)' % var_st
 
-        connection.commit()
+            #Execute query and commit
+            cursor.execute(query_str, arr_values)
+
+            connection.commit()
+    except Exception, e:
+        f.write(str(e) + '\n')
+
+
+
+
+

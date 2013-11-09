@@ -1,4 +1,5 @@
-from src.engine_clean_up import SentifiCategory, SentifiQuery
+from SentifiCategory import SentifiCategory
+from SentifiQuery import SentifiQuery
 
 __author__ = 'vinh.vo@sentifi.com'
 from Constant import *

@@ -2,7 +2,6 @@ __author__ = 'vinh.vo@sentifi.com'
 
 import re
 import operator
-import numpy
 
 
 
