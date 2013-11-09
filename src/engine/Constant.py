@@ -14,7 +14,7 @@ SERVER_STATUS_ERROR = "ERROR"
 
 DATABASE_NAME = 'autocategory_db'
 #DATABASE_NAME = 'primitive_category_db'
-TABLE_PROFILES = 'test'
+TABLE_PROFILES = 'test2'
 
 PERSONAL = "P"
 P_PUBLISHER_GROUP = ['Financial Market Professionals', 'Other Stakeholders']

@@ -1,60 +1,65 @@
 __author__ = 'vinh.vo@sentifi.com'
 from MySQLUtils import MySQLUtils
-#from SentifiCategory import SentifiCategory
-#from SentifiField import SentifiField
-#from SentifiQuery import SentifiQuery
+from SentifiCategory import SentifiCategory
+from SentifiField import SentifiField
+from SentifiQuery import SentifiQuery
 from SentifiTwitterProfile import SentifiTwitterProfile
 from JSonFeeder import JSonFeeder
 from Utils import *
 from Constant import *
+import shelve
 
 import pprint
 
 
 class Categorizer(object):
-    def categorizer(self, profile):
-        fields = profile.get_fields()
+    def categorizer(self, profile, list_sentifi_categories, json_category_names):
 
+        #Take the fields need to be scan
+        fields = profile.get_fields()
         field_description = fields[2]
 
+        #List of cat_id
         parent = CAT1_PARENT
-        list_sentifi_categories = []
-        for p in parent:
-            parent_name = JSonFeeder().get_category_name_by_id(p)
+        list_candidates = []
 
-            list_sentifi_categories.extend(JSonFeeder().get_sentifi_categories(parent_name, TWITTER_DESCRIPTION))
+        #For each pid, looking for the name then making the candidate category to which profile is assigned
+        for pid in parent:
+            sentifi_category = JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, list_sentifi_categories)
+            list_candidates.extend(sentifi_category)
 
-        list_result = self.check_field_against_categories(field_description, list_sentifi_categories)
-        list_category_names = [cat.name for cat in list_sentifi_categories]
 
-        profile.category1 = get_max_score_1(list_result, list_category_names)
+        print len(list_candidates)
 
-        profile.profile_group = JSonFeeder().get_parent_name(profile.category1)
+        #Taking array of results by examine the field to the list of candidates
+        list_weighting = self.check_field_against_categories(field_description, list_candidates)
+        list_candidate_names = [cat.name for cat in list_candidates]
 
-        profile.profile_type = JSonFeeder().get_parent_name(profile.profile_group)
-        print list_category_names
-        print(list_result)
+        print list_candidate_names
+        print list_weighting
+
+        profile.category1 = get_candidate_name(list_weighting, list_candidate_names)
+
+        profile.profile_group = JSonFeeder().get_parent_name(profile.category1, json_category_names)
+        profile.profile_type = JSonFeeder().get_parent_name(profile.profile_group, json_category_names)
+        print list_candidate_names
+        print(list_weighting)
 
         #############################################################
         #parent = CAT2_PARENT_ID
         parent2 = profile.category1
+        pid = JSonFeeder().get_category_id_by_name(parent2, json_category_names)
+        list_candidates_2 = []
+        list_candidates_2.extend(JSonFeeder().get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, list_sentifi_categories))
 
-        list_sentifi_categories2 = []
+        if len(list_candidates_2):
+            list_weighting_2 = self.check_field_against_categories(field_description, list_candidates_2)
+            list_candidate_names_2 = [cat.name for cat in list_candidates_2]
 
-        list_sentifi_categories2.extend(JSonFeeder().get_sentifi_categories(parent2, TWITTER_DESCRIPTION))
-        if len(list_sentifi_categories2):
-            list_result2 = self.check_field_against_categories(field_description, list_sentifi_categories2)
+            profile.category2 = get_candidate_name(list_weighting_2, list_candidate_names_2)
 
-            list_category_names2 = [cat.name for cat in list_sentifi_categories2]
-
-            profile.category2 = get_max_score_1(list_result2, list_category_names2)
-
-            print list_category_names2
-            print list_result2
         else:
             profile.category2 = None
-
-
 
         #sorted_results = sorted(list_results key=lambda k in )
         ##take the category have largest score in list result
@@ -105,7 +110,7 @@ class Categorizer(object):
     def check(sentifi_field, sentifi_category):
         score = 0
         #Extract only content
-        content = sentifi_field.content
+        content = unicode(sentifi_field.content).encode('utf-8')
         #print "content:", content
 
         #Extract exclusion
@@ -121,16 +126,45 @@ class Categorizer(object):
         #Extract rules
         list_rules = sentifi_category.get_rules()
         #print "inclusion:", list_rules
-        print "---------"
+        print "---------", content, '<<>>', sentifi_category.name
+        print list_rules
         for rules in list_rules:
-            #print rules
-            if match_and(rules, content):
-                print rules
-                if type(rules) == type(list):
-                    score += len(list(rules))
-                else:
-                    print type(rules)
-                    score += 1
+            if isinstance(rules, tuple):  # tuple
+                if match_and(rules, content):
+                    score += len(rules)
+            elif type(rules) == type(u''):
+                list_keywords = [rules]
+                if match_and(list_keywords, content):
+                    print list_keywords, 'against content of:', content
+                    #if len(rules) > 1 or len(rules.split() > 1):
+                    #    score += len(rules.split())
+                    #else:
+                    #    print type(rules)
+                    #    score += 1
+                    score += len(rules.split())
+            else:
+                print rules, type(rules)
+
+
+
+        #list_rules = sentifi_category.get_rules()
+        ##print "inclusion:", list_rules
+        #print "---------", content, '<<>>', sentifi_category.name
+        #print list_rules
+        #for rules in list_rules:
+        #    if match_and(rules, content):
+        #        score += 1
+
+        #queries = sentifi_category.queries
+        #for query in queries:
+        #    print 'based_word:', query.based_words
+        #    if match_or(query.based_words, content):
+        #        print query.and1_words
+        #        if match_or(query.and1_words, content):
+        #            print query.and2_words
+        #            if match_or(query.and2_words, content):
+        #                score += 1
+
         print score
         return score
 
@@ -140,6 +174,14 @@ class Categorizer(object):
 
 if __name__ == "__main__":
 
+    database = shelve.open("D:\data.gsv")
+    list_sentifi_categories = database['sc']
+    json_category_names = database['cn']
+    database.close()
+
+    #print len(list_sentifi_categories)
+    #print len(json_category_names)
+    #
     #field = SentifiField()
     #field.content = " I am a Financial Product Analyst Buy Side journalist"
     #field.channel = "TWITTER"
@@ -170,13 +212,22 @@ if __name__ == "__main__":
     #list_categories = [category, cat2]
     #list_fields = [field]
     #
-    #result = Categorizer().check_fields_against_categories(list_fields, list_categories)
-    #print 'matrix:', result
-
-    #profile = SentifiTwitterProfile([1, 'Truong Vinh', 'glorevenhite', 'I am a Financial Analyst'])
-    #Categorizer().categorizer(profile)
+    #
+    #profile = SentifiTwitterProfile([1, 'Truong Vinh', 'glorevenhite', 'I am a Financial Analyst Buy side Analyst'])
+    #Categorizer().categorizer(profile, list_sentifi_categories, json_category_names )
     #profile.display()
 
+    #Taking all categories
+    #list_sentifi_categories = JSonFeeder().parser()
+    #json_category_names = JSonFeeder.get_list_categories()
+
+
+    #database = shelve.open("D:\data.gsv")
+    #list_sentifi_categories = database['sc']
+    #json_category_names = database['cn']
+    #database.close()
+    #
+    #
     connection = MySQLUtils().connection
 
     cursor = connection.cursor()
@@ -188,8 +239,7 @@ if __name__ == "__main__":
 
     for row in rows:
         p = SentifiTwitterProfile(row)
-        Categorizer().categorizer(p)
-        p.display()
+        Categorizer().categorizer(p, list_sentifi_categories, json_category_names)
         arr_values = p.to_array()
 
         string = ['%s']*len(arr_values)
@@ -198,7 +248,7 @@ if __name__ == "__main__":
         var_st = ','.join(string)
 
         #Building query string
-        query_str = 'INSERT INTO ' + ' results ' + ' VALUES(%s)' % var_st
+        query_str = 'INSERT INTO ' + ' result_22 ' + ' VALUES(%s)' % var_st
 
         #Execute query and commit
         cursor.execute(query_str, arr_values)

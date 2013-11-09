@@ -5,16 +5,35 @@ import operator
 import numpy
 
 
+
 def match_and(list_keywords, content):
     re_inclusion = []
+
     for keyword in list_keywords:
         re_inclusion.append(re.compile(keyword))
 
-    return all(r.search(content) for r in re_inclusion)
+    if re_inclusion:
+        return all(r.search(content) for r in re_inclusion)
+    else:
+        return False
+
+def match_or(list_keywords, content):
+    re_inclusion = []
+
+    for keyword in list_keywords:
+        print keyword
+        re_inclusion.append(re.compile(keyword))
+
+    if re_inclusion:
+        return any(r.search(content) for r in re_inclusion)
+    else:
+        return False
+
+
 
 def match_not(list_keywords, content):
     re_inclusion = []
-    for keyword in list_keywords:
+    for keyword in list(list_keywords):
         re_inclusion.append(re.compile(keyword))
 
     return any(r.search(content) for r in re_inclusion)
@@ -25,9 +44,11 @@ def get_max_score(list_results, list_category_names):
     print numpy.argmax(a)
     return list_category_names[numpy.argmax(a)]
 
-def get_max_score_1(list_results, list_category_names):
-
-    return list_category_names[numpy.argmax(list_results)]
+def get_candidate_name(list_results, list_category_names):
+    if max(list_results) > 0:
+        return list_category_names[numpy.argmax(list_results)]
+    else:
+        return None
 
 
 def get_max_element_by_value(dict_values):
@@ -42,13 +63,13 @@ def get_inclusion():
 
 if __name__ == "__main__":
     pass
-    #list_keywords = ['financial', 'analyst']
-    #content = "I am a financial analyst"
-    #print match_and(list_keywords, content)
+    list_keywords = ['financial', 'analyst']
+    content = "I am a financial analyst"
+    print match_and(list_keywords, content)
     #
-    results = [4, 4]
-    list_category_names = ['Person', 'Organisation']
-    print get_max_score_1(results, list_category_names)
+    #results = [4, 4]
+    #list_category_names = ['Person', 'Organisation']
+    #print get_max_score_1(results, list_category_names)
 
     #print sorted(dict_results)
 
@@ -63,5 +84,6 @@ if __name__ == "__main__":
     #
     #text = "abc"
     #print len(list[text])
+    print type((1, ))
 
 
