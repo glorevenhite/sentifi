@@ -2,6 +2,7 @@ __author__ = 'vinh.vo@sentifi.com'
 
 import re
 import operator
+import numpy
 
 
 
@@ -9,7 +10,7 @@ def match_and(list_keywords, content):
     re_inclusion = []
 
     for keyword in list_keywords:
-        re_inclusion.append(re.compile(keyword))
+        re_inclusion.append(re.compile('\\b' + keyword + '\\b'))
 
     if re_inclusion:
         return all(r.search(content) for r in re_inclusion)
@@ -20,35 +21,30 @@ def match_or(list_keywords, content):
     re_inclusion = []
 
     for keyword in list_keywords:
-        print keyword
-        re_inclusion.append(re.compile(keyword))
+        re_inclusion.append(re.compile('\\b' + keyword + '\\b'))
 
     if re_inclusion:
         return any(r.search(content) for r in re_inclusion)
     else:
         return False
 
-
-
 def match_not(list_keywords, content):
     re_inclusion = []
     for keyword in list(list_keywords):
-        re_inclusion.append(re.compile(keyword))
+        re_inclusion.append(re.compile('\\b' + keyword + '\\b'))
 
     return any(r.search(content) for r in re_inclusion)
 
 def get_max_score(list_results, list_category_names):
 
     a = numpy.sum(list_results, axis=0)
-    print numpy.argmax(a)
     return list_category_names[numpy.argmax(a)]
 
 def get_candidate_name(list_results, list_category_names):
-    if max(list_results) > 0:
-        return list_category_names[numpy.argmax(list_results)]
-    else:
-        return None
-
+    if len(list_results):
+        if max(list_results) > 0:
+            return list_category_names[numpy.argmax(list_results)]
+    return None
 
 def get_max_element_by_value(dict_values):
     return max(dict_values.iteritems(), key=operator.itemgetter(1))[0]
@@ -62,9 +58,9 @@ def get_inclusion():
 
 if __name__ == "__main__":
     pass
-    list_keywords = ['financial', 'analyst']
-    content = "I am a financial analyst"
-    print match_and(list_keywords, content)
+    list_keywords = ['investor']
+    content = "where investors intersect with opportunity."
+    print match_and(list_keywords, content)     # False
     #
     #results = [4, 4]
     #list_category_names = ['Person', 'Organisation']
@@ -83,6 +79,6 @@ if __name__ == "__main__":
     #
     #text = "abc"
     #print len(list[text])
-    print type((1, ))
+    #print type((1, ))
 
 

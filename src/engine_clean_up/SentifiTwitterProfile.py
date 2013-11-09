@@ -7,9 +7,15 @@ from SentifiField import SentifiField
 class SentifiTwitterProfile(object):
     def __init__(self, data):
         self.profile_id = data[0]
-        self.screen_name = data[1].lower()
-        self.fullname = data[2].lower()
-        self.description = data[3].lower()
+        self.screen_name = data[2].lower()
+        if data[1] is not None:
+            self.fullname = data[1].lower()
+        else:
+            self.fullname = ""
+        if data[3] is not None:
+            self.description = data[3].lower()
+        else:
+            self.description = ""
         self.profile_type = None
         self.profile_group = None
         self.category1 = None
