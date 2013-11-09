@@ -4,7 +4,7 @@ from numpy import array
 import pprint
 
 def _build():
-    file_path = "D:\\Dropbox\\Sentifi Analytics\\5. Vinh\\Confusing Matrix\\2013.11.05\\results.csv"
+    file_path = "D:\\Dropbox\\Sentifi Analytics\\5. Vinh\\Confusing Matrix\\2013.11.09\\results.csv"
     data = IOUtils().read_list_from_csv(file_path)
 
     cat1_confusing_matrix(data)
@@ -21,8 +21,8 @@ def cat1_confusing_matrix(data):
 
     print "Total cases:", n
 
-    array_human = array(analyst_results)[1:, 10]     #Select only column 5th from the 2nd row
-    array_machine = array(machine_results)[1:, 6]    #Selecting only column 9th from the 2nd row
+    array_human = array(analyst_results)[1:, 6]     #Select only column 5th from the 2nd row
+    array_machine = array(machine_results)[1:, 14]    #Selecting only column 9th from the 2nd row
 
     dict = {}
     for index in range(0, n-1):
@@ -67,9 +67,9 @@ def cat1_confusing_matrix(data):
 
     print confusing_matrix
 
-    #list_results = confusing_matrix.tolist()
+    list_results = confusing_matrix.tolist()
 
-    #IOUtils().save_list_to_csv(grand_dict, list_results, "D:\\matrix.csv")
+    IOUtils().save_list_to_csv(grand_dict, list_results, "D:\\matrix.csv")
 
 
     #print matches, "in total of", total_cases, "Precise =", (matches *100)/total_cases

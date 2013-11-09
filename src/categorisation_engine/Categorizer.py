@@ -6,6 +6,7 @@ from Client import Client
 from TwitterProfile import TwitterProfile
 from RuleSet import RuleSet
 from MySQLUtils import MySQLUtils
+import timeit
 
 import numpy
 
@@ -52,15 +53,15 @@ class Categorizer(object):
                     if assigned_class is not None:
                         profile.category2 = assigned_class
                         return profile
-        else:
-            profile.profile_type = ORGANISATION
-
-            #moving to next step
-            stage = 'Publisher Group'
-            parent = profile.profile_type
-            assigned_class = self._assign_class(stage, parent, fields)
-            if assigned_class is not None:
-                profile.profile_group = assigned_class
+        #else:
+        #    profile.profile_type = ORGANISATION
+        #
+        #    #moving to next step
+        #    stage = 'Publisher Group'
+        #    parent = profile.profile_type
+        #    assigned_class = self._assign_class(stage, parent, fields)
+        #    if assigned_class is not None:
+        #        profile.profile_group = assigned_class
 
         ##################################################################
         #print "2nd STAGE: Identifying Publisher Group..."
@@ -172,7 +173,7 @@ class Categorizer(object):
         returned_data = dict(client.send(message))
         if returned_data.get('status') == SERVER_STATUS_OK:
             result = returned_data.get('data').get(parent_id)
-
+        print result
         return result
 
 if __name__ == "__main__":
@@ -186,23 +187,23 @@ if __name__ == "__main__":
     #rows = cursor.fetchall()
     #
     #for row in rows:
-        #p = TwitterProfile(row)
-        #p = Categorizer().categorize_twitter_profile_step(p)
-        #p.display()
-        #arr_values = p.to_array()
-        #
-        #string = ['%s']*len(arr_values)
-        #
-        ##Joining list of %s by comma
-        #var_st = ','.join(string)
-        #
-        ##Building query string
-        #query_str = 'INSERT INTO ' + ' results ' + ' VALUES(%s)' % var_st
-        #
-        ##Execute query and commit
-        #cursor.execute(query_str, arr_values)
-        #
-        #connection.commit()
+    #    p = TwitterProfile(row)
+    #    p = Categorizer().categorize_twitter_profile_step(p)
+    #    p.display()
+    #    arr_values = p.to_array()
+    #
+    #    string = ['%s']*len(arr_values)
+    #
+    #    #Joining list of %s by comma
+    #    var_st = ','.join(string)
+    #
+    #    #Building query string
+    #    query_str = 'INSERT INTO ' + ' results ' + ' VALUES(%s)' % var_st
+    #
+    #    #Execute query and commit
+    #    cursor.execute(query_str, arr_values)
+    #
+    #    connection.commit()
 
     #list_profile = Categorizer().categorize_twitter_profile_step(list_profile)
     #p = TwitterProfile([239, 'dividata', 'dividata.com', 'Dividend Stock Analysis and Dividend History'])
@@ -225,8 +226,8 @@ if __name__ == "__main__":
     #p2 = TwitterProfile([4683, 'GordonnanBroad', 'Gordon & Broad', 'Trading relentlessly and searching for unique alternative investments: non-traditional,  staying relevant -please check us out at - http://t.co/lowIBlbPc4'])
     #Categorizer().categorize_twitter_profile_step(p2)
     #
-    #p = TwitterProfile([123, 'john_smith', 'john smith', 'i am financial journalist'])
-    #Categorizer().categorize_twitter_profile_step(p)
+    p = TwitterProfile([123, 'john_smith', 'john smith', 'i am financial journalist'])
+    Categorizer().categorize_twitter_profile_step(p)
     #
     #Categorizer()._get_parent_class_name('Financial Analyst')
     #
@@ -236,5 +237,7 @@ if __name__ == "__main__":
     #p = TwitterProfile([1254, 'abheekb', 'Abheek Bhattacharya', 'Wall Street Journal. Columnist, Heard on the Street.'])
     #Categorizer().categorize_twitter_profile_step(p)
 
-    list_rows = Categorizer()._get_rule_subset_by_phase_field_parent('Profile Type', 76, 'NULL')
-    print Categorizer()._parse_to_ruleset(numpy.array(list_rows))
+    #list_rows = Categorizer()._get_rule_subset_by_phase_field_parent('Profile Type', 76, 'NULL')
+    #print Categorizer()._parse_to_ruleset(numpy.array(list_rows))
+
+    #print Categorizer._get_rule_subset_by_phase_field_parent('Category 1', 76, 'Financial Market Professionals')

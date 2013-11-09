@@ -1,5 +1,5 @@
-DATABASE_NAME = 'primitive_category_db'
-#DATABASE_NAME = 'autocategory_db'
+#DATABASE_NAME = 'primitive_category_db'
+DATABASE_NAME = 'autocategory_db'
 TABLE_RULES = 'tbl_rule'
 TABLE_CATEGORIES = 'tbl_category'
 TABLE_RULESETS = 'tbl_rule_set'
@@ -9,7 +9,7 @@ TABLE_RULE_FIELD = 'tbl_rule_field'
 TABLE_RULE_KEYWORD = 'tbl_rule_keyword'
 TABLE_KEYWORDS = 'tbl_keyword'
 
-FIELD_TWITTER_DESCRIPTION = '1'
+FIELD_TWITTER_DESCRIPTION = '77'
 FIELD_TWITTER_SCREEN_NAME = '2'
 FIELD_TWITTER_FULL_NAME = '3'
 

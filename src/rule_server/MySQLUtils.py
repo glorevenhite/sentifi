@@ -125,11 +125,15 @@ class MySQLUtils(object):
             sql += "JOIN {0} AS rf ON rf.rule_id = r.rule_id " .format(TABLE_RULE_FIELD)
             sql += "WHERE c.type LIKE '{0}' AND rf.field_id = {1} AND c.parent_cat_id IS NULL " .format(stage, field_id)
             sql += "ORDER BY c.priority "
-
+        print sql
         self.cursor.execute(sql)
         rows = self.cursor.fetchall()
 
         return rows
 #MySQLUtils()._get_rule_subset_by_phase_and_field('Category 1', 1)
 #MySQLUtils()._get_rule_subset_by_phase_and_field('Profile Type', 1)
-print MySQLUtils().get_rule_subset_by_phase_field_parent('Profile Type', 1, "NULL")
+print MySQLUtils().get_rule_subset_by_phase_field_parent('Profile Type', 76, "NULL")
+print MySQLUtils().get_rule_subset_by_phase_field_parent('Category 1', 76, 'Financial Market Professionals')
+#sql = "SELECT COUNT(*) FROM tbl_rule_keyword "
+#cursor = MySQLUtils().select_query(sql)
+#print cursor
