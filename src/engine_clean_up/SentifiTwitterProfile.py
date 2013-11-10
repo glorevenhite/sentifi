@@ -74,4 +74,4 @@ class SentifiTwitterProfile(object):
         self.set_category('Profile Group', value)
 
     def display(self):
-        print self.fullname,self.description, "/",self.profile_type,":",self.profile_group,":", self.category1,":",self.category2
+        print unicode(self.fullname),unicode(self.description), "/",self.profile_type,":",self.profile_group,":", self.category1,":",self.category2

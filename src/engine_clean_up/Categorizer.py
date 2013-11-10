@@ -4,6 +4,7 @@ from JSonFeeder import JSonFeeder
 from Utils import *
 from Constant import *
 import shelve
+import numpy
 
 
 class Categorizer(object):
@@ -65,6 +66,7 @@ class Categorizer(object):
                 assigned_category = self.assign(field_description, candidates)
                 if assigned_category is not None:   # Luckily find out CAT2
                     profile.category2 = assigned_category
+
                     profile.category1 = JSonFeeder().get_parent_name(profile.category2, json_category_names)
                     profile.profile_group = JSonFeeder().get_parent_name(profile.category1, json_category_names)
                     return
@@ -103,8 +105,8 @@ class Categorizer(object):
                 if len(candidates):
                     profile.category2 = self.assign(field_description, candidates)
                     profile.category1 = JSonFeeder().get_parent_name(profile.category2, json_category_names)
-                    profile.profile_group = JSonFeeder().get_category_id_by_name(profile.category1, json_category_names)
-                    profile.profile_type = JSonFeeder().get_category_id_by_name(profile.profile_group, json_category_names)
+                    profile.profile_group = JSonFeeder().get_parent_name(profile.category1, json_category_names)
+                    profile.profile_type = JSonFeeder().get_parent_name(profile.profile_group, json_category_names)
                 else:
                     profile.category2 = None
 
@@ -169,15 +171,49 @@ class Categorizer(object):
                 return score
 
         #Extract rules
-        list_rules = sentifi_category.get_rules()
-        for rules in list_rules:
-            if isinstance(rules, tuple):  # tuple
-                if match_and(rules, content):
-                    score += len(rules)
-            elif type(rules) == type(u''):
-                list_keywords = [rules]
-                if match_and(list_keywords, content):
-                    score += len(rules.split())
+        #list_rules = sentifi_category.get_rules()
+        #for rules in list_rules:
+        #    if isinstance(rules, tuple):  # tuple
+        #        if match_and(rules, content):
+        #            score += len(rules)
+        #    elif type(rules) == type(u''):
+        #        list_keywords = [rules]
+        #        if match_and(list_keywords, content):
+        #            score += len(rules.split())
+
+        queries = sentifi_category.queries
+        tmp_score = 0
+        for query in queries:
+            if match_or(query.not_words, content):  # contains words in the NOT BOX
+                return score
+            else:
+                scores = []
+                if len(query.based_words) > 0:
+                    s = match_or(query.based_words, content)
+                    scores.append(s)
+                if len(query.and1_words) > 0:
+                    scores.append(match_or(query.and1_words, content))
+                if len(query.and2_words) > 0:
+                    scores.append(match_or(query.and2_words, content))
+                arr_scores = numpy.array(scores)
+                tmp_score = arr_scores.prod()
+
+                #s = match_or(query.based_words, content)
+                #if s > 0:        # contains word in FIRST BOX
+                #    tmp_score += s
+                #
+                #    s = match_or(query.and1_words, content)
+                #    if s > 0:     # contains word in FIRST AND BOX
+                #        tmp_score *= s
+                #
+                #        s = match_or(query.and2_words, content)
+                #        if len(query.and2_words) and s > 0:     # contains word in SECOND BOX
+                #            tmp_score *= s
+                #        else:
+                #            tmp_score = 0   # do not match continuously second AND box
+                #    elif len(query.and1_words) == 0 and s == 0:  # score = 0 since no there is no keywords
+                #        tmp_score = 0
+            score += tmp_score
         return score
 
 if __name__ == "__main__":
@@ -189,6 +225,10 @@ if __name__ == "__main__":
         json_category_names = database['cn']
         database.close()
 
+        profile = SentifiTwitterProfile([1, 'marcbrse invest', 'glorevenhite', 'marcrse invest & market solutions'])
+        Categorizer().categorizer(profile, list_sentifi_categories, json_category_names )
+        profile.display()
+
         connection = MySQLUtils().connection
         cursor = connection.cursor()
         sql = "SELECT * FROM {0} " .format(TABLE_PROFILES_INPUT)
@@ -197,7 +237,9 @@ if __name__ == "__main__":
 
         for row in rows:
             p = SentifiTwitterProfile(row)
+            print p.screen_name
             Categorizer().categorizer(p, list_sentifi_categories, json_category_names)
+            #p.display()
             arr_values = p.to_array()
 
             string = ['%s']*len(arr_values)

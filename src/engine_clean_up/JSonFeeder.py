@@ -229,6 +229,10 @@ class JSonFeeder(object):
 
 
 if __name__ == "__main__":
+    database = shelve.open(PATH_CACHE)
+    list_sentifi_categories = database['sc']
+    json_category_names = database['cn']
+    database.close()
 
     #pprint.pprint(JSonFeeder().get_list_keywords_by_category_id(45))
     #pprint.pprint(JSonFeeder().get_list_categories())
@@ -240,12 +244,9 @@ if __name__ == "__main__":
     #list_a = []
     #list_a.extend([item.strip() for item in string.split(",")])
     #print len(list_a)
-    #print JSonFeeder().get_parent_name('Financial Analyst', json_category_names)
+    print JSonFeeder().get_parent_name('Journalist', json_category_names)
 
-    #database = shelve.open(PATH_CACHE)
-    #list_sentifi_categories = database['sc']
-    #json_category_names = database['cn']
-    #database.close()
+
     #
     #for sc in list_sentifi_categories:
     #    if sc.name == "P":

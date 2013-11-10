@@ -17,16 +17,20 @@ def match_and(list_keywords, content):
     else:
         return False
 
+
 def match_or(list_keywords, content):
     re_inclusion = []
+    score = 0
 
     for keyword in list_keywords:
         re_inclusion.append(re.compile('\\b' + keyword + '\\b'))
 
     if re_inclusion:
-        return any(r.search(content) for r in re_inclusion)
-    else:
-        return False
+        for r in re_inclusion:
+            if r.search(content):
+                score += 1
+
+    return score
 
 def match_not(list_keywords, content):
     re_inclusion = []
@@ -60,7 +64,11 @@ if __name__ == "__main__":
     pass
     list_keywords = ['investor']
     content = "where investors intersect with opportunity."
-    print match_and(list_keywords, content)     # False
+    print match_and(list_keywords, content)     # 0
+
+    list_keywords = ['investors', 'opportunity']
+    content = "where investors intersect with opportunity."
+    print match_or(list_keywords, content)     # 1
     #
     #results = [4, 4]
     #list_category_names = ['Person', 'Organisation']
@@ -80,5 +88,6 @@ if __name__ == "__main__":
     #text = "abc"
     #print len(list[text])
     #print type((1, ))
+
 
 
