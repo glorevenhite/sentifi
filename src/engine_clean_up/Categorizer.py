@@ -223,36 +223,36 @@ class Categorizer(object):
 
 def categorize(table_output, list_profiles, list_sentifi_categories, json_category_names):
 
-        print "Starting categorisastion progress and input to " + table_output
+    print "Starting categorisastion progress and input to " + table_output
 
-        # create output database
-        connection_thread = MySQLUtils().connection
-        cursor_thread = connection_thread.cursor()
+    # create output database
+    connection_thread = MySQLUtils().connection
+    cursor_thread = connection_thread.cursor()
 
-        sql_create_table = "CREATE TABLE {0} AS (SELECT * FROM {1}) " .format(table_output, TABLE_OUTPUT_TEMPLATE)
-        cursor_thread.execute(sql_create_table)
+    sql_create_table = "CREATE TABLE {0} AS (SELECT * FROM {1}) " .format(table_output, TABLE_OUTPUT_TEMPLATE)
+    cursor_thread.execute(sql_create_table)
+    connection_thread.commit()
+
+    for row in list_profiles:
+        p = SentifiTwitterProfile(row)
+        print p.screen_name
+        Categorizer().categorizer(p, list_sentifi_categories, json_category_names)
+        #p.display()
+        arr_values = p.to_array()
+
+        string = ['%s']*len(arr_values)
+
+        #Joining list of %s by comma
+        var_st = ','.join(string)
+
+        #Building query string
+        query_str = 'INSERT INTO ' + table_output + ' VALUES(%s)' % var_st
+
+        #Execute query and commit
+        cursor_thread.execute(query_str, arr_values)
+
         connection_thread.commit()
-
-        for row in list_profiles:
-            p = SentifiTwitterProfile(row)
-            print p.screen_name
-            Categorizer().categorizer(p, list_sentifi_categories, json_category_names)
-            #p.display()
-            arr_values = p.to_array()
-
-            string = ['%s']*len(arr_values)
-
-            #Joining list of %s by comma
-            var_st = ','.join(string)
-
-            #Building query string
-            query_str = 'INSERT INTO ' + table_output + ' VALUES(%s)' % var_st
-
-            #Execute query and commit
-            cursor_thread.execute(query_str, arr_values)
-
-            connection_thread.commit()
-        connection_thread.close()
+    connection_thread.close()
 
 
 if __name__ == "__main__":
@@ -264,7 +264,7 @@ if __name__ == "__main__":
         #Input table
         input_table = sys.argv[1]
         log_file = sys.argv[2]
-        profile_per_thread = sys.argv[3]
+        profile_per_thread = int(sys.argv[3])
     else:
         print "Please specify INPUT_TABLE, LOG FILE"
         exit()
@@ -292,7 +292,7 @@ if __name__ == "__main__":
         ith = 1
         for chunk in list_chunks:
             print "Start thread..."
-            output_table = TABLE_OUTPUT_TEMPLATE + str(ith)
+            output_table = input_table + TABLE_OUTPUT_TEMPLATE + str(ith)
             ith += 1
             try:
                 thread.start_new(categorize, (output_table, chunk, list_sentifi_categories, json_category_names))
