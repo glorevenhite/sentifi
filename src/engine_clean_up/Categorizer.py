@@ -202,21 +202,6 @@ class Categorizer(object):
                 arr_scores = numpy.array(scores)
                 tmp_score = arr_scores.prod()
 
-                #s = match_or(query.based_words, content)
-                #if s > 0:        # contains word in FIRST BOX
-                #    tmp_score += s
-                #
-                #    s = match_or(query.and1_words, content)
-                #    if s > 0:     # contains word in FIRST AND BOX
-                #        tmp_score *= s
-                #
-                #        s = match_or(query.and2_words, content)
-                #        if len(query.and2_words) and s > 0:     # contains word in SECOND BOX
-                #            tmp_score *= s
-                #        else:
-                #            tmp_score = 0   # do not match continuously second AND box
-                #    elif len(query.and1_words) == 0 and s == 0:  # score = 0 since no there is no keywords
-                #        tmp_score = 0
             score += tmp_score
         return score
 
