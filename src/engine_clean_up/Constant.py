@@ -3,10 +3,15 @@ TWITTER_SCREEN_NAME = "Twitter Screen Name"
 TWITTER_FULL_NAME = "Twitter Name"
 TWITTER_DESCRIPTION = "Twitter Description"
 
-
+SERVER = '127.0.0.1'
 DATABASE_NAME = 'autocategory_db'
+USERNAME = 'root'
+PASSWORD = ''
 TABLE_PROFILES_INPUT = 'input'
-TABLE_PROFILES_OUTPUT = 'results'
+TABLE_OUTPUT_TEMPLATE = 'results'
+
+#COLUMNS = [0, 89, 88, 87, 90]
+COLUMNS = [0, 0, 1, 2, 3]
 PATH_CACHE = "data.gsw"
 
 PERSONAL = "P"

@@ -3,11 +3,15 @@ from SentifiTwitterProfile import SentifiTwitterProfile
 from JSonFeeder import JSonFeeder
 from Utils import *
 from Constant import *
+import sys
 import shelve
 import numpy
+import thread
+import time
 
 
 class Categorizer(object):
+
     def categorizer(self, profile, list_sentifi_categories, json_category_names):
 
         #Take the fields need to be scan
@@ -216,26 +220,20 @@ class Categorizer(object):
             score += tmp_score
         return score
 
-if __name__ == "__main__":
-    f = open('log.txt', 'a')
 
-    try:
-        database = shelve.open(PATH_CACHE)
-        list_sentifi_categories = database['sc']
-        json_category_names = database['cn']
-        database.close()
+def categorize(table_output, list_profiles, list_sentifi_categories, json_category_names):
 
-        profile = SentifiTwitterProfile([1, 'marcbrse invest', 'glorevenhite', 'marcrse invest & market solutions'])
-        Categorizer().categorizer(profile, list_sentifi_categories, json_category_names )
-        profile.display()
+        print "Starting categorisastion progress and input to " + table_output
 
-        connection = MySQLUtils().connection
-        cursor = connection.cursor()
-        sql = "SELECT * FROM {0} " .format(TABLE_PROFILES_INPUT)
-        cursor.execute(sql)
-        rows = cursor.fetchall()
+        # create output database
+        connection_thread = MySQLUtils().connection
+        cursor_thread = connection_thread.cursor()
 
-        for row in rows:
+        sql_create_table = "CREATE TABLE {0} AS (SELECT * FROM {1}) " .format(table_output, TABLE_OUTPUT_TEMPLATE)
+        cursor_thread.execute(sql_create_table)
+        connection_thread.commit()
+
+        for row in list_profiles:
             p = SentifiTwitterProfile(row)
             print p.screen_name
             Categorizer().categorizer(p, list_sentifi_categories, json_category_names)
@@ -248,16 +246,63 @@ if __name__ == "__main__":
             var_st = ','.join(string)
 
             #Building query string
-            query_str = 'INSERT INTO ' + TABLE_PROFILES_OUTPUT + ' VALUES(%s)' % var_st
+            query_str = 'INSERT INTO ' + table_output + ' VALUES(%s)' % var_st
 
             #Execute query and commit
-            cursor.execute(query_str, arr_values)
+            cursor_thread.execute(query_str, arr_values)
 
-            connection.commit()
+            connection_thread.commit()
+        connection_thread.close()
+
+
+if __name__ == "__main__":
+    input_table = ""
+    log_file = ""
+    profile_per_thread = 0
+
+    if len(sys.argv) == 4:
+        #Input table
+        input_table = sys.argv[1]
+        log_file = sys.argv[2]
+        profile_per_thread = sys.argv[3]
+    else:
+        print "Please specify INPUT_TABLE, LOG FILE"
+        exit()
+
+    f = open(log_file, 'a')
+    try:
+        database = shelve.open(PATH_CACHE)
+        list_sentifi_categories = database['sc']
+        json_category_names = database['cn']
+        database.close()
+
+        #profile = SentifiTwitterProfile([1, 'marcbrse invest', 'glorevenhite', 'marcrse invest & market solutions'])
+        #Categorizer().categorizer(profile, list_sentifi_categories, json_category_names )
+        #profile.display()
+
+        connection = MySQLUtils().connection
+        cursor = connection.cursor()
+
+        sql = "SELECT * FROM {0} " .format(input_table)
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        connection.close()
+
+        list_chunks = split_into_chunks(rows, profile_per_thread)
+        ith = 1
+        for chunk in list_chunks:
+            print "Start thread..."
+            output_table = TABLE_OUTPUT_TEMPLATE + str(ith)
+            ith += 1
+            try:
+                thread.start_new(categorize, (output_table, chunk, list_sentifi_categories, json_category_names))
+            except Exception, e:
+                print e
+
+            time.sleep(3)
+
+        while 1:
+            pass
+
     except Exception, e:
         f.write(str(e) + '\n')
-
-
-
-
-

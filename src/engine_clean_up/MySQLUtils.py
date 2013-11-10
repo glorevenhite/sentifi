@@ -4,14 +4,10 @@ from Constant import *
 
 class MySQLUtils(object):
     def __init__(self):
-        SERVER = '127.0.0.1'
-        USERNAME = 'root'
-        PASSWORD = ""
-        DBNAME = DATABASE_NAME
         self.connection = None
         self.cursor = None
 
-        self.connection = mdb.connect(SERVER, USERNAME, PASSWORD, DBNAME, charset='utf8')
+        self.connection = mdb.connect(SERVER, USERNAME, PASSWORD, DATABASE_NAME, charset='utf8')
         self.cursor = self.connection.cursor()
         self.cursor.execute("SELECT VERSION()")
 

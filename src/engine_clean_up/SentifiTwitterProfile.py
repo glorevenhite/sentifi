@@ -6,16 +6,20 @@ from SentifiField import SentifiField
 
 class SentifiTwitterProfile(object):
     def __init__(self, data):
-        self.profile_id = data[0]
-        self.screen_name = data[2].lower()
-        if data[1] is not None:
-            self.fullname = data[1].lower()
+        self.profile_id = data[COLUMNS[0]]
+        self.id = data[COLUMNS[1]]
+        self.screen_name = data[COLUMNS[2]].lower()
+
+        if data[COLUMNS[3]] is not None:
+            self.fullname = data[COLUMNS[3]].lower()
         else:
             self.fullname = ""
-        if data[3] is not None:
-            self.description = data[3].lower()
+
+        if data[COLUMNS[4]] is not None:
+            self.description = data[COLUMNS[4]].lower()
         else:
             self.description = ""
+
         self.profile_type = None
         self.profile_group = None
         self.category1 = None
@@ -42,10 +46,12 @@ class SentifiTwitterProfile(object):
         desc.content = self.description
 
         return [snf, fn, desc]
+
     def to_array(self):
         list_items = []
 
         list_items.append(self.profile_id)
+        list_items.append(self.id)
         list_items.append(self.screen_name)
         list_items.append(self.fullname)
         list_items.append(self.description)
@@ -55,23 +61,6 @@ class SentifiTwitterProfile(object):
         list_items.append(self.category2)
 
         return list_items
-
-    def set_category(self, phase, category):
-        if phase.upper() == PHASE_VALUES[0]:
-            self.profile_type = category
-        elif phase.upper() == PHASE_VALUES[1]:
-            self.profile_group = category
-        elif phase.upper() == PHASE_VALUES[2]:
-            self.category1 = category
-        else:
-            self.category2 = category
-
-    def _get_previous_stage(self, stage):
-        message = {'type': 'parent', 'category_name': stage}
-        client = Client()
-        result = client.send(message)
-        value = simplejson.loads(result)[stage]
-        self.set_category('Profile Group', value)
 
     def display(self):
         print unicode(self.fullname),unicode(self.description), "/",self.profile_type,":",self.profile_group,":", self.category1,":",self.category2

@@ -5,7 +5,6 @@ import operator
 import numpy
 
 
-
 def match_and(list_keywords, content):
     re_inclusion = []
 
@@ -32,6 +31,12 @@ def match_or(list_keywords, content):
 
     return score
 
+
+def split_into_chunks(list_item, n):
+        for i in xrange(0, len(list_item), n):
+            yield list_item[i:i+n]
+
+
 def match_not(list_keywords, content):
     re_inclusion = []
     for keyword in list(list_keywords):
@@ -39,10 +44,12 @@ def match_not(list_keywords, content):
 
     return any(r.search(content) for r in re_inclusion)
 
+
 def get_max_score(list_results, list_category_names):
 
     a = numpy.sum(list_results, axis=0)
     return list_category_names[numpy.argmax(a)]
+
 
 def get_candidate_name(list_results, list_category_names):
     if len(list_results):
@@ -50,25 +57,20 @@ def get_candidate_name(list_results, list_category_names):
             return list_category_names[numpy.argmax(list_results)]
     return None
 
+
 def get_max_element_by_value(dict_values):
     return max(dict_values.iteritems(), key=operator.itemgetter(1))[0]
 
-def get_keywords_from_nth_box():
-    pass
-
-
-def get_inclusion():
-    pass
 
 if __name__ == "__main__":
     pass
-    list_keywords = ['investor']
-    content = "where investors intersect with opportunity."
-    print match_and(list_keywords, content)     # 0
+    list_keywords_test = ['investor']
+    content_test = "where investors intersect with opportunity."
+    print match_and(list_keywords_test, content_test)     # 0
 
-    list_keywords = ['investors', 'opportunity']
-    content = "where investors intersect with opportunity."
-    print match_or(list_keywords, content)     # 1
+    list_keywords_test = ['investors', 'opportunity']
+    content_test = "where investors intersect with opportunity."
+    print match_or(list_keywords_test, content_test)     # 1
     #
     #results = [4, 4]
     #list_category_names = ['Person', 'Organisation']
