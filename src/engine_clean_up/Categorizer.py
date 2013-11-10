@@ -174,17 +174,6 @@ class Categorizer(object):
                 score = 0
                 return score
 
-        #Extract rules
-        #list_rules = sentifi_category.get_rules()
-        #for rules in list_rules:
-        #    if isinstance(rules, tuple):  # tuple
-        #        if match_and(rules, content):
-        #            score += len(rules)
-        #    elif type(rules) == type(u''):
-        #        list_keywords = [rules]
-        #        if match_and(list_keywords, content):
-        #            score += len(rules.split())
-
         queries = sentifi_category.queries
         tmp_score = 0
         for query in queries:
