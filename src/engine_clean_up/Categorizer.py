@@ -339,8 +339,8 @@ if __name__ == "__main__":
         cursor.execute(sql)
         rows = cursor.fetchall()
 
-        #sql = "CREATE TABLE {0} AS (SELECT * FROM {1})".format(output_table, TABLE_OUTPUT_TEMPLATE)
-        #cursor.execute(sql)
+        sql = "CREATE TABLE {0} AS (SELECT * FROM {1})".format(output_table, TABLE_OUTPUT_TEMPLATE)
+        cursor.execute(sql)
         connection.close()
 
         i = 0
@@ -358,23 +358,23 @@ if __name__ == "__main__":
             arr_values = p.to_array()
             list_content.append(arr_values)
 
-            #string = ['%s']*len(arr_values)
-            #
-            ##Joining list of %s by comma
-            #var_st = ','.join(string)
-            #
-            ##Building query string
-            #query_str = 'INSERT INTO ' + output_table + ' VALUES(%s)' % var_st
-            #
-            ###Open connection
-            #connection_thread = MySQLUtils().connection
-            #cursor_thread = connection_thread.cursor()
-            #
-            ##Execute query and commit
-            #cursor_thread.execute(query_str, arr_values)
-            #connection_thread.commit()
+            string = ['%s']*len(arr_values)
 
-            ioutils.save_list_to_csv(None, list_content, "D:\\" + output_table +".csv")
+            #Joining list of %s by comma
+            var_st = ','.join(string)
+
+            #Building query string
+            query_str = 'INSERT INTO ' + output_table + ' VALUES(%s)' % var_st
+
+            ##Open connection
+            connection_thread = MySQLUtils().connection
+            cursor_thread = connection_thread.cursor()
+
+            #Execute query and commit
+            cursor_thread.execute(query_str, arr_values)
+            connection_thread.commit()
+
+            #ioutils.save_list_to_csv(None, list_content, "D:\\" + output_table +".csv")
 
     except Exception, e:
         f.write(str(e) + '\n')

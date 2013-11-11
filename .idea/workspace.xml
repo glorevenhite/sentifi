@@ -2,13 +2,101 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8aaa4db0-6dfb-471a-b343-1e22ba29154e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/vinh_vo_sentifi_com.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/categorisation_engine/Categorizer.py" afterPath="$PROJECT_DIR$/src/categorisation_engine/Categorizer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/categorisation_engine/Constant.py" afterPath="$PROJECT_DIR$/src/categorisation_engine/Constant.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/rule_server/Constant.py" afterPath="$PROJECT_DIR$/src/rule_server/Constant.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/rule_server/MySQLUtils.py" afterPath="$PROJECT_DIR$/src/rule_server/MySQLUtils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scanner/utils/test.py" afterPath="$PROJECT_DIR$/src/scanner/utils/test.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/Sentifier.iml" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\.idea\.name" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\.idea\dictionaries\Vince.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\.project" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\.pydevproject" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\README.md" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\Categorizer2.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\CategorizerTest.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\Client.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\ConfusingMatrix.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\Constant2.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\MySQLUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\Rule.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\RuleSet.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\RuleUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\SentifiCategory.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\SentifiField.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\SentifiQuery.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\SentifiWordsBank.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\TwitterProfile.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\test_categorisationMatrix.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\categorisation_engine\test_categorizer.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler2\Constant.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler2\CrawlerUsers.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler2\TwitterCaller.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler2\__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\Config.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\Constant.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\CrawlerMention.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\CrawlerSpecificMention.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\CrawlerUsers.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\SentifiTwitterProfile.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\TagsChecker.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\TwitterUserCrawler.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\UnitTest.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\mention_autionation.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\twitter\Config.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\twitter\SentifiTwitterClient.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\twitter\TwitterStatusCrawler.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\twitter\TwitterUserCrawler.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\twitter\__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\utils\CrawlerUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\utils\IOUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\utils\MySQLUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\utils\Parser.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\utils\PathUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\crawler\utils\__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\engine\MySQLUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\engine\ResultMatrix.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\engine\SentifiField.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\engine\SentifiRule.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\engine\__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\rule_server\IOUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\rule_server\PathUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\rule_server\Rule.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\rule_server\Ruler.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\rule_server\Ruler2.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\rule_server\Server.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\rule_server\__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\rule_server\test_ruler.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\runnable\PathUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\runnable\__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\Classifier.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\ClassifierUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\Constant.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\Filter.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\IOUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\Main.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\MessageFilter.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\MySQLUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\Parser.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\PathUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\Rule.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\RuleSet.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\Ruler.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\SentifiMessage.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\SentifiWordsBank.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\Switcher.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\TwitterProfile.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\utils\IOUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\utils\MySQLUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\scanner\utils\PathUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\search_item_engine\Filter.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\search_item_engine\IOUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\search_item_engine\MessageFilter.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\search_item_engine\PathUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\search_item_engine\Rule.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\search_item_engine\SentifiMessage.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\search_item_engine\SentifiWordsBank.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\SENTIFI\categorisation_engine\engine\Sentifier\src\search_item_engine\__init__.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/engine_clean_up/Categorizer.py" afterPath="$PROJECT_DIR$/src/engine_clean_up/Categorizer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="sentifi.iws" />
@@ -35,30 +123,10 @@
       <file leaf-file-name="Categorizer.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/engine_clean_up/Categorizer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="185" column="32" selection-start="6628" selection-end="6628" vertical-scroll-proportion="0.67105263" vertical-offset="4217" max-vertical-offset="5425">
+            <state line="341" column="8" selection-start="12697" selection-end="12816" vertical-scroll-proportion="1.6379585" vertical-offset="7498" max-vertical-offset="9675">
               <folding>
-                <element signature="e#1#34#0" expanded="true" />
+                <element signature="e#0#33#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SentifiTwitterProfile.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/engine_clean_up/SentifiTwitterProfile.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="8" selection-start="127" selection-end="127" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1900">
-              <folding>
-                <element signature="e#0#17#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SentifiField.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/engine_clean_up/SentifiField.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -66,16 +134,25 @@
       <file leaf-file-name="Constant.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/engine_clean_up/Constant.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="22" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1675">
+            <state line="14" column="0" selection-start="356" selection-end="356" vertical-scroll-proportion="0.0" vertical-offset="130" max-vertical-offset="825">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Utils.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/engine_clean_up/Utils.py">
+      <file leaf-file-name="SentifiCategory.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/engine_clean_up/SentifiCategory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="9" selection-start="45" selection-end="45" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2350">
+            <state line="26" column="0" selection-start="693" selection-end="693" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="825">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SentifiTwitterProfile.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/engine_clean_up/SentifiTwitterProfile.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="40" selection-start="460" selection-end="460" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1700">
               <folding />
             </state>
           </provider>
@@ -84,7 +161,7 @@
       <file leaf-file-name="JSonFeeder.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/engine_clean_up/JSonFeeder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="37" selection-start="81" selection-end="81" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6475">
+            <state line="64" column="36" selection-start="1766" selection-end="1766" vertical-scroll-proportion="0.0" vertical-offset="1125" max-vertical-offset="4850">
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -95,9 +172,51 @@
       <file leaf-file-name="Cache.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/engine_clean_up/Cache.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="345" selection-end="345" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="550">
+            <state line="14" column="0" selection-start="343" selection-end="343" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="625">
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Utils.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/engine_clean_up/Utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="138" column="0" selection-start="3588" selection-end="3692" vertical-scroll-proportion="-20.2" vertical-offset="2945" max-vertical-offset="3750">
+              <folding>
+                <element signature="e#36#45#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PathUtils.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/engine_clean_up/PathUtils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="0" selection-start="87" selection-end="87" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="475">
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="log.log" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/engine_clean_up/log.log">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IOUtils.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/engine_clean_up/IOUtils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="6" selection-start="61" selection-end="61" vertical-scroll-proportion="0.0" vertical-offset="900" max-vertical-offset="2700">
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -112,6 +231,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Fourth" />
+      </map>
+    </option>
   </component>
   <component name="GitLogSettings">
     <option name="myDateState">
@@ -121,21 +245,21 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/categorisation_engine/Categorizer.py" />
-        <option value="C:/Python27/Lib/pprint.py" />
-        <option value="$PROJECT_DIR$/src/engine/Cache.py" />
-        <option value="$PROJECT_DIR$/src/engine/Utils.py" />
-        <option value="$PROJECT_DIR$/src/scanner/utils/test.py" />
-        <option value="$PROJECT_DIR$/src/engine/JSonFeeder.py" />
-        <option value="$PROJECT_DIR$/src/engine/Categorizer.py" />
-        <option value="$PROJECT_DIR$/src/categorisation_engine/engine_clean_up/Categorizer.py" />
-        <option value="$PROJECT_DIR$/src/categorisation_engine/engine_clean_up/Constant.py" />
-        <option value="$PROJECT_DIR$/src/engine_clean_up/MySQLUtils.py" />
-        <option value="$PROJECT_DIR$/src/engine_clean_up/SentifiTwitterProfile.py" />
-        <option value="$PROJECT_DIR$/src/engine_clean_up/JSonFeeder.py" />
+        <option value="$PROJECT_DIR$/src/categorisation_engine/Rule.py" />
+        <option value="$PROJECT_DIR$/src/categorisation_engine/ComplexRule.py" />
+        <option value="$PROJECT_DIR$/src/rule_server/Ruler.py" />
+        <option value="$PROJECT_DIR$/src/rule_server/Server.py" />
+        <option value="$PROJECT_DIR$/src/categorisation_engine/Classifier.py" />
+        <option value="$PROJECT_DIR$/src/categorisation_engine/TwitterProfile.py" />
+        <option value="$PROJECT_DIR$/src/engine_clean_up/PathUtils.py" />
         <option value="$PROJECT_DIR$/src/engine_clean_up/Constant.py" />
+        <option value="$PROJECT_DIR$/src/engine_clean_up/SentifiTwitterProfile.py" />
         <option value="$PROJECT_DIR$/src/engine_clean_up/Cache.py" />
+        <option value="$PROJECT_DIR$/src/engine_clean_up/KeywordLookup.py" />
+        <option value="$PROJECT_DIR$/src/engine_clean_up/IOUtils.py" />
+        <option value="$PROJECT_DIR$/src/engine_clean_up/JSonFeeder.py" />
         <option value="$PROJECT_DIR$/src/engine_clean_up/Utils.py" />
+        <option value="$PROJECT_DIR$/src/engine_clean_up/SentifiCategory.py" />
         <option value="$PROJECT_DIR$/src/engine_clean_up/Categorizer.py" />
       </list>
     </option>
@@ -176,27 +300,17 @@
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
+              <option name="myItemId" value="Sentifier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
+              <option name="myItemId" value="Sentifier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
+              <option name="myItemId" value="Sentifier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -206,11 +320,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
+              <option name="myItemId" value="Sentifier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
+              <option name="myItemId" value="Sentifier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -218,17 +332,39 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="search_item_engine" />
+              <option name="myItemId" value="scanner" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
+              <option name="myItemId" value="Sentifier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
+              <option name="myItemId" value="Sentifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rule_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Sentifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Sentifier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -242,11 +378,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
+              <option name="myItemId" value="Sentifier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sentifi" />
+              <option name="myItemId" value="Sentifier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -255,6 +391,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Sentifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Sentifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="categorisation_engine" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -267,7 +421,6 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sentifi_matrix" />
     <property name="FullScreen" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
@@ -279,96 +432,49 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Workspace\python\sentifi\src\categorisation_engine" />
-      <recent name="D:\Workspace\python\sentifi\src\engine" />
       <recent name="D:\workspace\python\Sentifier\src\categorisation_engine" />
       <recent name="D:\workspace\python\Sentifier\src\rule_server" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Workspace\python\sentifi\src" />
-      <recent name="D:\Workspace\python\sentifi\src\engine" />
+      <recent name="D:\Workspace\python\sentifi\src\categorisation_engine" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Categorizer (2)">
-    <configuration default="false" name="Categorizer (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.Utils">
+    <configuration default="false" name="Classifier" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/engine" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/categorisation_engine" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="sentifi" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/engine/Categorizer.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/categorisation_engine/Classifier.py" />
       <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PyDebugRunner" />
       <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PyDebugRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
-    <configuration default="false" name="JSonFeeder" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="ComplexRule" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/engine" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/categorisation_engine" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="sentifi" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/engine/JSonFeeder.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PyDebugRunner" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PyDebugRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="Cache" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/engine" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="sentifi" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/engine/Cache.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PyDebugRunner" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PyDebugRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/scanner/utils" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="sentifi" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/scanner/utils/test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/categorisation_engine/ComplexRule.py" />
       <option name="PARAMETERS" value="" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
-    <configuration default="false" name="Categorizer (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="Categorizer" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -379,8 +485,48 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="sentifi" />
+      <module name="Sentifier" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/engine_clean_up/Categorizer.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PyDebugRunner" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PyDebugRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Utils" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/engine_clean_up" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Sentifier" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/engine_clean_up/Utils.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PyDebugRunner" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PyDebugRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="SentifiCategory" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/engine_clean_up" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Sentifier" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/engine_clean_up/SentifiCategory.py" />
       <option name="PARAMETERS" value="" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
@@ -508,19 +654,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.Categorizer (1)" />
-      <item index="1" class="java.lang.String" itemvalue="Python.JSonFeeder" />
-      <item index="2" class="java.lang.String" itemvalue="Python.Cache" />
-      <item index="3" class="java.lang.String" itemvalue="Python.test" />
-      <item index="4" class="java.lang.String" itemvalue="Python.Categorizer (2)" />
+      <item index="0" class="java.lang.String" itemvalue="Python.Classifier" />
+      <item index="1" class="java.lang.String" itemvalue="Python.ComplexRule" />
+      <item index="2" class="java.lang.String" itemvalue="Python.Categorizer" />
+      <item index="3" class="java.lang.String" itemvalue="Python.Utils" />
+      <item index="4" class="java.lang.String" itemvalue="Python.SentifiCategory" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.Categorizer (2)" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Categorizer (1)" />
-        <item index="2" class="java.lang.String" itemvalue="Python.JSonFeeder" />
-        <item index="3" class="java.lang.String" itemvalue="Python.test" />
-        <item index="4" class="java.lang.String" itemvalue="Python.Cache" />
+        <item index="0" class="java.lang.String" itemvalue="Python.Utils" />
+        <item index="1" class="java.lang.String" itemvalue="Python.SentifiCategory" />
+        <item index="2" class="java.lang.String" itemvalue="Python.Categorizer" />
+        <item index="3" class="java.lang.String" itemvalue="Python.Classifier" />
+        <item index="4" class="java.lang.String" itemvalue="Python.ComplexRule" />
       </list>
     </recent_temporary>
   </component>
@@ -620,39 +766,27 @@
       <created>1382871238603</created>
       <updated>1382871238603</updated>
     </task>
-    <task id="LOCAL-00019" summary="categorisation">
-      <created>1383656117704</created>
-      <updated>1383656117704</updated>
+    <task id="LOCAL-00019" summary="Delete code of using if-clauses. Using the simple one instead">
+      <created>1384092293987</created>
+      <updated>1384092293987</updated>
     </task>
-    <task id="LOCAL-00020" summary="Categorisation Engine">
-      <created>1383748481870</created>
-      <updated>1383748481870</updated>
+    <task id="LOCAL-00020" summary="Do some refactor to prevent the garbage stufff">
+      <created>1384137604733</created>
+      <updated>1384137604733</updated>
     </task>
-    <task id="LOCAL-00021" summary="New Categorisation Engine">
-      <created>1383748523164</created>
-      <updated>1383748523164</updated>
+    <task id="LOCAL-00021" summary="Optimizer by make instance instead of call directly">
+      <created>1384160328666</created>
+      <updated>1384160328666</updated>
     </task>
-    <task id="LOCAL-00022" summary="New Categorisation Engine">
-      <created>1383750552703</created>
-      <updated>1383750552703</updated>
+    <task id="LOCAL-00022" summary="optimizer remove the mistake in function of get_exclusion. Return to the total exclusion instead of the property">
+      <created>1384177423872</created>
+      <updated>1384177423872</updated>
     </task>
-    <task id="LOCAL-00023" summary="New Categorisation Engine (ok)">
-      <created>1383859819951</created>
-      <updated>1383859819951</updated>
+    <task id="LOCAL-00023" summary="optimizer remove the mistake in function of get_exclusion. Return to the total exclusion instead of the property">
+      <created>1384177456933</created>
+      <updated>1384177456933</updated>
     </task>
-    <task id="LOCAL-00024" summary="New Categorisation Engine Refactored">
-      <created>1383972063093</created>
-      <updated>1383972063093</updated>
-    </task>
-    <task id="LOCAL-00025" summary="New Categorisation Engine Refactored">
-      <created>1383984025835</created>
-      <updated>1383984025835</updated>
-    </task>
-    <task id="LOCAL-00026" summary="New Categorisation Engine">
-      <created>1383984663572</created>
-      <updated>1383984663572</updated>
-    </task>
-    <option name="localTasksCounter" value="27" />
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -660,17 +794,17 @@
     <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32792208" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21861471" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.146875" sideWeight="0.7132035" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3051948" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14739583" sideWeight="0.7435065" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3982684" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28679654" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2564935" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -700,218 +834,148 @@
     <MESSAGE value="categorising engine&#10;" />
     <MESSAGE value="Rule class in rule server&#10;" />
     <MESSAGE value="Ruler class in rule server&#10;" />
-    <MESSAGE value="categorisation" />
-    <MESSAGE value="Categorisation Engine" />
-    <MESSAGE value="New Categorisation Engine (ok)" />
-    <MESSAGE value="New Categorisation Engine Refactored" />
-    <MESSAGE value="New Categorisation Engine" />
-    <option name="LAST_COMMIT_MESSAGE" value="New Categorisation Engine" />
+    <MESSAGE value="Delete code of using if-clauses. Using the simple one instead" />
+    <MESSAGE value="Do some refactor to prevent the garbage stufff" />
+    <MESSAGE value="Optimizer by make instance instead of call directly" />
+    <MESSAGE value="optimizer remove the mistake in function of get_exclusion. Return to the total exclusion instead of the property" />
+    <option name="LAST_COMMIT_MESSAGE" value="optimizer remove the mistake in function of get_exclusion. Return to the total exclusion instead of the property" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/categorisation_engine/RuleUtils.py</url>
-          <line>48</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/categorisation_engine/Categorizer.py</url>
-          <line>189</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/categorisation_engine/Categorizer.py</url>
-          <line>236</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/rule_server/MySQLUtils.py</url>
-          <line>134</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/categorisation_engine/Categorizer.py</url>
-          <line>208</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/categorisation_engine/Categorizer.py</url>
-          <line>2</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/categorisation_engine/Categorizer.py</url>
-          <line>228</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/engine/Categorizer.py</url>
-          <line>156</line>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/engine/Categorizer.py</url>
-          <line>214</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/engine/Categorizer.py</url>
-          <line>240</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/engine/Cache.py</url>
-          <line>6</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/engine/JSonFeeder.py</url>
-          <line>253</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/engine/Categorizer.py</url>
-          <line>52</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/engine/JSonFeeder.py</url>
-          <line>153</line>
-          <option name="timeStamp" value="34" />
+          <url>file://$PROJECT_DIR$/src/rule_server/Ruler.py</url>
+          <line>298</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="35" />
+      <option name="time" value="4" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/categorisation_engine/ConfusingMatrix.py">
+    <entry file="file://$USER_HOME$/.PyCharm30/system/python_stubs/-762174762/thread.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="77" selection-end="77" vertical-scroll-proportion="0.19747235" vertical-offset="0" max-vertical-offset="633">
+        <state line="96" column="4" selection-start="3369" selection-end="3369" vertical-scroll-proportion="0.0" vertical-offset="2180" max-vertical-offset="7225">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scanner/utils/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="21" selection-start="1106" selection-end="1106" vertical-scroll-proportion="0.59241706" vertical-offset="525" max-vertical-offset="2725">
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/engine/JSonFeeder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="0" selection-start="5524" selection-end="5524" vertical-scroll-proportion="0.32385466" vertical-offset="3695" max-vertical-offset="6475">
-          <folding>
-            <element signature="e#35#78#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/engine/Categorizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="35" selection-end="350" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6700">
-          <folding>
-            <element signature="e#35#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/engine/MySQLUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="22" selection-end="44" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2175">
+        <state line="188" column="24" selection-start="6839" selection-end="6839" vertical-scroll-proportion="0.0" vertical-offset="4125" max-vertical-offset="6450">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/MySQLUtils.py">
+    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/KeywordLookup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="22" selection-start="44" selection-end="44" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2175">
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/SentifiCategory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="775">
+        <state line="2" column="0" selection-start="36" selection-end="36" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/SentifiQuery.py">
+    <entry file="file://$USER_HOME$/.PyCharm30/system/python_stubs/-762174762/__builtin__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3220" column="8" selection-start="111017" selection-end="111017" vertical-scroll-proportion="0.33333334" vertical-offset="80275" max-vertical-offset="127475">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/SentifiCategory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="28" selection-start="272" selection-end="272" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="775">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/SentifiQuery.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="950">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/engine_clean_up/JSonFeeder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="37" selection-start="81" selection-end="81" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6475">
+        <state line="64" column="36" selection-start="1766" selection-end="1766" vertical-scroll-proportion="0.0" vertical-offset="1125" max-vertical-offset="4850">
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/SentifiField.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/SentifiTwitterProfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="8" selection-start="127" selection-end="127" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1900">
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/engine_clean_up/Cache.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="345" selection-end="345" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="550">
+        <state line="14" column="0" selection-start="343" selection-end="343" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="625">
           <folding>
             <element signature="e#0#33#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/Constant.py">
+    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/Utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="22" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1675">
+        <state line="138" column="0" selection-start="3588" selection-end="3692" vertical-scroll-proportion="-20.2" vertical-offset="2945" max-vertical-offset="3750">
+          <folding>
+            <element signature="e#36#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/PathUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="0" selection-start="87" selection-end="87" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="475">
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/log.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="640">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/Utils.py">
+    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/IOUtils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="9" selection-start="45" selection-end="45" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2350">
+        <state line="5" column="6" selection-start="61" selection-end="61" vertical-scroll-proportion="0.0" vertical-offset="900" max-vertical-offset="2700">
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/Constant.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="356" selection-end="356" vertical-scroll-proportion="0.0" vertical-offset="130" max-vertical-offset="825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/SentifiCategory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="0" selection-start="693" selection-end="693" vertical-scroll-proportion="0.0" vertical-offset="185" max-vertical-offset="825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine_clean_up/SentifiTwitterProfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="40" selection-start="460" selection-end="460" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1700">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/engine_clean_up/Categorizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="185" column="32" selection-start="6628" selection-end="6628" vertical-scroll-proportion="0.67105263" vertical-offset="4217" max-vertical-offset="5425">
+        <state line="341" column="8" selection-start="12697" selection-end="12816" vertical-scroll-proportion="1.6379585" vertical-offset="7498" max-vertical-offset="9675">
           <folding>
-            <element signature="e#1#34#0" expanded="true" />
+            <element signature="e#0#33#0" expanded="true" />
           </folding>
         </state>
       </provider>
