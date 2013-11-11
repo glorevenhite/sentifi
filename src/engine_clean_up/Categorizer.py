@@ -12,7 +12,7 @@ import time
 
 class Categorizer(object):
 
-    def categorizer(self, profile, list_sentifi_categories, json_category_names):
+    def categorizer(self, profile, sentifi_categories, category_names):
 
         #Take the fields need to be scan
         fields = profile.get_fields()
@@ -22,10 +22,10 @@ class Categorizer(object):
         #Identify whether a profile is Person or Organisation
         pid = None
         candidates = []
-        candidates.extend(JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, list_sentifi_categories))
+        candidates.extend(JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories))
         assigned_category = self.assign(field_description, candidates)
 
-        if assigned_category is not None:   #Knowing ITEM FILE
+        if assigned_category is not None:   # Knowing ITEM FILE
             profile.profile_type = assigned_category
 
             # We now know the type of given profile. Just keep allocate profile in a straight way.
@@ -38,7 +38,7 @@ class Categorizer(object):
 
             candidates = []
             for pid in pids:
-                sc = JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, list_sentifi_categories)
+                sc = JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories)
                 candidates.extend(sc)
 
             assigned_category = self.assign(field_description, candidates)
@@ -47,11 +47,11 @@ class Categorizer(object):
                 profile.category1 = assigned_category
 
                 #Having known CAT1, ITEM GROUP is identified as well
-                profile.profile_group = JSonFeeder().get_parent_name(profile.category1, json_category_names)
+                profile.profile_group = JSonFeeder().get_parent_name(profile.category1, category_names)
 
                 #Go to the stage of identifying CAT2
-                pid = JSonFeeder.get_category_id_by_name(profile.category1, json_category_names)
-                sc = JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, list_sentifi_categories)
+                pid = JSonFeeder.get_category_id_by_name(profile.category1, category_names)
+                sc = JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories)
                 candidates = []
                 candidates.extend(sc)
 
@@ -63,7 +63,7 @@ class Categorizer(object):
                 #Go to the stage of identifying CAT2
                 pids = [45, 46, 47, 179, 52, 61, 64, 89, 68, 87, 93]
                 for pid in pids:
-                    sc = JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, list_sentifi_categories)
+                    sc = JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories)
                 candidates = []
                 candidates.extend(sc)
 
@@ -71,8 +71,8 @@ class Categorizer(object):
                 if assigned_category is not None:   # Luckily find out CAT2
                     profile.category2 = assigned_category
 
-                    profile.category1 = JSonFeeder().get_parent_name(profile.category2, json_category_names)
-                    profile.profile_group = JSonFeeder().get_parent_name(profile.category1, json_category_names)
+                    profile.category1 = JSonFeeder().get_parent_name(profile.category2, category_names)
+                    profile.profile_group = JSonFeeder().get_parent_name(profile.category1, category_names)
                     return
         else:   # Cannot detect whether profile is Person or Organisation. Going to stage of CAT1 detection
             pids = CAT1_PARENT
@@ -80,21 +80,21 @@ class Categorizer(object):
 
             #For each pid, making a list of candidate categories to which profile is assigned
             for pid in pids:
-                sc = JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, list_sentifi_categories)
+                sc = JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories)
                 candidates.extend(sc)
 
             assigned_category = self.assign(field_description, candidates)
 
             if assigned_category is not None:
                 profile.category1 = assigned_category
-                profile.profile_group = JSonFeeder().get_parent_name(profile.category1, json_category_names)
-                profile.profile_type = JSonFeeder().get_parent_name(profile.profile_group, json_category_names)
+                profile.profile_group = JSonFeeder().get_parent_name(profile.category1, category_names)
+                profile.profile_type = JSonFeeder().get_parent_name(profile.profile_group, category_names)
 
                 #############################################################
                 parent = profile.category1
-                pid = JSonFeeder().get_category_id_by_name(parent, json_category_names)
+                pid = JSonFeeder().get_category_id_by_name(parent, category_names)
                 candidates = []
-                candidates.extend(JSonFeeder().get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, list_sentifi_categories))
+                candidates.extend(JSonFeeder().get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories))
 
                 if len(candidates):
                     profile.category2 = self.assign(field_description, candidates)
@@ -104,16 +104,15 @@ class Categorizer(object):
                 pids = [45, 46, 47, 179, 52, 61, 64, 89, 68, 87, 93]
                 candidates = []
                 for pid in pids:
-                    candidates.extend(JSonFeeder().get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, list_sentifi_categories))
+                    candidates.extend(JSonFeeder().get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories))
 
                 if len(candidates):
                     profile.category2 = self.assign(field_description, candidates)
-                    profile.category1 = JSonFeeder().get_parent_name(profile.category2, json_category_names)
-                    profile.profile_group = JSonFeeder().get_parent_name(profile.category1, json_category_names)
-                    profile.profile_type = JSonFeeder().get_parent_name(profile.profile_group, json_category_names)
+                    profile.category1 = JSonFeeder().get_parent_name(profile.category2, category_names)
+                    profile.profile_group = JSonFeeder().get_parent_name(profile.category1, category_names)
+                    profile.profile_type = JSonFeeder().get_parent_name(profile.profile_group, category_names)
                 else:
                     profile.category2 = None
-
 
     def assign(self, field, candidate_list):
         value = None
@@ -132,8 +131,8 @@ class Categorizer(object):
 
         # For each field we will check it against a list of categories to know to which it can be classified
         # The result is an array of score indicates how good (how many time) a field contains keywords given
-        for f in sentifi_fields:
-            dict_results = self.check_field_against_categories(f, list_categories)
+        for field in sentifi_fields:
+            dict_results = self.check_field_against_categories(field, list_categories)
             list_result.append(dict_results)
 
         return list_result
@@ -149,10 +148,10 @@ class Categorizer(object):
         return list_results
 
     @staticmethod
-    def get_categories(list_sentifi_categories, field):
+    def get_categories(sentifi_categories, field):
         list_results = []
 
-        for cat in list_sentifi_categories:
+        for cat in sentifi_categories:
             queries = cat.queries
             for query in queries:
                 if query.field == field:
@@ -195,7 +194,7 @@ class Categorizer(object):
         return score
 
 
-def categorize(table_output, list_profiles, list_sentifi_categories, json_category_names):
+def categorize(table_output, list_profiles, sentifi_categories, category_names):
 
     print "Starting categorisastion progress and input to " + table_output
 
@@ -206,11 +205,12 @@ def categorize(table_output, list_profiles, list_sentifi_categories, json_catego
     sql_create_table = "CREATE TABLE {0} AS (SELECT * FROM {1}) " .format(table_output, TABLE_OUTPUT_TEMPLATE)
     cursor_thread.execute(sql_create_table)
     connection_thread.commit()
+    connection_thread.close()
 
     for row in list_profiles:
         p = SentifiTwitterProfile(row)
         print p.screen_name
-        Categorizer().categorizer(p, list_sentifi_categories, json_category_names)
+        Categorizer().categorizer(p, sentifi_categories, category_names)
         #p.display()
         arr_values = p.to_array()
 
@@ -221,6 +221,10 @@ def categorize(table_output, list_profiles, list_sentifi_categories, json_catego
 
         #Building query string
         query_str = 'INSERT INTO ' + table_output + ' VALUES(%s)' % var_st
+
+        #Open connection
+        connection_thread = MySQLUtils().connection
+        cursor_thread = connection_thread.cursor()
 
         #Execute query and commit
         cursor_thread.execute(query_str, arr_values)
