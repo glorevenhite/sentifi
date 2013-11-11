@@ -123,8 +123,8 @@ class JSonFeeder(object):
             print e
         return list_result
 
-
-    def get_list_keywords_by_category_id(self, cat_id):
+    @staticmethod
+    def get_list_keywords_by_category_id(cat_id):
         url = END_POINT_URL + 'getCategoryKeywordById?id={0}'.format(cat_id) + END_POINT_KEY
         req = urllib2.Request(url, None)
         opener = urllib2.build_opener()
@@ -146,78 +146,11 @@ class JSonFeeder(object):
 
         return list_result
 
-    def get_category_name_by_id2(self, cat_id, json_data):
-
-        for item in json_data:
-            if item['id'] == str(cat_id):
-                return item['name']
-
     @staticmethod
     def get_category_id_by_name(cat_name, list_data):
         for item in list_data:
             if item.name == str(cat_name):
                 return item.id
-
-    def get_sentifi_categories(self, parent_name, field_name, json_data_list_categories):
-        #parent_id = self.get_category_id_by_name(parent_name)
-        parent_id = self.get_category_id_by_name(parent_name, json_data_list_categories)
-
-        #get list of ids of categories
-        list_ids = []
-        for item in json_data_list_categories:
-            if parent_name is not None:
-                if item['parent_id'] == str(parent_id):
-                    list_ids.append(item['id'])
-            else:
-                if item['parent_id'] is None:
-                    list_ids.append(item['id'])
-
-        #PARSE JSON TO OBJECT
-        list_results = []
-        # Having list of ids of all categories belong to a specific category, looking for all childs
-        for id in list_ids:
-            #looking for rules for this category
-            json_data_rules = self.get_list_keywords_by_category_id(id)
-
-
-            #Having rules
-            if json_data_rules is not None:
-                cat = SentifiCategory()
-                cat.id = id
-                cat.name = self.get_category_name_by_id(id, json_data_list_categories)     # OPTIMIZE HERE
-                cat.parent = parent_name
-                keys = dict(json_data_rules).keys()
-
-                #Having exclusion
-                if 'exclusions' in keys:
-                    if len(json_data_rules['exclusions']):
-                        cat.exclusion.extend([item.strip().lower() for item in json_data_rules['exclusions'].split(",")])
-                else:
-                    cat.exclusion = []
-
-                #Having keywords
-                if 'keywords' in keys:
-                    fields = json_data_rules['keywords']
-                    for f in fields:
-                        #Taking only rules for given field_name (Description
-                        if f['field'] == str(field_name):
-                            queries = f['rules']
-                            for q in queries:
-                                query = SentifiQuery()
-                                query.field = f['field']
-                                if len(q['keyword']):
-                                    query.based_words.extend([item.strip().lower() for item in q['keyword'].split(",")])
-                                if len(q['and'][0]):
-                                    query.and1_words.extend([item.strip().lower() for item in q['and'][0].split(",")])
-                                if len(q['and'][1]):
-                                    query.and2_words.extend([item.strip().lower() for item in q['and'][1].split(",")])
-                                if len(q['not']):
-                                    query.not_words.extend([item.strip().lower() for item in q['not'].split(",")])
-                                cat.queries.append(query)
-
-                            list_results.append(cat)
-
-        return list_results
 
     def get_parent_name(self, cat_name, json_data_list_categories):
 
@@ -229,24 +162,22 @@ class JSonFeeder(object):
 
 
 if __name__ == "__main__":
-    database = shelve.open(PATH_CACHE)
-    list_sentifi_categories = database['sc']
-    json_category_names = database['cn']
-    database.close()
-
-    #pprint.pprint(JSonFeeder().get_list_keywords_by_category_id(45))
-    #pprint.pprint(JSonFeeder().get_list_categories())
-    #pprint.pprint(JSonFeeder().get_list_categories_by_parent_id(None))
-    #pprint.pprint(JSonFeeder().get_list_categories_by_parent_id(2))
-    #pprint.pprint((JSonFeeder().get_category_name_by_id(1)))
-    #pprint.pprint((JSonFeeder().get_sentifi_categories('Financial Market Professionals', TWITTER_DESCRIPTION)))
-    #string = "abc, def"
-    #list_a = []
-    #list_a.extend([item.strip() for item in string.split(",")])
-    #print len(list_a)
-    print JSonFeeder().get_parent_name('Journalist', json_category_names)
-
-
+    #database = shelve.open(PATH_CACHE)
+    #list_sentifi_categories = database['sc']
+    #json_category_names = database['cn']
+    #database.close()
+    #
+    ##pprint.pprint(JSonFeeder().get_list_keywords_by_category_id(45))
+    ##pprint.pprint(JSonFeeder().get_list_categories())
+    ##pprint.pprint(JSonFeeder().get_list_categories_by_parent_id(None))
+    ##pprint.pprint(JSonFeeder().get_list_categories_by_parent_id(2))
+    ##pprint.pprint((JSonFeeder().get_category_name_by_id(1)))
+    ##pprint.pprint((JSonFeeder().get_sentifi_categories('Financial Market Professionals', TWITTER_DESCRIPTION)))
+    ##string = "abc, def"
+    ##list_a = []
+    ##list_a.extend([item.strip() for item in string.split(",")])
+    ##print len(list_a)
+    #print JSonFeeder().get_parent_name('Journalist', json_category_names)
     #
     #for sc in list_sentifi_categories:
     #    if sc.name == "P":

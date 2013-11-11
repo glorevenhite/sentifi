@@ -7,7 +7,7 @@ SERVER = '127.0.0.1'
 DATABASE_NAME = 'autocategory_db'
 USERNAME = 'root'
 PASSWORD = ''
-TABLE_PROFILES_INPUT = 'input'
+TABLE_PROFILES_INPUT = 'results'
 TABLE_OUTPUT_TEMPLATE = 'results'
 
 #COLUMNS = [0, 89, 88, 87, 90]
