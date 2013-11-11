@@ -10,20 +10,24 @@ import numpy
 import thread
 import timeit
 
+global keyword_regex
+
 
 class Categorizer(object):
+    def __init__(self):
+        self.jsonfeeder = JSonFeeder()
 
     def categorizer(self, profile, sentifi_categories, category_names):
 
         #Take the fields need to be scan
         fields = profile.get_fields()
         field_description = fields[2]
-        field_full_name = fields[1]
+        #field_full_name = fields[1]
 
         #Identify whether a profile is Person or Organisation
         pid = None
         candidates = []
-        candidates.extend(JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories))
+        candidates.extend(self.jsonfeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories))
         assigned_category = self.assign(field_description, candidates)
 
         if assigned_category is not None:   # Knowing ITEM FILE
@@ -48,11 +52,11 @@ class Categorizer(object):
                 profile.category1 = assigned_category
 
                 #Having known CAT1, ITEM GROUP is identified as well
-                profile.profile_group = JSonFeeder().get_parent_name(profile.category1, category_names)
+                profile.profile_group = self.jsonfeeder.get_parent_name(profile.category1, category_names)
 
                 #Go to the stage of identifying CAT2
-                pid = JSonFeeder.get_category_id_by_name(profile.category1, category_names)
-                sc = JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories)
+                pid = self.jsonfeeder.get_category_id_by_name(profile.category1, category_names)
+                sc = self.jsonfeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories)
                 candidates = []
                 candidates.extend(sc)
 
@@ -64,7 +68,7 @@ class Categorizer(object):
                 #Go to the stage of identifying CAT2
                 pids = [45, 46, 47, 179, 52, 61, 64, 89, 68, 87, 93]
                 for pid in pids:
-                    sc = JSonFeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories)
+                    sc = self.jsonfeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories)
                 candidates = []
                 candidates.extend(sc)
 
@@ -72,8 +76,8 @@ class Categorizer(object):
                 if assigned_category is not None:   # Luckily find out CAT2
                     profile.category2 = assigned_category
 
-                    profile.category1 = JSonFeeder().get_parent_name(profile.category2, category_names)
-                    profile.profile_group = JSonFeeder().get_parent_name(profile.category1, category_names)
+                    profile.category1 = self.jsonfeeder.get_parent_name(profile.category2, category_names)
+                    profile.profile_group = self.jsonfeeder.get_parent_name(profile.category1, category_names)
                     return
         else:   # Cannot detect whether profile is Person or Organisation. Going to stage of CAT1 detection
             pids = CAT1_PARENT
@@ -88,14 +92,14 @@ class Categorizer(object):
 
             if assigned_category is not None:
                 profile.category1 = assigned_category
-                profile.profile_group = JSonFeeder().get_parent_name(profile.category1, category_names)
-                profile.profile_type = JSonFeeder().get_parent_name(profile.profile_group, category_names)
+                profile.profile_group = self.jsonfeeder.get_parent_name(profile.category1, category_names)
+                profile.profile_type = self.jsonfeeder.get_parent_name(profile.profile_group, category_names)
 
                 #############################################################
                 parent = profile.category1
-                pid = JSonFeeder().get_category_id_by_name(parent, category_names)
+                pid = self.jsonfeeder.get_category_id_by_name(parent, category_names)
                 candidates = []
-                candidates.extend(JSonFeeder().get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories))
+                candidates.extend(self.jsonfeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories))
 
                 if len(candidates):
                     profile.category2 = self.assign(field_description, candidates)
@@ -105,13 +109,13 @@ class Categorizer(object):
                 pids = [45, 46, 47, 179, 52, 61, 64, 89, 68, 87, 93]
                 candidates = []
                 for pid in pids:
-                    candidates.extend(JSonFeeder().get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories))
+                    candidates.extend(self.jsonfeeder.get_sentifi_category_by_field(pid, TWITTER_DESCRIPTION, sentifi_categories))
 
                 if len(candidates):
                     profile.category2 = self.assign(field_description, candidates)
-                    profile.category1 = JSonFeeder().get_parent_name(profile.category2, category_names)
-                    profile.profile_group = JSonFeeder().get_parent_name(profile.category1, category_names)
-                    profile.profile_type = JSonFeeder().get_parent_name(profile.profile_group, category_names)
+                    profile.category1 = self.jsonfeeder.get_parent_name(profile.category2, category_names)
+                    profile.profile_group = self.jsonfeeder.get_parent_name(profile.category1, category_names)
+                    profile.profile_type = self.jsonfeeder.get_parent_name(profile.profile_group, category_names)
                 else:
                     profile.category2 = None
 
@@ -167,6 +171,7 @@ class Categorizer(object):
         content = unicode(sentifi_field.content).encode('utf-8')
 
         #Extract exclusion
+
         exclusion = sentifi_category.get_exclusion()
 
         if len(exclusion):
@@ -210,12 +215,15 @@ def categorize(table_output, list_profiles, sentifi_categories, category_names):
 
     i = 0
     total = len(list_profiles)
+    ioutils = IOUtils()
+    engine = Categorizer()
+    #categorize_engine
     for row in list_profiles:
         list_content = []
         p = SentifiTwitterProfile(row)
         i += 1
         print p.screen_name, "there still have been ", total - i, " profiles"
-        Categorizer().categorizer(p, sentifi_categories, category_names)
+        engine.categorizer(p, sentifi_categories, category_names)
         #p.display()
         arr_values = p.to_array()
         list_content.append(arr_values)
@@ -236,7 +244,7 @@ def categorize(table_output, list_profiles, sentifi_categories, category_names):
         #cursor_thread.execute(query_str, arr_values)
         #connection_thread.commit()
         try:
-            IOUtils().save_list_to_csv(None, list_content, "D:\\" + table_output +".csv")
+            ioutils.save_list_to_csv(None, list_content, "D:\\" + table_output +".csv")
         except Exception, e:
             pass
 
@@ -299,6 +307,7 @@ def categorize(table_output, list_profiles, sentifi_categories, category_names):
 
 if __name__ == "__main__":
     print "start"
+    start = timeit.timeit()
     input_table = ""
     log_file = ""
     profile_per_thread = 0
@@ -321,21 +330,24 @@ if __name__ == "__main__":
         json_category_names = database['cn']
         database.close()
 
+        output_table = input_table + "_" + TABLE_OUTPUT_TEMPLATE
+
         connection = MySQLUtils().connection
         cursor = connection.cursor()
 
         sql = "SELECT * FROM {0} " .format(input_table)
         cursor.execute(sql)
         rows = cursor.fetchall()
+
+        #sql = "CREATE TABLE {0} AS (SELECT * FROM {1})".format(output_table, TABLE_OUTPUT_TEMPLATE)
+        #cursor.execute(sql)
         connection.close()
 
         i = 0
         total = len(rows)
+        ioutils = IOUtils()
         for row in rows:
-            start = timeit.timeit()
 
-
-            output_table = input_table + TABLE_OUTPUT_TEMPLATE
 
             list_content = []
             p = SentifiTwitterProfile(row)
@@ -346,26 +358,24 @@ if __name__ == "__main__":
             arr_values = p.to_array()
             list_content.append(arr_values)
 
-            string = ['%s']*len(arr_values)
-
-            #Joining list of %s by comma
-            var_st = ','.join(string)
-
-            #Building query string
-            query_str = 'INSERT INTO ' + output_table + ' VALUES(%s)' % var_st
-
-            ##Open connection
+            #string = ['%s']*len(arr_values)
+            #
+            ##Joining list of %s by comma
+            #var_st = ','.join(string)
+            #
+            ##Building query string
+            #query_str = 'INSERT INTO ' + output_table + ' VALUES(%s)' % var_st
+            #
+            ###Open connection
             #connection_thread = MySQLUtils().connection
             #cursor_thread = connection_thread.cursor()
-
-            #Execute query and commit
+            #
+            ##Execute query and commit
             #cursor_thread.execute(query_str, arr_values)
             #connection_thread.commit()
 
-            IOUtils().save_list_to_csv(None, list_content, "D:\\" + output_table +".csv")
-            if i % 1000 == 0:
-                end = timeit.timeit()
-                print end - start
+            ioutils.save_list_to_csv(None, list_content, "D:\\" + output_table +".csv")
 
     except Exception, e:
         f.write(str(e) + '\n')
+        pass

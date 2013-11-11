@@ -62,6 +62,7 @@ class JSonFeeder(object):
 
                 #Having exclusion
                 if 'exclusions' in keys:
+                    sc.exclusion = []
                     if len(json_rules['exclusions']):
                         sc.exclusion.extend([item.strip().lower() for item in json_rules['exclusions'].split(",")])
                 else:
