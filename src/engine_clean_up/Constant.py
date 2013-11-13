@@ -4,7 +4,8 @@ TWITTER_FULL_NAME = "Twitter Name"
 TWITTER_DESCRIPTION = "Twitter Description"
 
 SERVER = '127.0.0.1'
-DATABASE_NAME = 'autocategory_db'
+#DATABASE_NAME = 'autocategory_db'
+DATABASE_NAME = 'test'
 USERNAME = 'root'
 PASSWORD = ''
 TABLE_PROFILES_INPUT = 'results'

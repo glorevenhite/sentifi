@@ -1,5 +1,7 @@
 import MySQLdb as mdb
 from Constant import *
+from IOUtils import IOUtils
+from SentifiTwitterProfile import SentifiTwitterProfile
 
 
 class MySQLUtils(object):
@@ -75,3 +77,22 @@ class MySQLUtils(object):
     def select_query(self, str_query):
         self.cursor.execute(str_query)
         return self.cursor.fetchall()
+
+#conn = MySQLUtils().connection
+#cur = conn.cursor()
+#query = "SELECT * FROM tbl_uncategorized_searched_profiles_from_twitter_results"
+#cur.execute(query)
+#rows = cur.fetchall()
+#file_name = 'tbl_uncategorized_searched_profiles_from_twitter_results.csv'
+
+#print len(rows)
+#for row in rows:
+#    list_content = []
+#    list_content.append([unicode(col).encode('utf-8') for col in row])
+#    IOUtils().save_list_to_csv(None, list_content, file_name)
+#    #p.display()
+#
+#print len(list_content)
+
+#IOUtils().save_list_to_csv(None, list_content, file_name)
+
