@@ -4,9 +4,12 @@ from JSonFeeder import JSonFeeder
 from IOUtils import IOUtils
 from Utils import *
 from Constant import *
+from MongoUtils import *
 import sys
 import shelve
 import numpy
+
+import pymongo
 import thread
 import timeit
 
@@ -212,7 +215,6 @@ def categorize(table_output, list_profiles, sentifi_categories, category_names):
     #cursor_thread.execute(sql_create_table)
     #connection_thread.commit()
     #connection_thread.close()
-
     i = 0
     total = len(list_profiles)
     ioutils = IOUtils()
@@ -305,14 +307,85 @@ def categorize(table_output, list_profiles, sentifi_categories, category_names):
 #    except Exception, e:
 #        f.write(str(e) + '\n')
 
-if __name__ == "__main__":
-    print "start"
-    start = timeit.timeit()
-    input_table = ""
+#if __name__ == "__main__":
+#    start = timeit.timeit()
+#    input_table = ""
+#    log_file = ""
+#    profile_per_thread = 0
+#
+#    categorize_engine = Categorizer()
+#
+#    if len(sys.argv) == 4:
+#        #Input table
+#        input_table = sys.argv[1]
+#        log_file = sys.argv[2]
+#        profile_per_thread = int(sys.argv[3])
+#    else:
+#        print "Please specify INPUT_TABLE, LOG FILE"
+#        exit()
+#
+#    f = open(log_file, 'a')
+#    try:
+#        database = shelve.open(PATH_CACHE)
+#        list_sentifi_categories = database['sc']
+#        json_category_names = database['cn']
+#        database.close()
+#
+#        output_table = input_table + "_" + TABLE_OUTPUT_TEMPLATE
+#
+#        connection = MySQLUtils().connection
+#        cursor = connection.cursor()
+#
+#        sql = "SELECT * FROM {0} " .format(input_table)
+#        cursor.execute(sql)
+#        rows = cursor.fetchall()
+#
+#        sql = "CREATE TABLE {0} AS (SELECT * FROM {1})".format(output_table, TABLE_OUTPUT_TEMPLATE)
+#        cursor.execute(sql)
+#        connection.close()
+#
+#        i = 0
+#        total = len(rows)
+#        ioutils = IOUtils()
+#        for row in rows:
+#            list_content = []
+#            p = SentifiTwitterProfile(row)
+#            i += 1
+#            print p.screen_name, "there still have been ", total - i, " profiles"
+#            categorize_engine.categorizer(p, list_sentifi_categories, json_category_names)
+#
+#            arr_values = p.to_array()
+#            list_content.append(arr_values)
+#
+#            string = ['%s']*len(arr_values)
+#
+#            #Joining list of %s by comma
+#            var_st = ','.join(string)
+#
+#            #Building query string
+#            query_str = 'INSERT INTO ' + output_table + ' VALUES(%s)' % var_st
+#
+#            ##Open connection
+#            connection_thread = MySQLUtils().connection
+#            cursor_thread = connection_thread.cursor()
+#
+#            #Execute query and commit
+#            cursor_thread.execute(query_str, arr_values)
+#            connection_thread.commit()
+#
+#            # Want to export in csv format
+#            #ioutils.save_list_to_csv(None, list_content, "D:\\" + output_table +".csv")
+#
+#    except Exception, e:
+#        f.write(str(e) + '\n')
+#        pass
+
+
+def get_list_profiles_from_mongo(db_name, table_name):
+    input_collection = ""
     log_file = ""
     profile_per_thread = 0
 
-    categorize_engine = Categorizer()
 
     if len(sys.argv) == 4:
         #Input table
@@ -332,50 +405,121 @@ if __name__ == "__main__":
 
         output_table = input_table + "_" + TABLE_OUTPUT_TEMPLATE
 
-        connection = MySQLUtils().connection
-        cursor = connection.cursor()
+        connection = connect_mongodb()
+        categorize_engine = Categorizer()
+        if check_db_exist(db_name):
+            if check_table_exist(db_name, table_name):
+                db = connection[db_name]
+                collection = db[table_name]
 
-        sql = "SELECT * FROM {0} " .format(input_table)
-        cursor.execute(sql)
-        rows = cursor.fetchall()
+                documents = collection.find()
 
-        sql = "CREATE TABLE {0} AS (SELECT * FROM {1})".format(output_table, TABLE_OUTPUT_TEMPLATE)
-        cursor.execute(sql)
-        connection.close()
+                total = collection.count()
+                i = 0
+                for item in documents:
+                    list_content = []
+                    p = SentifiTwitterProfile(item)
+                    i += 1
+                    print p.screen_name, "there still have been ", total - i, " profiles"
+                    categorize_engine.categorizer(p, list_sentifi_categories, json_category_names)
 
-        i = 0
-        total = len(rows)
-        ioutils = IOUtils()
-        for row in rows:
+                    arr_values = p.to_array()
+                    list_content.append(arr_values)
 
+                    string = ['%s']*len(arr_values)
 
-            list_content = []
-            p = SentifiTwitterProfile(row)
-            i += 1
-            print p.screen_name, "there still have been ", total - i, " profiles"
-            categorize_engine.categorizer(p, list_sentifi_categories, json_category_names)
+                    #Joining list of %s by comma
+                    var_st = ','.join(string)
 
-            arr_values = p.to_array()
-            list_content.append(arr_values)
+                    #Building query string
+                    query_str = 'INSERT INTO ' + output_table + ' VALUES(%s)' % var_st
 
-            string = ['%s']*len(arr_values)
+                    ##Open connection
+                    connection_thread = MySQLUtils().connection
+                    cursor_thread = connection_thread.cursor()
 
-            #Joining list of %s by comma
-            var_st = ','.join(string)
+                    #Execute query and commit
+                    cursor_thread.execute(query_str, arr_values)
+                    connection_thread.commit()
 
-            #Building query string
-            query_str = 'INSERT INTO ' + output_table + ' VALUES(%s)' % var_st
-
-            ##Open connection
-            connection_thread = MySQLUtils().connection
-            cursor_thread = connection_thread.cursor()
-
-            #Execute query and commit
-            cursor_thread.execute(query_str, arr_values)
-            connection_thread.commit()
-
-            #ioutils.save_list_to_csv(None, list_content, "D:\\" + output_table +".csv")
-
+                print collection.count()
     except Exception, e:
-        f.write(str(e) + '\n')
         pass
+
+get_list_profiles_from_mongo('twitter_publisher', 'carl_ikahn')
+
+
+
+#if __name__ == "__main__":
+#    input_collection = ""
+#    log_file = ""
+#    profile_per_thread = 0
+#
+#    categorize_engine = Categorizer()
+#
+#    if len(sys.argv) == 4:
+#        #Input table
+#        input_table = sys.argv[1]
+#        log_file = sys.argv[2]
+#        profile_per_thread = int(sys.argv[3])
+#    else:
+#        print "Please specify INPUT_TABLE, LOG FILE"
+#        exit()
+#
+#    f = open(log_file, 'a')
+#    try:
+#        database = shelve.open(PATH_CACHE)
+#        list_sentifi_categories = database['sc']
+#        json_category_names = database['cn']
+#        database.close()
+#
+#        output_table = input_table + "_" + TABLE_OUTPUT_TEMPLATE
+#
+#        connection = MySQLUtils().connection
+#        cursor = connection.cursor()
+#
+#        sql = "SELECT * FROM {0} " .format(input_table)
+#        cursor.execute(sql)
+#        rows = cursor.fetchall()
+#
+#        sql = "CREATE TABLE {0} AS (SELECT * FROM {1})".format(output_table, TABLE_OUTPUT_TEMPLATE)
+#        cursor.execute(sql)
+#        connection.close()
+#
+#        i = 0
+#        total = len(rows)
+#        ioutils = IOUtils()
+#        for row in rows:
+#            list_content = []
+#            p = SentifiTwitterProfile(row)
+#            i += 1
+#            print p.screen_name, "there still have been ", total - i, " profiles"
+#            categorize_engine.categorizer(p, list_sentifi_categories, json_category_names)
+#
+#            arr_values = p.to_array()
+#            list_content.append(arr_values)
+#
+#            string = ['%s']*len(arr_values)
+#
+#            #Joining list of %s by comma
+#            var_st = ','.join(string)
+#
+#            #Building query string
+#            query_str = 'INSERT INTO ' + output_table + ' VALUES(%s)' % var_st
+#
+#            ##Open connection
+#            connection_thread = MySQLUtils().connection
+#            cursor_thread = connection_thread.cursor()
+#
+#            #Execute query and commit
+#            cursor_thread.execute(query_str, arr_values)
+#            connection_thread.commit()
+#
+#            # Want to export in csv format
+#            #ioutils.save_list_to_csv(None, list_content, "D:\\" + output_table +".csv")
+#
+#    except Exception, e:
+#        f.write(str(e) + '\n')
+#        pass
+#
+#    pass

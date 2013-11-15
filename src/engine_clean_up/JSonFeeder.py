@@ -7,7 +7,6 @@ from Constant import *
 import urllib2
 import simplejson
 import pprint
-import shelve
 
 
 class JSonFeeder(object):

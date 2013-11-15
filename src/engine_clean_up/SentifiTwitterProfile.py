@@ -5,20 +5,27 @@ from SentifiField import SentifiField
 
 
 class SentifiTwitterProfile(object):
-    def __init__(self, data):
-        self.profile_id = data[COLUMNS[0]]
-        self.id = data[COLUMNS[1]]
-        self.screen_name = data[COLUMNS[2]].lower()
+    def __init__(self, data, data_type):
+        if data_type == 'json':
+            self.id = data['id']
+            self.name = data['name']
+            self.screen_name = data['screen_name']
+            self.description = data['description']
 
-        if data[COLUMNS[3]] is not None:
-            self.fullname = data[COLUMNS[3]].lower()
         else:
-            self.fullname = ""
+            self.profile_id = data[COLUMNS[0]]
+            self.id = data[COLUMNS[1]]
+            self.screen_name = data[COLUMNS[2]].lower()
 
-        if data[COLUMNS[4]] is not None:
-            self.description = data[COLUMNS[4]].lower()
-        else:
-            self.description = ""
+            if data[COLUMNS[3]] is not None:
+                self.fullname = data[COLUMNS[3]].lower()
+            else:
+                self.fullname = ""
+
+            if data[COLUMNS[4]] is not None:
+                self.description = data[COLUMNS[4]].lower()
+            else:
+                self.description = ""
 
         self.profile_type = None
         self.profile_group = None

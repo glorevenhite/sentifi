@@ -26,3 +26,5 @@ GET_CATEGORY_BY_ID = END_POINT_URL + 'getCategoryKeywordById?id={0}&' + END_POIN
 CAT1_PARENT = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 44]
 
 CAT2_PARENT_ID = [45, 46, 47, 55, 61, 64, 68, 89, 87, 93, 179]
+
+
