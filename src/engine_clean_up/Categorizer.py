@@ -4,7 +4,7 @@ from JSonFeeder import JSonFeeder
 from IOUtils import IOUtils
 from Utils import *
 from Constant import *
-from MongoUtils import *
+#from MongoUtils import *
 import sys
 import shelve
 import numpy
@@ -171,7 +171,7 @@ class Categorizer(object):
     def check(sentifi_field, sentifi_category):
         score = 0
         #Extract only content
-        content = unicode(sentifi_field.content).encode('utf-8')
+        content = sentifi_field.content
 
         #Extract exclusion
 
@@ -446,9 +446,7 @@ def get_list_profiles_from_mongo(db_name, table_name):
     except Exception, e:
         pass
 
-get_list_profiles_from_mongo('twitter_publisher', 'carl_ikahn')
-
-
+#get_list_profiles_from_mongo('twitter_publisher', 'carl_ikahn')
 
 #if __name__ == "__main__":
 #    input_collection = ""
@@ -523,3 +521,50 @@ get_list_profiles_from_mongo('twitter_publisher', 'carl_ikahn')
 #        pass
 #
 #    pass
+
+if __name__ == "__main__":
+    input_collection = ""
+    log_file = ""
+
+    categorize_engine = Categorizer()
+
+    #if len(sys.argv) == 3:
+    #    #Input table
+    #    file_path = sys.argv[1]
+    #    log_file = sys.argv[2]
+    #else:
+    #    print "Please specify INPUT_TABLE, LOG FILE"
+    #    exit()
+
+
+    file_path = "D:\\online-cloud\\Dropbox\\Sentifi Analytics\\5. Vinh\\categorisation_engine\\2013.11.18\New folder\\20131118_for_MM-from_new_hashtags_with_combination_cashtag_gt_0.csv"
+    log_file = "D:\\log.txt"
+    f = open(log_file, 'a')
+
+    database = shelve.open(PATH_CACHE)
+    list_sentifi_categories = database['sc']
+    json_category_names = database['cn']
+    database.close()
+
+    #read data from csv files
+    rows = IOUtils().read_list_from_csv(file_path)
+
+    i = 0
+    total = len(rows)
+    ioutils = IOUtils()
+    for row in rows:
+        list_content = []
+        p = SentifiTwitterProfile(row, 'csv')
+        i += 1
+        print p.screen_name, "there still have been ", total - i, " profiles"
+        categorize_engine.categorizer(p, list_sentifi_categories, json_category_names)
+
+        arr_values = p.to_array()
+        list_content.append(arr_values)
+
+        # Want to export in csv format
+        ioutils.save_list_to_csv(None, list_content, "D:\\file_result.csv")
+
+
+
+

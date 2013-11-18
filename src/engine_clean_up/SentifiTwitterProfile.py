@@ -59,9 +59,9 @@ class SentifiTwitterProfile(object):
 
         list_items.append(self.profile_id)
         list_items.append(self.id)
-        list_items.append(unicode(self.screen_name).encode('utf-8'))
-        list_items.append(unicode(self.fullname).encode('utf-8'))
-        list_items.append(unicode(self.description).encode('utf-8'))
+        list_items.append(self.screen_name)
+        list_items.append(self.fullname)
+        list_items.append(self.description)
         list_items.append(self.profile_type)
         list_items.append(self.profile_group)
         list_items.append(self.category1)
