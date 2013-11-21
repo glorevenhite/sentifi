@@ -6,14 +6,18 @@ TWITTER_DESCRIPTION = "Twitter Description"
 SERVER = '127.0.0.1'
 #DATABASE_NAME = 'autocategory_db'
 DATABASE_NAME = 'test'
+#DATABASE_NAME = 'new_community'
 USERNAME = 'root'
 PASSWORD = ''
 TABLE_PROFILES_INPUT = 'results'
 TABLE_OUTPUT_TEMPLATE = 'results'
 
+COLUMNS = [3, 3, 0, 1, 2]
 #COLUMNS = [0, 89, 88, 87, 90]
 #COLUMNS = [0, 0, 1, 2, 3]
-COLUMNS = [9, 9, 1, 0, 2]
+#COLUMNS = [9, 9, 1, 0, 2]
+#COLUMNS = [0, 9, 8, 7, 10]
+
 PATH_CACHE = "data.gsw"
 
 PERSONAL = "P"

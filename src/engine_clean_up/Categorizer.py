@@ -381,79 +381,11 @@ def categorize(table_output, list_profiles, sentifi_categories, category_names):
 #        pass
 
 
-def get_list_profiles_from_mongo(db_name, table_name):
-    input_collection = ""
-    log_file = ""
-    profile_per_thread = 0
-
-
-    if len(sys.argv) == 4:
-        #Input table
-        input_table = sys.argv[1]
-        log_file = sys.argv[2]
-        profile_per_thread = int(sys.argv[3])
-    else:
-        print "Please specify INPUT_TABLE, LOG FILE"
-        exit()
-
-    f = open(log_file, 'a')
-    try:
-        database = shelve.open(PATH_CACHE)
-        list_sentifi_categories = database['sc']
-        json_category_names = database['cn']
-        database.close()
-
-        output_table = input_table + "_" + TABLE_OUTPUT_TEMPLATE
-
-        connection = connect_mongodb()
-        categorize_engine = Categorizer()
-        if check_db_exist(db_name):
-            if check_table_exist(db_name, table_name):
-                db = connection[db_name]
-                collection = db[table_name]
-
-                documents = collection.find()
-
-                total = collection.count()
-                i = 0
-                for item in documents:
-                    list_content = []
-                    p = SentifiTwitterProfile(item)
-                    i += 1
-                    print p.screen_name, "there still have been ", total - i, " profiles"
-                    categorize_engine.categorizer(p, list_sentifi_categories, json_category_names)
-
-                    arr_values = p.to_array()
-                    list_content.append(arr_values)
-
-                    string = ['%s']*len(arr_values)
-
-                    #Joining list of %s by comma
-                    var_st = ','.join(string)
-
-                    #Building query string
-                    query_str = 'INSERT INTO ' + output_table + ' VALUES(%s)' % var_st
-
-                    ##Open connection
-                    connection_thread = MySQLUtils().connection
-                    cursor_thread = connection_thread.cursor()
-
-                    #Execute query and commit
-                    cursor_thread.execute(query_str, arr_values)
-                    connection_thread.commit()
-
-                print collection.count()
-    except Exception, e:
-        pass
-
-#get_list_profiles_from_mongo('twitter_publisher', 'carl_ikahn')
-
-#if __name__ == "__main__":
+#def get_list_profiles_from_mongo(db_name, table_name):
 #    input_collection = ""
 #    log_file = ""
 #    profile_per_thread = 0
 #
-#    categorize_engine = Categorizer()
 #
 #    if len(sys.argv) == 4:
 #        #Input table
@@ -473,72 +405,113 @@ def get_list_profiles_from_mongo(db_name, table_name):
 #
 #        output_table = input_table + "_" + TABLE_OUTPUT_TEMPLATE
 #
-#        connection = MySQLUtils().connection
-#        cursor = connection.cursor()
+#        connection = connect_mongodb()
+#        categorize_engine = Categorizer()
+#        if check_db_exist(db_name):
+#            if check_table_exist(db_name, table_name):
+#                db = connection[db_name]
+#                collection = db[table_name]
 #
-#        sql = "SELECT * FROM {0} " .format(input_table)
-#        cursor.execute(sql)
-#        rows = cursor.fetchall()
+#                documents = collection.find()
 #
-#        sql = "CREATE TABLE {0} AS (SELECT * FROM {1})".format(output_table, TABLE_OUTPUT_TEMPLATE)
-#        cursor.execute(sql)
-#        connection.close()
+#                total = collection.count()
+#                i = 0
+#                for item in documents:
+#                    list_content = []
+#                    p = SentifiTwitterProfile(item)
+#                    i += 1
+#                    print p.screen_name, "there still have been ", total - i, " profiles"
+#                    categorize_engine.categorizer(p, list_sentifi_categories, json_category_names)
 #
-#        i = 0
-#        total = len(rows)
-#        ioutils = IOUtils()
-#        for row in rows:
-#            list_content = []
-#            p = SentifiTwitterProfile(row)
-#            i += 1
-#            print p.screen_name, "there still have been ", total - i, " profiles"
-#            categorize_engine.categorizer(p, list_sentifi_categories, json_category_names)
+#                    arr_values = p.to_array()
+#                    list_content.append(arr_values)
 #
-#            arr_values = p.to_array()
-#            list_content.append(arr_values)
+#                    string = ['%s']*len(arr_values)
 #
-#            string = ['%s']*len(arr_values)
+#                    #Joining list of %s by comma
+#                    var_st = ','.join(string)
 #
-#            #Joining list of %s by comma
-#            var_st = ','.join(string)
+#                    #Building query string
+#                    query_str = 'INSERT INTO ' + output_table + ' VALUES(%s)' % var_st
 #
-#            #Building query string
-#            query_str = 'INSERT INTO ' + output_table + ' VALUES(%s)' % var_st
+#                    ##Open connection
+#                    connection_thread = MySQLUtils().connection
+#                    cursor_thread = connection_thread.cursor()
 #
-#            ##Open connection
-#            connection_thread = MySQLUtils().connection
-#            cursor_thread = connection_thread.cursor()
+#                    #Execute query and commit
+#                    cursor_thread.execute(query_str, arr_values)
+#                    connection_thread.commit()
 #
-#            #Execute query and commit
-#            cursor_thread.execute(query_str, arr_values)
-#            connection_thread.commit()
-#
-#            # Want to export in csv format
-#            #ioutils.save_list_to_csv(None, list_content, "D:\\" + output_table +".csv")
-#
+#                print collection.count()
 #    except Exception, e:
-#        f.write(str(e) + '\n')
 #        pass
-#
-#    pass
 
-if __name__ == "__main__":
-    input_collection = ""
-    log_file = ""
+#get_list_profiles_from_mongo('twitter_publisher', 'carl_ikahn')
 
+
+def sql_categorize(input_table, log_file):
     categorize_engine = Categorizer()
 
-    #if len(sys.argv) == 3:
-    #    #Input table
-    #    file_path = sys.argv[1]
-    #    log_file = sys.argv[2]
-    #else:
-    #    print "Please specify INPUT_TABLE, LOG FILE"
-    #    exit()
+    f = open(log_file, 'a')
+    try:
+        database = shelve.open(PATH_CACHE)
+        list_sentifi_categories = database['sc']
+        json_category_names = database['cn']
+        database.close()
+
+        output_table = input_table + "_" + TABLE_OUTPUT_TEMPLATE
+
+        connection = MySQLUtils().connection
+        cursor = connection.cursor()
+
+        sql = "SELECT * FROM {0} " .format(input_table)
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+
+        sql = "CREATE TABLE {0} AS (SELECT * FROM {1})".format(output_table, TABLE_OUTPUT_TEMPLATE)
+        cursor.execute(sql)
+        connection.close()
+
+        i = 0
+        total = len(rows)
+        ioutils = IOUtils()
+        for row in rows:
+            list_content = []
+            p = SentifiTwitterProfile(row, 'csv')
+            i += 1
+            print p.screen_name, "there still have been ", total - i, " profiles"
+            categorize_engine.categorizer(p, list_sentifi_categories, json_category_names)
+
+            arr_values = p.to_array()
+            list_content.append(arr_values)
+
+            string = ['%s']*len(arr_values)
+
+            #Joining list of %s by comma
+            var_st = ','.join(string)
+
+            #Building query string
+            query_str = 'INSERT INTO ' + output_table + ' VALUES(%s)' % var_st
+
+            ##Open connection
+            connection_thread = MySQLUtils().connection
+            cursor_thread = connection_thread.cursor()
+
+            #Execute query and commit
+            cursor_thread.execute(query_str, arr_values)
+            connection_thread.commit()
+
+    except Exception, e:
+        f.write(str(e) + '\n')
+        pass
+
+    pass
 
 
-    file_path = "D:\\online-cloud\\Dropbox\\Sentifi Analytics\\5. Vinh\\categorisation_engine\\2013.11.18\New folder\\20131118_for_MM-from_new_hashtags_with_combination_cashtag_gt_0.csv"
-    log_file = "D:\\log.txt"
+def csv_categorize(input_file_name, file_log):
+    path = "D:\\"
+    file_path = path + input_file_name
+    log_file = path + file_log
     f = open(log_file, 'a')
 
     database = shelve.open(PATH_CACHE)
@@ -552,6 +525,7 @@ if __name__ == "__main__":
     i = 0
     total = len(rows)
     ioutils = IOUtils()
+    categorize_engine = Categorizer()
     for row in rows:
         list_content = []
         p = SentifiTwitterProfile(row, 'csv')
@@ -559,11 +533,31 @@ if __name__ == "__main__":
         print p.screen_name, "there still have been ", total - i, " profiles"
         categorize_engine.categorizer(p, list_sentifi_categories, json_category_names)
 
-        arr_values = p.to_array()
+        arr_values = row + p.to_array_2()
         list_content.append(arr_values)
 
         # Want to export in csv format
-        ioutils.save_list_to_csv(None, list_content, "D:\\file_result.csv")
+        ioutils.save_list_to_csv(None, list_content, file_path.replace('.csv', '_result.csv'))
+
+
+if __name__ == "__main__":
+    if len(sys.argv) == 4:
+        data_type = sys.argv[1]
+        if data_type.lower() == 'csv':
+            file_name = sys.argv[2]
+            log_file_name = sys.argv[3]
+            csv_categorize(file_name, log_file_name)
+        elif data_type.lower() == 'sql':
+            table_input = sys.argv[2]
+            log_file_name = sys.argv[3]
+            sql_categorize(table_input, log_file_name)
+
+    else:
+        print "Please specify INPUT_TABLE, LOG FILE"
+        exit()
+
+
+
 
 
 

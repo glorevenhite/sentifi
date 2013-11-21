@@ -69,5 +69,13 @@ class SentifiTwitterProfile(object):
 
         return list_items
 
+    def to_array_2(self):
+        list_items = []
+        list_items.append(self.profile_type)
+        list_items.append(self.profile_group)
+        list_items.append(self.category1)
+        list_items.append(self.category2)
+        return list_items
+
     def display(self):
         print unicode(self.fullname),unicode(self.description), "/",self.profile_type,":",self.profile_group,":", self.category1,":",self.category2
