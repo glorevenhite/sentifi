@@ -468,7 +468,7 @@ def sql_categorize(input_table, log_file):
         cursor.execute(sql)
         rows = cursor.fetchall()
 
-        sql = "CREATE TABLE {0} AS (SELECT * FROM {1})".format(output_table, TABLE_OUTPUT_TEMPLATE)
+        sql = "CREATE TABLE IF NOT EXISTS {0} AS (SELECT * FROM {1})".format(output_table, TABLE_OUTPUT_TEMPLATE)
         cursor.execute(sql)
         connection.close()
 
@@ -555,10 +555,3 @@ if __name__ == "__main__":
     else:
         print "Please specify INPUT_TABLE, LOG FILE"
         exit()
-
-
-
-
-
-
-

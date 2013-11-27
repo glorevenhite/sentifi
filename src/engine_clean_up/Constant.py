@@ -12,11 +12,12 @@ PASSWORD = ''
 TABLE_PROFILES_INPUT = 'results'
 TABLE_OUTPUT_TEMPLATE = 'results'
 
-COLUMNS = [3, 3, 0, 1, 2]
+#COLUMNS = [3, 3, 0, 1, 2]
 #COLUMNS = [0, 89, 88, 87, 90]
 #COLUMNS = [0, 0, 1, 2, 3]
 #COLUMNS = [9, 9, 1, 0, 2]
 #COLUMNS = [0, 9, 8, 7, 10]
+COLUMNS = [0, 0, 1, 2, 3]
 
 PATH_CACHE = "data.gsw"
 
