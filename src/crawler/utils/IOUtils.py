@@ -9,20 +9,17 @@ from PathUtils import PathUtils
 
 class IOUtils(object):
 
-    def read_list_from_csv(self, file_path):
+    @staticmethod
+    def read_list_from_csv(file_path):
         results = []
-
-        file = open(file_path, "rU")
-
+        f = open(file_path, "rU")
         try:
-            reader = csv.reader(file, delimiter=",", dialect='excel')
+            reader = csv.reader(f, delimiter=",", dialect='excel')
             for row in reader:
                 results.append(row)
         except IOError:
             print IOError
-
-
-        file.close()
+        f.close()
 
         return results
 
@@ -45,13 +42,13 @@ class IOUtils(object):
 
     def save_list_to_csv(self, header, list_contents, file_path):
         #Create file_path if the file doesn't exist
-        PathUtils().create_path_if_not_exists(file_path)
+        #PathUtils().create_path_if_not_exists(file_path)
 
-        file = open(file_path, 'ab')    #Appending file
-        wr = csv.writer(file, dialect='excel')
+        f = open(file_path, 'ab')    #Appending file
+        wr = csv.writer(f, dialect='excel')
 
         #write down the header first
-        if (header != None):
+        if header is not None:
             wr.writerow(header)
 
         for row in list_contents:
@@ -60,7 +57,7 @@ class IOUtils(object):
             except IOError:
                 print IOError
 
-        file.close()
+        f.close()
 
     def save_json_data_to_file(self, json_data, file_name, path):
         file = io.open(path + file_name, 'w', encoding='utf-8')
